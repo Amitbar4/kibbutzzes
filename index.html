@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZDRV4BSBT0"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-ZDRV4BSBT0');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>קיבוץ-Guessr</title>
@@ -130,7 +139,7 @@
         .tractor-shaking { animation: tShake 0.2s infinite; }
         @keyframes tShake { 0% { transform: translateY(-50%) rotate(0deg); } 25% { transform: translateY(-50.5%) rotate(-0.5deg); } 50% { transform: translateY(-49.5%) rotate(0.5deg); } 75% { transform: translateY(-50.2%) rotate(-0.2deg); } 100% { transform: translateY(-50%) rotate(0deg); } }
 
-        /* סצנת האלומה (עודכנה כדי לאפשר לה להיות במרכז ולרקוד) */
+        /* סצנת האלומה */
         #wheat-field {
             position: absolute; right: 0; top: 0; height: 100%; width: 0%; background-color: #FFC107;
             background-image: repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(212, 175, 55, 0.4) 10px, rgba(212, 175, 55, 0.4) 20px);
