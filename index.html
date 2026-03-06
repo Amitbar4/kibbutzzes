@@ -539,10 +539,15 @@
                 if (currentRound < MAX_ROUNDS) { specialRounds.push(currentRound + 1); }
             }
 
-            let hasAnimOrFarmer = false;
-            if (farmerRounds.includes(currentRound) || dist <= 3) { 
-                triggerFarmerAndAnimLogic(dist, timeUsed); 
-                hasAnimOrFarmer = true;
+            let hasAnim = false;
+            let hasFarmerOnly = false;
+            
+            if (dist <= 3) {
+                hasAnim = true;
+                triggerFarmerAndAnimLogic(dist, timeUsed);
+            } else if (farmerRounds.includes(currentRound)) {
+                hasFarmerOnly = true;
+                triggerFarmerAndAnimLogic(dist, timeUsed);
             }
 
             if (isSpecial) {
@@ -558,10 +563,12 @@
                 await new Promise(r => setTimeout(r, 3800)); 
                 
                 satelliteLayer.remove(); mapLayer.addTo(map); map.setView([31.5, 34.9], 7);
-            } else if (hasAnimOrFarmer) {
-                // הנה קסם התזמון! המשחק מחכה בסבלנות 4.5 שניות כדי לתת לך לראות את האנימציה או את החקלאי
-                // ורק אז מציג את כפתור הסיום או ממשיך הלאה!
-                await new Promise(r => setTimeout(r, 4500));
+            } else if (hasAnim) {
+                // הנה השינוי שביקשת! המתנה באורך האנימציה בדיוק (3.4 שניות)
+                await new Promise(r => setTimeout(r, R_TO_L_DURATION)); 
+            } else if (hasFarmerOnly) {
+                // אם זה סתם חקלאי חופר (בלי אנימציה), נחכה רק חצי שנייה ואז נמשיך. החקלאי יישאר למטה
+                await new Promise(r => setTimeout(r, 500));
             }
 
             const startBtn = document.getElementById('start-btn');
@@ -659,11 +666,10 @@
             
             setTimeout(() => { document.body.classList.remove('shake'); tractor.classList.remove('tractor-shaking'); }, R_TO_L_DURATION);
             
-            // מנקים את האנימציה רק כשהתמונה כבר מוסתרת כדי למנוע קפיצות
             setTimeout(() => { 
                 scene.style.display = 'none'; 
-                tAnim.cancel();
-                dAnim.cancel();
+                if(tAnim) tAnim.cancel();
+                if(dAnim) dAnim.cancel();
             }, R_TO_L_DURATION + 100);
         }
 
@@ -689,8 +695,8 @@
             
             setTimeout(() => { 
                 scene.style.display = 'none'; 
-                sAnim.cancel();
-                wAnim.cancel();
+                if(sAnim) sAnim.cancel();
+                if(wAnim) wAnim.cancel();
             }, R_TO_L_DURATION + 100);
         }
 
@@ -716,12 +722,18 @@
                 fill: 'forwards' 
             });
             
+            // השתמשתי ב-setTimeout כדי להבטיח ניקוי קשיח גם אם הדפדפן מנסה לדלג על סיום האנימציה
             setTimeout(() => {
-                wall.animate([{ opacity: 0.95 }, { opacity: 0 }], { duration: 400, fill: 'forwards' }).onfinish = () => {
+                const fadeAnim = wall.animate([{ opacity: 0.95 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
+                
+                // כפיית ניקוי כדי למנוע את באג השקיפות!
+                setTimeout(() => {
                     wall.style.display = 'none';
                     wall.style.opacity = 0.95; 
-                    vAnim.cancel(); // האנימציה מתנקה במדויק בסוף
-                };
+                    if(fadeAnim) fadeAnim.cancel(); 
+                    if(vAnim) vAnim.cancel();
+                }, 400);
+
             }, R_TO_L_DURATION - 400);
 
             setTimeout(() => {
