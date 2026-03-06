@@ -370,6 +370,7 @@
             specialRounds = pickSpecialRounds();
             farmerRounds = pickFarmerRounds();
             
+            // מחזירים את האנימציות למלאי בכל תחילת משחק
             availableAnims = ['tractor', 'sheaf', 'vibe'];
             playedAnimsCount = 0;
 
@@ -642,7 +643,12 @@
         function animTractor() {
             const scene = document.getElementById('tractor-scene'); const dirt = document.getElementById('plowed-dirt'); const tractor = document.getElementById('the-tractor');
             scene.style.display = 'block'; 
-            void scene.offsetWidth; // תיקון דפדפנים כדי שהתמונה תמיד תופיע
+            void scene.offsetWidth; 
+            
+            // ניקוי האנימציה הקודמת כדי למנוע היתקעות במקום
+            tractor.getAnimations().forEach(a => a.cancel());
+            dirt.getAnimations().forEach(a => a.cancel());
+
             sndTractor.play().catch(e => {}); document.body.classList.add('shake'); tractor.classList.add('tractor-shaking');
             
             tractor.animate([{ right: '-100%' }, { right: '150%' }], { duration: R_TO_L_DURATION, easing: 'linear', fill: 'forwards' });
@@ -655,7 +661,12 @@
         function animGiantSheaf() {
             const scene = document.getElementById('sheaf-scene'); const wheat = document.getElementById('wheat-field'); const sheaf = document.getElementById('the-sheaf');
             scene.style.display = 'block'; 
-            void scene.offsetWidth; // תיקון דפדפנים
+            void scene.offsetWidth; 
+            
+            // ניקוי האנימציה הקודמת
+            sheaf.getAnimations().forEach(a => a.cancel());
+            wheat.getAnimations().forEach(a => a.cancel());
+
             sndWind.play().catch(e => {}); 
             
             sheaf.animate([
@@ -680,8 +691,12 @@
             
             wall.style.display = 'block';
             wall.style.opacity = 0.95;
-            void wall.offsetWidth; // תיקון דפדפנים חובה כדי שהזקנים תמיד יופיעו!
+            void wall.offsetWidth; 
             
+            // פה הגיבור שלנו! מוחק את האנימציה הקודמת שהשאירה אותם מחוץ למסך
+            vibe.getAnimations().forEach(a => a.cancel());
+            wall.getAnimations().forEach(a => a.cancel());
+
             sndDining.play().catch(e => {});
             
             vibe.animate([
