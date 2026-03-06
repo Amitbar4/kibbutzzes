@@ -370,7 +370,6 @@
             specialRounds = pickSpecialRounds();
             farmerRounds = pickFarmerRounds();
             
-            // מחזירים את האנימציות למלאי בכל תחילת משחק
             availableAnims = ['tractor', 'sheaf', 'vibe'];
             playedAnimsCount = 0;
 
@@ -540,7 +539,11 @@
                 if (currentRound < MAX_ROUNDS) { specialRounds.push(currentRound + 1); }
             }
 
-            if (farmerRounds.includes(currentRound) || dist <= 3) { triggerFarmerAndAnimLogic(dist, timeUsed); }
+            let hasAnimOrFarmer = false;
+            if (farmerRounds.includes(currentRound) || dist <= 3) { 
+                triggerFarmerAndAnimLogic(dist, timeUsed); 
+                hasAnimOrFarmer = true;
+            }
 
             if (isSpecial) {
                 await new Promise(r => setTimeout(r, 1200));
@@ -555,6 +558,10 @@
                 await new Promise(r => setTimeout(r, 3800)); 
                 
                 satelliteLayer.remove(); mapLayer.addTo(map); map.setView([31.5, 34.9], 7);
+            } else if (hasAnimOrFarmer) {
+                // הנה קסם התזמון! המשחק מחכה בסבלנות 4.5 שניות כדי לתת לך לראות את האנימציה או את החקלאי
+                // ורק אז מציג את כפתור הסיום או ממשיך הלאה!
+                await new Promise(r => setTimeout(r, 4500));
             }
 
             const startBtn = document.getElementById('start-btn');
@@ -645,17 +652,19 @@
             scene.style.display = 'block'; 
             void scene.offsetWidth; 
             
-            // ניקוי האנימציה הקודמת כדי למנוע היתקעות במקום
-            tractor.getAnimations().forEach(a => a.cancel());
-            dirt.getAnimations().forEach(a => a.cancel());
-
             sndTractor.play().catch(e => {}); document.body.classList.add('shake'); tractor.classList.add('tractor-shaking');
             
-            tractor.animate([{ right: '-100%' }, { right: '150%' }], { duration: R_TO_L_DURATION, easing: 'linear', fill: 'forwards' });
-            dirt.animate([{ width: '0%' }, { width: '100%' }], { duration: R_TO_L_DURATION, easing: 'linear', fill: 'forwards' });
+            const tAnim = tractor.animate([{ right: '-100%' }, { right: '150%' }], { duration: R_TO_L_DURATION, easing: 'linear', fill: 'forwards' });
+            const dAnim = dirt.animate([{ width: '0%' }, { width: '100%' }], { duration: R_TO_L_DURATION, easing: 'linear', fill: 'forwards' });
             
             setTimeout(() => { document.body.classList.remove('shake'); tractor.classList.remove('tractor-shaking'); }, R_TO_L_DURATION);
-            setTimeout(() => { scene.style.display = 'none'; }, R_TO_L_DURATION + 1000);
+            
+            // מנקים את האנימציה רק כשהתמונה כבר מוסתרת כדי למנוע קפיצות
+            setTimeout(() => { 
+                scene.style.display = 'none'; 
+                tAnim.cancel();
+                dAnim.cancel();
+            }, R_TO_L_DURATION + 100);
         }
 
         function animGiantSheaf() {
@@ -663,13 +672,9 @@
             scene.style.display = 'block'; 
             void scene.offsetWidth; 
             
-            // ניקוי האנימציה הקודמת
-            sheaf.getAnimations().forEach(a => a.cancel());
-            wheat.getAnimations().forEach(a => a.cancel());
-
             sndWind.play().catch(e => {}); 
             
-            sheaf.animate([
+            const sAnim = sheaf.animate([
                 { left: '150%', transform: 'translate(-50%, -50%) rotate(15deg)', offset: 0 },
                 { left: '50%', transform: 'translate(-50%, -50%) rotate(0deg)', offset: 0.2 },
                 { left: '50%', transform: 'translate(-50%, -50%) rotate(5deg)', offset: 0.3 },
@@ -680,9 +685,13 @@
                 { left: '-50%', transform: 'translate(-50%, -50%) rotate(-15deg)', offset: 1 }
             ], { duration: R_TO_L_DURATION, easing: 'ease-in-out', fill: 'forwards' });
             
-            wheat.animate([{ width: '0%' }, { width: '100%' }], { duration: R_TO_L_DURATION, easing: 'linear', fill: 'forwards' });
+            const wAnim = wheat.animate([{ width: '0%' }, { width: '100%' }], { duration: R_TO_L_DURATION, easing: 'linear', fill: 'forwards' });
             
-            setTimeout(() => { scene.style.display = 'none'; }, R_TO_L_DURATION + 1000);
+            setTimeout(() => { 
+                scene.style.display = 'none'; 
+                sAnim.cancel();
+                wAnim.cancel();
+            }, R_TO_L_DURATION + 100);
         }
 
         function animDiningHall() {
@@ -692,14 +701,10 @@
             wall.style.display = 'block';
             wall.style.opacity = 0.95;
             void wall.offsetWidth; 
-            
-            // פה הגיבור שלנו! מוחק את האנימציה הקודמת שהשאירה אותם מחוץ למסך
-            vibe.getAnimations().forEach(a => a.cancel());
-            wall.getAnimations().forEach(a => a.cancel());
 
             sndDining.play().catch(e => {});
             
-            vibe.animate([
+            const vAnim = vibe.animate([
                 { transform: 'translateX(200%)', offset: 0 },         
                 { transform: 'translateX(-45%)', offset: 0.20 },      
                 { transform: 'translateX(-55%)', offset: 0.50 },      
@@ -712,12 +717,14 @@
             });
             
             setTimeout(() => {
-                wall.animate([{ opacity: 0.95 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
+                wall.animate([{ opacity: 0.95 }, { opacity: 0 }], { duration: 400, fill: 'forwards' }).onfinish = () => {
+                    wall.style.display = 'none';
+                    wall.style.opacity = 0.95; 
+                    vAnim.cancel(); // האנימציה מתנקה במדויק בסוף
+                };
             }, R_TO_L_DURATION - 400);
 
             setTimeout(() => {
-                wall.style.display = 'none';
-                wall.style.opacity = 0.95; 
                 sndDining.pause();
                 sndDining.currentTime = 0;
             }, R_TO_L_DURATION + 100);
