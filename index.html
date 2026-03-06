@@ -31,14 +31,12 @@
             background-position: center; 
             background-attachment: fixed; 
             margin: 0;
-            /* תוספות לאייפון: הרחקה בטוחה מהמצלמה למעלה ומפס הגלילה למטה */
             padding-top: env(safe-area-inset-top);
             padding-bottom: env(safe-area-inset-bottom);
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* גובה דינמי שמונע חיתוכים בדפדפן ספארי */
             height: 100dvh;
             overflow: hidden;
         }
@@ -48,7 +46,6 @@
             border: 5px solid var(--earth-brown);
             border-radius: 12px;
             padding: 15px;
-            /* הוספנו קצת יותר רווח למעלה כדי להיות על הצד הבטוח */
             margin: 10px 0 10px 0; 
             text-align: center;
             width: 95vw;
@@ -126,7 +123,6 @@
             position: relative; width: 95vw; max-width: 450px; box-sizing: border-box; height: 65vh; 
             margin-bottom: 15px; border: 5px solid var(--earth-brown); border-radius: 12px;
             overflow: hidden; z-index: 1; background-color: #ddd; cursor: crosshair; box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-            /* התאמה נוספת כדי למנוע חיתוך של המפה במסכים קטנים עם אי דינמי גדול */
             flex-grow: 1;
             max-height: 60vh;
         }
@@ -645,7 +641,9 @@
 
         function animTractor() {
             const scene = document.getElementById('tractor-scene'); const dirt = document.getElementById('plowed-dirt'); const tractor = document.getElementById('the-tractor');
-            scene.style.display = 'block'; sndTractor.play().catch(e => {}); document.body.classList.add('shake'); tractor.classList.add('tractor-shaking');
+            scene.style.display = 'block'; 
+            void scene.offsetWidth; // תיקון דפדפנים כדי שהתמונה תמיד תופיע
+            sndTractor.play().catch(e => {}); document.body.classList.add('shake'); tractor.classList.add('tractor-shaking');
             
             tractor.animate([{ right: '-100%' }, { right: '150%' }], { duration: R_TO_L_DURATION, easing: 'linear', fill: 'forwards' });
             dirt.animate([{ width: '0%' }, { width: '100%' }], { duration: R_TO_L_DURATION, easing: 'linear', fill: 'forwards' });
@@ -656,7 +654,9 @@
 
         function animGiantSheaf() {
             const scene = document.getElementById('sheaf-scene'); const wheat = document.getElementById('wheat-field'); const sheaf = document.getElementById('the-sheaf');
-            scene.style.display = 'block'; sndWind.play().catch(e => {}); 
+            scene.style.display = 'block'; 
+            void scene.offsetWidth; // תיקון דפדפנים
+            sndWind.play().catch(e => {}); 
             
             sheaf.animate([
                 { left: '150%', transform: 'translate(-50%, -50%) rotate(15deg)', offset: 0 },
@@ -680,6 +680,8 @@
             
             wall.style.display = 'block';
             wall.style.opacity = 0.95;
+            void wall.offsetWidth; // תיקון דפדפנים חובה כדי שהזקנים תמיד יופיעו!
+            
             sndDining.play().catch(e => {});
             
             vibe.animate([
