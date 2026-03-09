@@ -291,6 +291,8 @@
         let totalScore = 0;
         let highScore = 0;
         let playerName = ""; 
+        let gameStartTime = 0; 
+        const MIN_GAME_TIME = 85; 
         
         let specialRounds = [];
         let farmerRounds = [];
@@ -367,6 +369,7 @@
             
             currentRound = 1; 
             totalScore = 0; 
+            gameStartTime = Date.now(); 
             specialRounds = pickSpecialRounds();
             farmerRounds = pickFarmerRounds();
             
@@ -416,7 +419,7 @@
             }
         }
 
-        async function saveScoreToLeaderboard(score) {
+        async function saveScoreToLeaderboard(score, timeTaken) {
             if (score <= 0 || !playerName) return;
             try {
                 const querySnapshot = await db.collection('leaderboard').where('name', '==', playerName).get();
@@ -436,6 +439,7 @@
                     if (score > existingScore) {
                         await db.collection('leaderboard').doc(docId).update({
                             score: score,
+                            timePlayed: timeTaken,
                             timestamp: firebase.firestore.FieldValue.serverTimestamp()
                         });
                     }
@@ -443,6 +447,7 @@
                     await db.collection('leaderboard').add({
                         name: playerName,
                         score: score,
+                        timePlayed: timeTaken,
                         timestamp: firebase.firestore.FieldValue.serverTimestamp()
                     });
                 }
@@ -564,10 +569,8 @@
                 
                 satelliteLayer.remove(); mapLayer.addTo(map); map.setView([31.5, 34.9], 7);
             } else if (hasAnim) {
-                // הנה השינוי שביקשת! המתנה באורך האנימציה בדיוק (3.4 שניות)
                 await new Promise(r => setTimeout(r, R_TO_L_DURATION)); 
             } else if (hasFarmerOnly) {
-                // אם זה סתם חקלאי חופר (בלי אנימציה), נחכה רק חצי שנייה ואז נמשיך. החקלאי יישאר למטה
                 await new Promise(r => setTimeout(r, 500));
             }
 
@@ -578,10 +581,23 @@
                 currentRound++; 
                 startBtn.innerText = "לסיבוב הבא";
             } else {
-                updateHighScore(totalScore);
+                let timeTakenSeconds = Math.floor((Date.now() - gameStartTime) / 1000);
+                let isCheater = timeTakenSeconds < MIN_GAME_TIME;
+
+                if (!isCheater) {
+                    updateHighScore(totalScore);
+                }
+                
                 startBtn.innerText = "שומר תוצאה...";
                 startBtn.disabled = true;
-                await saveScoreToLeaderboard(totalScore);
+                
+                if (!isCheater) {
+                    await saveScoreToLeaderboard(totalScore, timeTakenSeconds);
+                } else {
+                    console.log("זוהתה פעילות חשודה, התוצאה לא נשמרה.");
+                    await new Promise(r => setTimeout(r, 800)); // השהייה קטנה כדי שייראה אמין לרמאי
+                }
+                
                 startBtn.innerText = "משחק חדש";
                 startBtn.disabled = false;
                 startBtn.onclick = resetToWelcome;
