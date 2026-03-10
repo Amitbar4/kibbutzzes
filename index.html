@@ -13,6 +13,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>קיבוץ-Guessr</title>
+
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4CAF50">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         :root {
@@ -129,10 +137,8 @@
 
         #map { width: 100%; height: 100%; border: none; border-radius: 0; margin: 0; z-index: 1; filter: brightness(1.00) contrast(1.02); }
 
-        /* אלמנטים משותפים לאנימציות */
         .scene-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 9998; pointer-events: none; display: none; }
 
-        /* סצנת הטרקטור */
         #plowed-dirt {
             position: absolute; right: 0; top: 0; height: 100%; width: 0%; background-color: #4E342E;
             background-image: linear-gradient(rgba(0,0,0,0.3) 3px, transparent 3px), radial-gradient(#3E2723 30%, transparent 40%), radial-gradient(#2E1A14 25%, transparent 35%);
@@ -143,7 +149,6 @@
         .tractor-shaking { animation: tShake 0.2s infinite; }
         @keyframes tShake { 0% { transform: translateY(-50%) rotate(0deg); } 25% { transform: translateY(-50.5%) rotate(-0.5deg); } 50% { transform: translateY(-49.5%) rotate(0.5deg); } 75% { transform: translateY(-50.2%) rotate(-0.2deg); } 100% { transform: translateY(-50%) rotate(0deg); } }
 
-        /* סצנת האלומה */
         #wheat-field {
             position: absolute; right: 0; top: 0; height: 100%; width: 0%; background-color: #FFC107;
             background-image: repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(212, 175, 55, 0.4) 10px, rgba(212, 175, 55, 0.4) 20px);
@@ -152,7 +157,6 @@
         #the-sheaf { position: absolute; top: 50%; left: 150%; width: clamp(240px, 55vw, 420px); transform: translate(-50%, -50%); }
         #the-sheaf img { width: 100%; height: auto; display: block; filter: drop-shadow(8px 10px 15px rgba(0,0,0,0.6)); }
 
-        /* סצנת חדר האוכל */
         #dining-hall {
             position: absolute; top: 0; left: 0; height: 100%; width: 100%; background-color: #F5EEDA;
             background-image: linear-gradient(#D2B48C 15px, transparent 15px);
@@ -595,7 +599,7 @@
                     await saveScoreToLeaderboard(totalScore, timeTakenSeconds);
                 } else {
                     console.log("זוהתה פעילות חשודה, התוצאה לא נשמרה.");
-                    await new Promise(r => setTimeout(r, 800)); // השהייה קטנה כדי שייראה אמין לרמאי
+                    await new Promise(r => setTimeout(r, 800)); 
                 }
                 
                 startBtn.innerText = "משחק חדש";
@@ -738,11 +742,9 @@
                 fill: 'forwards' 
             });
             
-            // השתמשתי ב-setTimeout כדי להבטיח ניקוי קשיח גם אם הדפדפן מנסה לדלג על סיום האנימציה
             setTimeout(() => {
                 const fadeAnim = wall.animate([{ opacity: 0.95 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
                 
-                // כפיית ניקוי כדי למנוע את באג השקיפות!
                 setTimeout(() => {
                     wall.style.display = 'none';
                     wall.style.opacity = 0.95; 
