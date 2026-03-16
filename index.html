@@ -362,7 +362,7 @@
                 document.getElementById('player-nickname').value = playerName;
             }
 
-            // פותר את הבעיה של המפה הנמעכת במסך הפתיחה
+            // המרכוז למפה הקטנה במסך הפתיחה
             setTimeout(() => {
                 map.invalidateSize();
                 map.setView([31.5, 34.9], 7); 
@@ -400,10 +400,10 @@
             if (guessMarker) map.removeLayer(guessMarker);
             if (resultLine) map.removeLayer(resultLine);
             
-            // המפה חוזרת לגודל המקורי שלה, אז נחשב מחדש את הגודל ונמרכז לאמצע ישראל
+            // המפה של מסך ה"התחל משחק" (המקורית)
             setTimeout(() => {
                 map.invalidateSize();
-                map.setView([32.0, 34.9], 7);
+                map.setView([31.5, 34.9], 7); // הוחזר ל-31.5 כמו שביקשת!
             }, 50);
         }
 
@@ -514,7 +514,7 @@
             document.getElementById('kibbutz-name').innerText = `איפה זה: ${currentKibbutz.name}?`;
             document.getElementById('round-info').innerText = `סבב: ${currentRound}/10`;
 
-            // המרכוז החדש של המשחק עם זום 7.9 שקבענו
+            // המרכוז המדויק בתוך המשחק עצמו
             map.setView([32.0, 34.9], 7.9);
 
             isRoundActive = true;
