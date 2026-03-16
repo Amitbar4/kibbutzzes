@@ -314,8 +314,8 @@
             mapLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', { attribution: '© OpenStreetMap' });
             satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri' });
 
-            // התחלה: מפה מלאה בטעינה ראשונית
-            map = L.map('map', {zoomControl: false}).setView([31.5, 34.9], 7);
+            // שינינו פה כדי לאפשר "חצאי זומים" כמו 7.5
+            map = L.map('map', {zoomControl: false, zoomSnap: 0.5}).setView([31.5, 34.9], 7);
             mapLayer.addTo(map);
             
             loadHighScore();
@@ -395,7 +395,6 @@
             if (guessMarker) map.removeLayer(guessMarker);
             if (resultLine) map.removeLayer(resultLine);
             
-            // מפה מלאה בזמן שממתינים למשחק (כפתור "התחל משחק" מוצג)
             map.setView([31.5, 34.9], 7);
         }
 
@@ -506,8 +505,8 @@
             document.getElementById('kibbutz-name').innerText = `איפה זה: ${currentKibbutz.name}?`;
             document.getElementById('round-info').innerText = `סבב: ${currentRound}/10`;
 
-            // המרכוז החדש - חותך את צפון לבנון ודרום ים המלח
-            map.setView([32.2, 34.9], 8);
+            // המרכוז החדש - זום 7.5 מאפשר לראות את הצפון כמו קודם ועוד קצת מדרום לים המלח
+            map.setView([31.85, 34.9], 7.5);
 
             isRoundActive = true;
             timeLeft = 15;
@@ -578,8 +577,8 @@
                 await new Promise(r => setTimeout(r, 3800)); 
                 
                 satelliteLayer.remove(); mapLayer.addTo(map); 
-                // עדכון חזרה לזום ומרכוז המדויק גם אחרי אפקט הלוויין
-                map.setView([32.2, 34.9], 8);
+                // גם כאן, עדכון חזרה לזום 7.5 ומרכוז מדויק
+                map.setView([31.85, 34.9], 7.5);
             } else if (hasAnim) {
                 await new Promise(r => setTimeout(r, R_TO_L_DURATION)); 
             } else if (hasFarmerOnly) {
