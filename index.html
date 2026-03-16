@@ -314,7 +314,8 @@
             mapLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', { attribution: '© OpenStreetMap' });
             satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri' });
 
-            map = L.map('map', {zoomControl: false, zoomSnap: 0.1}).setView([31.5, 34.9], 7);
+            // שינינו למרכז 32.0 (כמו במשחק) אבל השארנו זום 7
+            map = L.map('map', {zoomControl: false, zoomSnap: 0.1}).setView([32.0, 34.9], 7);
             mapLayer.addTo(map);
             
             loadHighScore();
@@ -394,7 +395,8 @@
             if (guessMarker) map.removeLayer(guessMarker);
             if (resultLine) map.removeLayer(resultLine);
             
-            map.setView([31.5, 34.9], 7);
+            // גם כאן שינינו למרכז 32.0 עם זום 7 כשהשחקן מחכה להתחיל
+            map.setView([32.0, 34.9], 7);
         }
 
         function resetToWelcome() {
@@ -504,7 +506,7 @@
             document.getElementById('kibbutz-name').innerText = `איפה זה: ${currentKibbutz.name}?`;
             document.getElementById('round-info').innerText = `סבב: ${currentRound}/10`;
 
-            // המרכוז החדש: זום 7.9 לדיוק המושלם של הפריים (קצת יותר קרוב מ-7.8)
+            // המרכוז החדש: זום 7.9 לדיוק המושלם של הפריים
             map.setView([32.0, 34.9], 7.9);
 
             isRoundActive = true;
@@ -576,7 +578,7 @@
                 await new Promise(r => setTimeout(r, 3800)); 
                 
                 satelliteLayer.remove(); mapLayer.addTo(map); 
-                // חזרה מדויקת גם כאן (זום 7.9)
+                // חזרה מדויקת גם כאן
                 map.setView([32.0, 34.9], 7.9);
             } else if (hasAnim) {
                 await new Promise(r => setTimeout(r, R_TO_L_DURATION)); 
