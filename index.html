@@ -314,7 +314,7 @@
             mapLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', { attribution: '© OpenStreetMap' });
             satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri' });
 
-            map = L.map('map', {zoomControl: false}).setView([31.5, 34.9], 7);
+            map = L.map('map', {zoomControl: false}).setView([31.7, 34.9], 8);
             mapLayer.addTo(map);
             
             loadHighScore();
@@ -393,7 +393,7 @@
             if (actualMarker) map.removeLayer(actualMarker);
             if (guessMarker) map.removeLayer(guessMarker);
             if (resultLine) map.removeLayer(resultLine);
-            map.setView([31.5, 34.9], 7);
+            map.setView([31.7, 34.9], 8);
         }
 
         function resetToWelcome() {
@@ -503,6 +503,9 @@
             document.getElementById('kibbutz-name').innerText = `איפה זה: ${currentKibbutz.name}?`;
             document.getElementById('round-info').innerText = `סבב: ${currentRound}/10`;
 
+            // המרכוז המבוקש - מאפס את המפה בתחילת כל תור
+            map.setView([31.7, 34.9], 8);
+
             isRoundActive = true;
             timeLeft = 15;
             updateTimerBar();
@@ -571,7 +574,7 @@
                 map.flyTo(actualLatlng, 12, {duration: 2.3});
                 await new Promise(r => setTimeout(r, 3800)); 
                 
-                satelliteLayer.remove(); mapLayer.addTo(map); map.setView([31.5, 34.9], 7);
+                satelliteLayer.remove(); mapLayer.addTo(map); map.setView([31.7, 34.9], 8);
             } else if (hasAnim) {
                 await new Promise(r => setTimeout(r, R_TO_L_DURATION)); 
             } else if (hasFarmerOnly) {
