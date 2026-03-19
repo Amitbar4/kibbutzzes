@@ -89,7 +89,7 @@
             top: 55px;
             left: 0;
             width: 140px;
-            background: white; /* שונה ללבן */
+            background: white; 
             border: 2px solid var(--dark-green);
             color: var(--earth-brown);
             font-size: 13px;
@@ -121,7 +121,7 @@
             left: 15px;
             border-width: 0 6px 6px 6px;
             border-style: solid;
-            border-color: transparent transparent white transparent; /* הותאם לרקע לבן */
+            border-color: transparent transparent white transparent; 
         }
         .install-hint-container:hover .install-hint-tooltip,
         .install-hint-container.show .install-hint-tooltip {
@@ -283,7 +283,7 @@
     </div>
 
     <div id="welcome-panel" class="panel">
-        <div class="install-hint-container" onclick="this.classList.toggle('show')">
+        <div class="install-hint-container" id="install-hint">
             <img src="icon.png" class="install-hint-icon" alt="אייקון האפליקציה">
             <div class="install-hint-tooltip">מומלץ להוריד למסך הבית לפתיחה נוחה</div>
         </div>
@@ -844,6 +844,20 @@
                 sndDining.currentTime = 0;
             }, R_TO_L_DURATION + 100);
         }
+
+        // מנגנון חכם לסגירת בועת ההתקנה כשלוחצים במקום אחר במסך
+        document.addEventListener('click', function(event) {
+            const hintContainer = document.getElementById('install-hint');
+            if (hintContainer) {
+                // אם הלחיצה הייתה בתוך האייקון - נפתח או נסגור
+                if (hintContainer.contains(event.target)) {
+                    hintContainer.classList.toggle('show');
+                } else {
+                    // אם הלחיצה הייתה מחוץ לאייקון - נסגור
+                    hintContainer.classList.remove('show');
+                }
+            }
+        });
 
         window.onload = () => { initMap(); map.on('click', handleMapClick); };
     </script>
