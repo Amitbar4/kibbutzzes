@@ -12,7 +12,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>קיבוץ-Guessr</title>
+    <title>משחק הקיבוצים</title>
 
     <link rel="icon" type="image/png" href="icon.png">
     <link rel="apple-touch-icon" href="icon.png">
@@ -50,6 +50,7 @@
         }
 
         .panel {
+            position: relative;
             background-color: rgba(255, 255, 255, 0.95);
             border: 5px solid var(--earth-brown);
             border-radius: 12px;
@@ -62,6 +63,73 @@
             box-shadow: 0 8px 16px rgba(0,0,0,0.3);
             z-index: 10;
         }
+
+        /* --- תחילת עיצוב האייקון בצד שמאל למעלה --- */
+        .install-hint-container {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            cursor: pointer;
+            z-index: 20;
+        }
+        .install-hint-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            border: 2px solid var(--dark-green);
+            background-color: white;
+            transition: transform 0.2s;
+        }
+        .install-hint-container:active .install-hint-icon {
+            transform: scale(0.95);
+        }
+        .install-hint-tooltip {
+            position: absolute;
+            top: 55px;
+            left: 0;
+            width: 140px;
+            background: white; /* שונה ללבן */
+            border: 2px solid var(--dark-green);
+            color: var(--earth-brown);
+            font-size: 13px;
+            font-weight: bold;
+            padding: 8px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            text-align: center;
+            line-height: 1.2;
+            pointer-events: none;
+        }
+        /* המשולש הקטן של הבועה */
+        .install-hint-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 15px;
+            border-width: 0 6px 6px 6px;
+            border-style: solid;
+            border-color: transparent transparent var(--dark-green) transparent;
+        }
+        .install-hint-tooltip::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 15px;
+            border-width: 0 6px 6px 6px;
+            border-style: solid;
+            border-color: transparent transparent white transparent; /* הותאם לרקע לבן */
+        }
+        .install-hint-container:hover .install-hint-tooltip,
+        .install-hint-container.show .install-hint-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(5px);
+        }
+        /* --- סוף עיצוב האייקון --- */
 
         #welcome-panel { display: none; }
         #game-panel { display: none; }
@@ -215,6 +283,11 @@
     </div>
 
     <div id="welcome-panel" class="panel">
+        <div class="install-hint-container" onclick="this.classList.toggle('show')">
+            <img src="icon.png" class="install-hint-icon" alt="אייקון האפליקציה">
+            <div class="install-hint-tooltip">מומלץ להוריד למסך הבית לפתיחה נוחה</div>
+        </div>
+
         <div class="kibbutz-sign-container" style="margin-bottom: 25px;">
             <div class="sign-pole"></div>
             <div class="sign-board sign-right">משחק</div>
@@ -362,7 +435,6 @@
                 document.getElementById('player-nickname').value = playerName;
             }
 
-            // המרכוז למפה הקטנה במסך הפתיחה
             setTimeout(() => {
                 map.invalidateSize();
                 map.setView([31.5, 34.9], 7); 
@@ -400,10 +472,9 @@
             if (guessMarker) map.removeLayer(guessMarker);
             if (resultLine) map.removeLayer(resultLine);
             
-            // המפה של מסך ה"התחל משחק" (המקורית)
             setTimeout(() => {
                 map.invalidateSize();
-                map.setView([31.5, 34.9], 7); // הוחזר ל-31.5 כמו שביקשת!
+                map.setView([31.5, 34.9], 7);
             }, 50);
         }
 
@@ -514,7 +585,6 @@
             document.getElementById('kibbutz-name').innerText = `איפה זה: ${currentKibbutz.name}?`;
             document.getElementById('round-info').innerText = `סבב: ${currentRound}/10`;
 
-            // המרכוז המדויק בתוך המשחק עצמו
             map.setView([32.0, 34.9], 7.9);
 
             isRoundActive = true;
