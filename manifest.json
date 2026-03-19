@@ -1,6 +1,6 @@
 {
-  "name": "קיבוץ-Guessr",
-  "short_name": "קיבוץ-Guessr",
+  "name": "משחק הקיבוצים",
+  "short_name": "משחק הקיבוצים",
   "description": "משחק זיהוי קיבוצים על מפת ישראל",
   "start_url": "index.html",
   "display": "standalone",
