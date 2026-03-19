@@ -123,11 +123,21 @@
             border-style: solid;
             border-color: transparent transparent white transparent; 
         }
-        .install-hint-container:hover .install-hint-tooltip,
+        
+        /* הצגת הבועה באמצעות קלאס מיוחד (ללחיצות בטלפון) */
         .install-hint-container.show .install-hint-tooltip {
             opacity: 1;
             visibility: visible;
             transform: translateY(5px);
+        }
+
+        /* הצגת הבועה במעבר עכבר רק במכשירים שתומכים בזה (מחשבים) */
+        @media (hover: hover) {
+            .install-hint-container:hover .install-hint-tooltip {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(5px);
+            }
         }
         /* --- סוף עיצוב האייקון --- */
 
@@ -845,15 +855,15 @@
             }, R_TO_L_DURATION + 100);
         }
 
-        // מנגנון חכם לסגירת בועת ההתקנה כשלוחצים במקום אחר במסך
+        // מנגנון שמטפל נכון בלחיצות על מסך מגע וסגירת הבועה
         document.addEventListener('click', function(event) {
             const hintContainer = document.getElementById('install-hint');
             if (hintContainer) {
-                // אם הלחיצה הייתה בתוך האייקון - נפתח או נסגור
+                // אם הלחיצה היא בדיוק על האייקון או בתוך הקונטיינר שלו
                 if (hintContainer.contains(event.target)) {
                     hintContainer.classList.toggle('show');
                 } else {
-                    // אם הלחיצה הייתה מחוץ לאייקון - נסגור
+                    // אם הלחיצה היא בכל מקום אחר במסך
                     hintContainer.classList.remove('show');
                 }
             }
