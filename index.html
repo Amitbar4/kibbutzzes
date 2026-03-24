@@ -83,6 +83,9 @@
         .modal-content input { padding: 10px; border: 2px solid var(--primary-green); border-radius: 8px; font-size: 15px; font-family: inherit; width: 100%; box-sizing: border-box; text-align: right; direction: rtl; }
         .close-modal { position: absolute; top: 8px; left: 12px; font-size: 28px; cursor: pointer; color: #888; line-height: 1; }
         .close-modal:hover { color: #333; }
+
+        /* שורת זכויות היוצרים על המפה */
+        .map-copyright { position: absolute; bottom: 0; left: 0; z-index: 9999; background: rgba(255, 255, 255, 0.7); padding: 2px 6px; font-size: 10px; color: #333; font-family: sans-serif; border-top-right-radius: 4px; pointer-events: none; direction: ltr; }
     </style>
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script> <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
 </head>
@@ -102,7 +105,7 @@
                 <span class="firgun-text">פינת הפרגון</span>
             </div>
             <div id="firgun-popup" class="firgun-popup">
-                <p>המשחק חינמי לגמרי!<br>אם בא לכם לתמוך בפיתוח<br>ולפרגן על ההשקעה,<br>פייבוקס הפירגונים שלנו<br>פתוח <a href="https://links.payboxapp.com/h2vMq4S2L1b" target="_blank" class="firgun-link-btn">לפרגון 💙</a></p>
+                <p>המשחק חינמי לגמרי אבל<br>אם בא לכם לתמוך בפיתוח<br>ולפרגן על ההשקעה,<br>אשמח מאוד <a href="https://links.payboxapp.com/h2vMq4S2L1b" target="_blank" class="firgun-link-btn">לפרגון 💙</a></p>
             </div>
         </div>
         
@@ -126,7 +129,13 @@
             </div>
         </div>
     </div>
-    <div id="map-wrapper"><div id="map"></div><div id="tractor-scene" class="scene-layer"><div id="plowed-dirt"></div><div id="the-tractor"><img src="tractor.png" alt="טרקטור פרגוסון"></div></div><div id="sheaf-scene" class="scene-layer"><div id="wheat-field"></div><div id="the-sheaf"><img src="aluma.png" alt="אלומה"></div></div><div id="dining-hall"><div id="the-vibe"><img src="kibbutz_vibe.png" alt="הפרלמנט"></div></div></div>
+    
+    <div id="map-wrapper">
+        <div id="map"></div>
+        <div class="map-copyright">© 2026 Kibbutzzes | Amit Bar</div>
+        <div id="tractor-scene" class="scene-layer"><div id="plowed-dirt"></div><div id="the-tractor"><img src="tractor.png" alt="טרקטור פרגוסון"></div></div><div id="sheaf-scene" class="scene-layer"><div id="wheat-field"></div><div id="the-sheaf"><img src="aluma.png" alt="אלומה"></div></div><div id="dining-hall"><div id="the-vibe"><img src="kibbutz_vibe.png" alt="הפרלמנט"></div></div>
+    </div>
+    
     <div id="farmer-container"><div id="speech-bubble"></div><div id="farmer-character"><img src="farmer.png" alt="חקלאי"></div></div>
     
     <div id="sponsor-modal" class="modal-overlay">
@@ -147,12 +156,50 @@
         let kibbutzim = []; let currentKibbutz = null; let timerInterval; let timeLeft = 15; let map, actualMarker, guessMarker, resultLine; let isRoundActive = false; let currentRound = 1; const MAX_ROUNDS = 10; let totalScore = 0; let highScore = 0; let playerName = ""; let gameStartTime = 0; const MIN_GAME_TIME = 85; 
         let specialRounds = []; let farmerRounds = []; let availableAnims = ['tractor', 'sheaf', 'vibe']; let playedAnimsCount = 0; let mapLayer, satelliteLayer;
         const sndWind = new Audio('https://www.soundjay.com/nature/sounds/wind-01.mp3'); const sndTractor = new Audio('https://actions.google.com/sounds/v1/transportation/tractor_driving_by.ogg'); const sndDining = new Audio('https://actions.google.com/sounds/v1/ambience/coffee_shop.ogg'); 
+        
         async function initMap() { mapLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', { attribution: '© OpenStreetMap' }); satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri' }); map = L.map('map', {zoomControl: false, zoomSnap: 0.1}).setView([32.0, 34.9], 7.5); mapLayer.addTo(map); loadHighScore(); fetchGlobalLeaderboard(); await fetchKibbutzimData(); }
         async function fetchKibbutzimData() { try { const savedData = localStorage.getItem('kibbutzim_data_v2'); if (savedData) { kibbutzim = JSON.parse(savedData); showWelcomePanel(); return; } const response = await fetch('kibbutzim.kml'); if (!response.ok) throw new Error("שגיאה"); const text = await response.text(); const xmlDoc = new DOMParser().parseFromString(text, "text/xml"); const placemarks = xmlDoc.getElementsByTagName("Placemark"); kibbutzim = []; for (let p of placemarks) { const name = p.getElementsByTagName("name")[0]?.textContent; const coords = p.getElementsByTagName("coordinates")[0]?.textContent.split(','); if (name && coords) kibbutzim.push({name: name.trim(), lng: parseFloat(coords[0]), lat: parseFloat(coords[1])}); } localStorage.setItem('kibbutzim_data_v2', JSON.stringify(kibbutzim)); showWelcomePanel(); } catch (error) { document.getElementById('loading-panel').innerHTML = "<h3>שגיאה!</h3>"; } }
         function showWelcomePanel() { document.getElementById('loading-panel').style.display = 'none'; document.getElementById('welcome-panel').style.display = 'block'; if (playerName && playerName !== "אורח") { document.getElementById('player-nickname').value = playerName; } setTimeout(() => { map.invalidateSize(); map.setView([32.0, 34.9], 7.5); }, 50); }
         function submitNickname() { const input = document.getElementById('player-nickname').value.trim(); if (input !== "") { playerName = input; } else if (!playerName) { playerName = "אורח"; } currentRound = 1; totalScore = 0; gameStartTime = Date.now(); specialRounds = pickSpecialRounds(); farmerRounds = pickFarmerRounds(); availableAnims = ['tractor', 'sheaf', 'vibe']; playedAnimsCount = 0; document.getElementById('welcome-panel').style.display = 'none'; document.getElementById('game-panel').style.display = 'block'; document.getElementById('end-game-ad-container').style.display = 'none'; document.getElementById('start-btn').innerText = "התחל משחק"; document.getElementById('start-btn').onclick = startRound; document.getElementById('start-btn').style.display = 'block'; document.getElementById('kibbutz-name').innerHTML = "מוכן להתחיל?"; document.getElementById('round-info').innerText = ""; document.getElementById('result-msg').innerText = ""; document.getElementById('top-stats-bar').style.display = 'flex'; if (actualMarker) map.removeLayer(actualMarker); if (guessMarker) map.removeLayer(guessMarker); if (resultLine) map.removeLayer(resultLine); setTimeout(() => { map.invalidateSize(); map.setView([32.0, 34.9], 7.9); }, 50); }
         function resetToWelcome() { fetchGlobalLeaderboard(); document.getElementById('game-panel').style.display = 'none'; showWelcomePanel(); }
-        async function fetchGlobalLeaderboard() { try { const snapshot = await db.collection('leaderboard').orderBy('score', 'desc').limit(5).get(); const list = document.getElementById('top5-list'); list.innerHTML = ''; if (snapshot.empty) return; snapshot.forEach(doc => { const data = doc.data(); const li = document.createElement('li'); li.innerText = `${data.name} - ${data.score} נק'`; list.appendChild(li); }); } catch (e) { document.getElementById('top5-list').innerHTML = ''; } }
+        
+        /* המנגנון החכם לעדכון הטבלה */
+        async function fetchGlobalLeaderboard() { 
+            const now = Date.now();
+            const lastFetch = localStorage.getItem('last_leaderboard_fetch');
+            const cachedData = localStorage.getItem('cached_leaderboard');
+            const list = document.getElementById('top5-list');
+
+            if (lastFetch && cachedData && (now - lastFetch < 60000)) {
+                renderLeaderboard(JSON.parse(cachedData), list);
+                return;
+            }
+
+            try { 
+                const snapshot = await db.collection('leaderboard').orderBy('score', 'desc').limit(5).get(); 
+                const scores = [];
+                if (!snapshot.empty) {
+                    snapshot.forEach(doc => scores.push(doc.data()));
+                }
+                
+                localStorage.setItem('cached_leaderboard', JSON.stringify(scores));
+                localStorage.setItem('last_leaderboard_fetch', now);
+                renderLeaderboard(scores, list);
+            } catch (e) { 
+                if (cachedData) renderLeaderboard(JSON.parse(cachedData), list);
+                else list.innerHTML = ''; 
+            } 
+        }
+
+        function renderLeaderboard(scores, listElement) {
+            listElement.innerHTML = '';
+            scores.forEach(data => {
+                const li = document.createElement('li');
+                li.innerText = `${data.name} - ${data.score} נק'`;
+                listElement.appendChild(li);
+            });
+        }
+        
         async function saveScoreToLeaderboard(score, timeTaken) { if (score <= 0 || !playerName) return; try { const querySnapshot = await db.collection('leaderboard').where('name', '==', playerName).get(); if (!querySnapshot.empty) { let docId = null; let existingScore = -1; querySnapshot.forEach(doc => { const data = doc.data(); if (data.score > existingScore) { existingScore = data.score; docId = doc.id; } }); if (score > existingScore) { await db.collection('leaderboard').doc(docId).update({ score: score, timePlayed: timeTaken, timestamp: firebase.firestore.FieldValue.serverTimestamp() }); } } else { await db.collection('leaderboard').add({ name: playerName, score: score, timePlayed: timeTaken, timestamp: firebase.firestore.FieldValue.serverTimestamp() }); } } catch (e) {} }
         function loadHighScore() { const saved = localStorage.getItem('kibbutz_high_score_v3'); if (saved) { highScore = parseInt(saved); document.getElementById('high-score-val').innerText = highScore; } }
         function updateHighScore(newScore) { if (newScore > highScore) { highScore = newScore; localStorage.setItem('kibbutz_high_score_v3', highScore); document.getElementById('high-score-val').innerText = highScore; } }
