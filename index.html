@@ -28,7 +28,7 @@
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); background-image: url('bg.png'); background-size: cover; background-position: center; background-attachment: fixed; margin: 0; padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); box-sizing: border-box; display: flex; flex-direction: column; align-items: center; height: 100dvh; overflow: hidden; }
         .panel { position: relative; background-color: rgba(255, 255, 255, 0.95); border: 5px solid var(--earth-brown); border-radius: 12px; padding: 15px; margin: 10px 0 10px 0; text-align: center; width: 95vw; max-width: 450px; box-sizing: border-box; box-shadow: 0 8px 16px rgba(0,0,0,0.3); z-index: 10; }
         
-        /* הורדנו את הצבעים והמסגרת כדי שיהיה שקוף לשחקנים */
+        /* אזור הפרסומות - שקוף ומוכן לגוגל */
         .ad-placeholder { margin: 10px auto; display: flex; align-items: center; justify-content: center; }
         .ad-banner-small { width: 320px; min-height: 50px; max-width: 100%; }
         .ad-box-medium { width: 300px; min-height: 250px; max-width: 100%; }
@@ -62,7 +62,10 @@
         #kibbutz-name { font-size: clamp(20px, 4vw, 24px); font-weight: 900; color: var(--earth-brown); margin-bottom: 8px; line-height: 1.4; text-shadow: 1px 1px 0px #fff; text-align: center; }
         #timer-container { width: 100%; height: 12px; background-color: #eee; border-radius: 6px; margin-bottom: 10px; overflow: hidden; display: none; border: 1px solid #ddd; }
         #timer-bar { width: 100%; height: 100%; background: linear-gradient(to left, var(--primary-green), #FFC107, #F44336); transition: width 0.1s linear; }
-        #map-wrapper { position: relative; width: 95vw; max-width: 450px; box-sizing: border-box; height: 65vh; margin-bottom: 15px; border: 5px solid var(--earth-brown); border-radius: 12px; overflow: hidden; z-index: 1; background-color: #ddd; cursor: crosshair; box-shadow: 0 8px 16px rgba(0,0,0,0.3); flex-grow: 1; max-height: 60vh; }
+        
+        /* כאן בוצע השינוי: מתיחה דינמית של המפה ללא גובה מקסימלי קשיח */
+        #map-wrapper { position: relative; width: 95vw; max-width: 450px; box-sizing: border-box; flex-grow: 1; min-height: 250px; margin-bottom: 15px; border: 5px solid var(--earth-brown); border-radius: 12px; overflow: hidden; z-index: 1; background-color: #ddd; cursor: crosshair; box-shadow: 0 8px 16px rgba(0,0,0,0.3); }
+        
         #map { width: 100%; height: 100%; border: none; border-radius: 0; margin: 0; z-index: 1; filter: brightness(1.00) contrast(1.02); }
         .scene-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 9998; pointer-events: none; display: none; }
         #plowed-dirt { position: absolute; right: 0; top: 0; height: 100%; width: 0%; background-color: #4E342E; background-image: linear-gradient(rgba(0,0,0,0.3) 3px, transparent 3px), radial-gradient(#3E2723 30%, transparent 40%), radial-gradient(#2E1A14 25%, transparent 35%); background-size: 100% 15px, 20px 20px, 15px 15px; background-position: 0 0, 0 0, 10px 10px; opacity: 0.95; box-shadow: inset 0 0 25px rgba(0,0,0,0.8); }
