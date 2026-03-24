@@ -29,13 +29,16 @@
         .firgun-icon { width: 45px; height: 45px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); border: 2px solid #81C784; background-color: #E8F5E9; transition: transform 0.2s; object-fit: contain; padding: 2px; }
         .firgun-container:active .firgun-icon { transform: scale(0.95); }
         .firgun-text { font-size: 11px; font-weight: bold; color: var(--earth-brown); margin-top: 3px; }
-        .firgun-popup { position: absolute; top: 65px; right: -6px; width: 220px; background: white; border: 2px solid var(--dark-green); color: var(--earth-brown); font-size: 12px; font-weight: bold; padding: 8px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); opacity: 0; visibility: hidden; transition: all 0.3s ease; text-align: center; line-height: 1.5; cursor: default; z-index: 101; pointer-events: auto; }
+        
+        /* תיבת טקסט מהודקת לפרגון */
+        .firgun-popup { position: absolute; top: 65px; right: -6px; width: max-content; background: white; border: 2px solid var(--dark-green); color: var(--earth-brown); font-size: 12px; font-weight: bold; padding: 8px 12px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); opacity: 0; visibility: hidden; transition: all 0.3s ease; text-align: center; line-height: 1.4; cursor: default; z-index: 101; pointer-events: auto; }
         .firgun-popup::before { content: ''; position: absolute; top: -8px; right: 22px; border-width: 0 6px 6px 6px; border-style: solid; border-color: transparent transparent var(--dark-green) transparent; }
         .firgun-popup::after { content: ''; position: absolute; top: -5px; right: 22px; border-width: 0 6px 6px 6px; border-style: solid; border-color: transparent transparent white transparent; }
         .firgun-popup.show { opacity: 1; visibility: visible; transform: translateY(5px); }
-        .firgun-popup p { margin: 0; display: inline; }
-        .firgun-link-btn { display: inline-block; background-color: var(--earth-brown); color: white; text-decoration: none; padding: 2px 6px; border-radius: 4px; font-weight: bold; transition: background-color 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.2); font-size: 11px; margin-right: 4px; vertical-align: middle; }
+        .firgun-popup p { margin: 0; display: block; }
+        .firgun-link-btn { display: inline-block; background-color: var(--earth-brown); color: white; text-decoration: none; padding: 2px 8px; border-radius: 5px; font-weight: bold; transition: background-color 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.2); font-size: 11px; margin-right: 2px; vertical-align: baseline; }
         .firgun-link-btn:hover { background-color: #3e2b22; }
+        
         #welcome-panel { display: none; } #game-panel { display: none; } #loading-panel { display: block; }
         #top-stats-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; min-height: 24px; font-size: 18px; font-weight: bold; }
         #round-info { color: var(--dark-green); } #result-msg { color: var(--earth-brown); }
@@ -78,7 +81,8 @@
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 10000; direction: rtl; }
         .modal-content { position: relative; background: white; border: 4px solid var(--earth-brown); border-radius: 12px; padding: 25px 15px 15px 15px; width: 85vw; max-width: 320px; text-align: center; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
         .modal-content h3 { margin: 0; color: var(--dark-green); font-size: 18px; }
-        .modal-content input { padding: 10px; border: 2px solid var(--primary-green); border-radius: 8px; font-size: 15px; font-family: inherit; width: 100%; box-sizing: border-box; }
+        /* יישור שדות טקסט מימין לשמאל במסך סיום */
+        .modal-content input { padding: 10px; border: 2px solid var(--primary-green); border-radius: 8px; font-size: 15px; font-family: inherit; width: 100%; box-sizing: border-box; text-align: right; direction: rtl; }
         .close-modal { position: absolute; top: 8px; left: 12px; font-size: 28px; cursor: pointer; color: #888; line-height: 1; }
         .close-modal:hover { color: #333; }
     </style>
@@ -91,7 +95,7 @@
         <div id="firgun-container" class="firgun-container">
             <div id="firgun-trigger"><img src="farmericon.png" alt="פינת הפרגון" class="firgun-icon"><span class="firgun-text">פינת הפרגון❤️</span></div>
             <div id="firgun-popup" class="firgun-popup">
-                <p>המשחק חינמי לגמרי! אם בא לכם לתמוך בפיתוח ולפרגן על ההשקעה, פייבוקס הפירגונים שלנו פתוח... <a href="https://links.payboxapp.com/h2vMq4S2L1b" target="_blank" class="firgun-link-btn">לפרגון 💙</a></p>
+                <p>המשחק חינמי לגמרי!<br>אם בא לכם לתמוך בפיתוח<br>ולפרגן על ההשקעה,<br>פייבוקס הפירגונים שלנו<br>פתוח <a href="https://links.payboxapp.com/h2vMq4S2L1b" target="_blank" class="firgun-link-btn">לפרגון 💙</a></p>
             </div>
         </div>
         <div class="kibbutz-sign-container" style="margin-bottom: 25px;"><div class="sign-pole"></div><div class="sign-board sign-right">משחק</div><div class="sign-board sign-left">הקיבוצים</div></div>
@@ -157,7 +161,6 @@
         function animGiantSheaf() { const scene = document.getElementById('sheaf-scene'); const wheat = document.getElementById('wheat-field'); const sheaf = document.getElementById('the-sheaf'); scene.style.display = 'block'; void scene.offsetWidth; sndWind.play().catch(e => {}); const sAnim = sheaf.animate([ { left: '150%', transform: 'translate(-50%, -50%) rotate(15deg)', offset: 0 }, { left: '50%', transform: 'translate(-50%, -50%) rotate(0deg)', offset: 0.2 }, { left: '50%', transform: 'translate(-50%, -50%) rotate(5deg)', offset: 0.3 }, { left: '50%', transform: 'translate(-50%, -50%) rotate(-5deg)', offset: 0.4 }, { left: '50%', transform: 'translate(-50%, -50%) rotate(5deg)', offset: 0.5 }, { left: '50%', transform: 'translate(-50%, -50%) rotate(-5deg)', offset: 0.6 }, { left: '50%', transform: 'translate(-50%, -50%) rotate(0deg)', offset: 0.75 }, { left: '-50%', transform: 'translate(-50%, -50%) rotate(-15deg)', offset: 1 } ], { duration: R_TO_L_DURATION, easing: 'ease-in-out', fill: 'forwards' }); const wAnim = wheat.animate([{ width: '0%' }, { width: '100%' }], { duration: R_TO_L_DURATION, easing: 'linear', fill: 'forwards' }); setTimeout(() => { scene.style.display = 'none'; if(sAnim) sAnim.cancel(); if(wAnim) wAnim.cancel(); }, R_TO_L_DURATION + 100); }
         function animDiningHall() { const wall = document.getElementById('dining-hall'); const vibe = document.getElementById('the-vibe'); wall.style.display = 'block'; wall.style.opacity = 0.95; void wall.offsetWidth; sndDining.play().catch(e => {}); const vAnim = vibe.animate([ { transform: 'translateX(200%)', offset: 0 }, { transform: 'translateX(-45%)', offset: 0.20 }, { transform: 'translateX(-55%)', offset: 0.50 }, { transform: 'translateX(-45%)', offset: 0.80 }, { transform: 'translateX(-300%)', offset: 1 } ], { duration: R_TO_L_DURATION, easing: 'ease-in-out', fill: 'forwards' }); setTimeout(() => { const fadeAnim = wall.animate([{ opacity: 0.95 }, { opacity: 0 }], { duration: 400, fill: 'forwards' }); setTimeout(() => { wall.style.display = 'none'; wall.style.opacity = 0.95; if(fadeAnim) fadeAnim.cancel(); if(vAnim) vAnim.cancel(); }, 400); }, R_TO_L_DURATION - 400); setTimeout(() => { sndDining.pause(); sndDining.currentTime = 0; }, R_TO_L_DURATION + 100); }
         
-        // פונקציות חלון השארת פרטים
         function openSponsorModal() { document.getElementById('sponsor-modal').style.display = 'flex'; }
         function closeSponsorModal() { document.getElementById('sponsor-modal').style.display = 'none'; }
         function submitSponsorForm() {
@@ -170,7 +173,10 @@
                 alert('הפרטים נשלחו בהצלחה! ניצור קשר בהקדם.');
                 closeSponsorModal();
                 document.getElementById('sponsor-name').value = ''; document.getElementById('sponsor-phone').value = ''; document.getElementById('sponsor-kibbutz').value = '';
-            }).catch(e => { alert('שגיאה בשליחה. אנא נסה שוב.'); });
+            }).catch(e => {
+                console.error(e);
+                alert('שגיאה בשליחה! כנראה שצריך לפתוח הרשאות ב-Firebase (ראה הסבר שקיבלת).');
+            });
         }
         
         document.addEventListener('click', function(event) { 
@@ -179,7 +185,6 @@
             const firgunTrigger = document.getElementById('firgun-trigger'); const firgunPopup = document.getElementById('firgun-popup'); 
             if (firgunTrigger && firgunPopup) { if (firgunTrigger.contains(event.target)) { firgunPopup.classList.toggle('show'); } else if (!firgunPopup.contains(event.target)) { firgunPopup.classList.remove('show'); } } 
             
-            // סגירת חלון הטופס אם לוחצים על הרקע הכהה
             const modalOverlay = document.getElementById('sponsor-modal');
             if (event.target === modalOverlay) { closeSponsorModal(); }
         });
