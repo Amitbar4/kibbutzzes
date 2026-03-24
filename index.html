@@ -26,10 +26,18 @@
     <style>
         :root { --primary-green: #4CAF50; --dark-green: #388E3C; --earth-brown: #5D4037; --light-earth: #D7CCC8; --bg-color: #F9FBE7; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); background-image: url('bg.png'); background-size: cover; background-position: center; background-attachment: fixed; margin: 0; padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); box-sizing: border-box; display: flex; flex-direction: column; align-items: center; height: 100dvh; overflow: hidden; }
-        .panel { position: relative; background-color: rgba(255, 255, 255, 0.95); border: 5px solid var(--earth-brown); border-radius: 12px; padding: 15px; margin: 10px 0 10px 0; text-align: center; width: 95vw; max-width: 450px; box-sizing: border-box; box-shadow: 0 8px 16px rgba(0,0,0,0.3); z-index: 10; }
-        .ad-placeholder { background-color: #e0e0e0; border: 2px dashed #9e9e9e; color: #757575; display: flex; align-items: center; justify-content: center; font-weight: bold; margin: 10px auto; border-radius: 4px; text-align: center; line-height: 1.2; }
-        .ad-banner-small { width: 320px; height: 50px; max-width: 100%; font-size: 14px; }
-        .ad-box-medium { width: 300px; height: 250px; max-width: 100%; font-size: 18px; }
+        .panel { position: relative; flex-shrink: 0; background-color: rgba(255, 255, 255, 0.95); border: 5px solid var(--earth-brown); border-radius: 12px; padding: 15px; margin: 10px 0 10px 0; text-align: center; width: 95vw; max-width: 450px; box-sizing: border-box; box-shadow: 0 8px 16px rgba(0,0,0,0.3); z-index: 10; }
+        
+        /* אזור הפרסומות - שקוף ומוכן לגוגל */
+        .ad-placeholder { margin: 10px auto; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
+        .ad-banner-small { width: 320px; min-height: 50px; max-width: 100%; }
+        .ad-box-medium { width: 300px; min-height: 250px; max-width: 100%; }
+        
+        /* עיצוב באנר חסויות לוואטסאפ */
+        .sponsor-banner { display: block; width: 100%; box-sizing: border-box; background-color: #fdf5e6; border: 2px dashed var(--earth-brown); color: var(--earth-brown); text-align: center; padding: 10px; text-decoration: none; font-weight: bold; border-radius: 8px; font-size: 15px; transition: transform 0.2s, background-color 0.2s; direction: rtl; cursor: pointer; }
+        .sponsor-banner:hover { background-color: #f5deb3; transform: scale(1.02); }
+
+        /* כפתור הטרקטור מצד שמאל */
         .install-hint-container { position: absolute; top: 10px; left: 10px; cursor: pointer; z-index: 20; }
         .install-hint-icon { width: 45px; height: 45px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); border: 2px solid var(--dark-green); background-color: white; transition: transform 0.2s; }
         .install-hint-container:active .install-hint-icon { transform: scale(0.95); }
@@ -37,7 +45,21 @@
         .install-hint-tooltip::before { content: ''; position: absolute; top: -8px; left: 22px; border-width: 0 6px 6px 6px; border-style: solid; border-color: transparent transparent var(--dark-green) transparent; }
         .install-hint-tooltip::after { content: ''; position: absolute; top: -5px; left: 22px; border-width: 0 6px 6px 6px; border-style: solid; border-color: transparent transparent white transparent; }
         .install-hint-container.show .install-hint-tooltip { opacity: 1; visibility: visible; transform: translateY(5px); }
-        @media (hover: hover) { .install-hint-container:hover .install-hint-tooltip { opacity: 1; visibility: visible; transform: translateY(5px); } }
+
+        /* פינת הפרגון מצד ימין */
+        .firgun-container { position: absolute; top: 10px; right: 10px; cursor: pointer; z-index: 20; display: flex; flex-direction: column; align-items: center; }
+        #firgun-trigger { display: flex; flex-direction: column; align-items: center; }
+        .firgun-icon { width: 45px; height: 45px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); border: 2px solid var(--earth-brown); background-color: white; transition: transform 0.2s; object-fit: contain; }
+        .firgun-container:active .firgun-icon { transform: scale(0.95); }
+        .firgun-text { font-size: 11px; font-weight: bold; color: var(--earth-brown); margin-top: 3px; }
+        .firgun-popup { position: absolute; top: 68px; right: -6px; width: 230px; background: white; border: 3px solid var(--earth-brown); color: #333; font-size: 14px; font-weight: bold; padding: 12px; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.3); opacity: 0; visibility: hidden; transition: all 0.3s ease; text-align: center; line-height: 1.35; cursor: default; z-index: 101; pointer-events: auto; }
+        .firgun-popup::before { content: ''; position: absolute; top: -11px; right: 22px; border-width: 0 8px 10px 8px; border-style: solid; border-color: transparent transparent var(--earth-brown) transparent; }
+        .firgun-popup::after { content: ''; position: absolute; top: -7px; right: 22px; border-width: 0 8px 10px 8px; border-style: solid; border-color: transparent transparent white transparent; }
+        .firgun-popup.show { opacity: 1; visibility: visible; transform: translateY(5px); }
+        .firgun-popup p { margin: 0 0 12px 0; }
+        .firgun-link-btn { display: inline-block; background-color: var(--earth-brown); color: white; text-decoration: none; padding: 8px 15px; border-radius: 8px; font-weight: bold; transition: background-color 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.2); font-size: 14px; }
+        .firgun-link-btn:hover { background-color: #3e2b22; }
+
         #welcome-panel { display: none; } #game-panel { display: none; } #loading-panel { display: block; }
         #top-stats-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; min-height: 24px; font-size: 18px; font-weight: bold; }
         #round-info { color: var(--dark-green); } #result-msg { color: var(--earth-brown); }
@@ -59,7 +81,9 @@
         #kibbutz-name { font-size: clamp(20px, 4vw, 24px); font-weight: 900; color: var(--earth-brown); margin-bottom: 8px; line-height: 1.4; text-shadow: 1px 1px 0px #fff; text-align: center; }
         #timer-container { width: 100%; height: 12px; background-color: #eee; border-radius: 6px; margin-bottom: 10px; overflow: hidden; display: none; border: 1px solid #ddd; }
         #timer-bar { width: 100%; height: 100%; background: linear-gradient(to left, var(--primary-green), #FFC107, #F44336); transition: width 0.1s linear; }
-        #map-wrapper { position: relative; width: 95vw; max-width: 450px; box-sizing: border-box; height: 65vh; margin-bottom: 15px; border: 5px solid var(--earth-brown); border-radius: 12px; overflow: hidden; z-index: 1; background-color: #ddd; cursor: crosshair; box-shadow: 0 8px 16px rgba(0,0,0,0.3); flex-grow: 1; max-height: 60vh; }
+        
+        #map-wrapper { position: relative; width: 95vw; max-width: 450px; box-sizing: border-box; flex: 1; min-height: 120px; margin-bottom: 15px; border: 5px solid var(--earth-brown); border-radius: 12px; overflow: hidden; z-index: 1; background-color: #ddd; cursor: crosshair; box-shadow: 0 8px 16px rgba(0,0,0,0.3); }
+        
         #map { width: 100%; height: 100%; border: none; border-radius: 0; margin: 0; z-index: 1; filter: brightness(1.00) contrast(1.02); }
         .scene-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 9998; pointer-events: none; display: none; }
         #plowed-dirt { position: absolute; right: 0; top: 0; height: 100%; width: 0%; background-color: #4E342E; background-image: linear-gradient(rgba(0,0,0,0.3) 3px, transparent 3px), radial-gradient(#3E2723 30%, transparent 40%), radial-gradient(#2E1A14 25%, transparent 35%); background-size: 100% 15px, 20px 20px, 15px 15px; background-position: 0 0, 0 0, 10px 10px; opacity: 0.95; box-shadow: inset 0 0 25px rgba(0,0,0,0.8); }
@@ -102,6 +126,17 @@
             <div class="install-hint-tooltip">מומלץ להוריד<br>למסך הבית<br>לפתיחה נוחה</div>
         </div>
 
+        <div id="firgun-container" class="firgun-container">
+            <div id="firgun-trigger">
+                <img src="aluma.png" alt="פינת הפרגון" class="firgun-icon">
+                <span class="firgun-text">פינת הפרגון❤️</span>
+            </div>
+            <div id="firgun-popup" class="firgun-popup">
+                <p>המשחק חינמי לגמרי. אם בא לכם לתמוך בפיתוח ולפרגן על ההשקעה עם איזה קפה (או בירה 🍻), פייבוקס הפירגונים שלנו פתוח.</p>
+                <a href="https://links.payboxapp.com/h2vMq4S2L1b" target="_blank" class="firgun-link-btn">לפרגון בפייבוקס 💙</a>
+            </div>
+        </div>
+
         <div class="kibbutz-sign-container" style="margin-bottom: 25px;">
             <div class="sign-pole"></div>
             <div class="sign-board sign-right">משחק</div>
@@ -119,6 +154,9 @@
         <button onclick="submitNickname()">למשחק!</button>
         
         <div class="ad-placeholder ad-banner-small">
+            <a href="https://wa.me/972533385151?text=%D7%94%D7%99%D7%99!%20%D7%A9%D7%99%D7%97%D7%A7%D7%AA%D7%99%20%D7%A2%D7%9B%D7%A9%D7%99%D7%95%20%D7%91%D7%9E%D7%A9%D7%97%D7%A7%20%D7%94%D7%A7%D7%99%D7%91%D7%95%D7%A6%D7%99%D7%9D%20%D7%95%D7%9E%D7%A2%D7%95%D7%A0%D7%99%D7%99%D7%9F%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A4%D7%A8%D7%98%D7%99%D7%9D%20%D7%A2%D7%9C%20%D7%A4%D7%A8%D7%A1%D7%95%D7%9D%20%D7%94%D7%A2%D7%A1%D7%A7%20%D7%A9%D7%9C%D7%99%20%D7%91%D7%91%D7%90%D7%A0%D7%A8" target="_blank" class="sponsor-banner">
+                רוצים שהעסק שלכם יופיע כאן מול אלפי קיבוצניקים כל יום! לחץ לפרטים
+            </a>
             <ins class="adsbygoogle"
                  style="display:inline-block;width:320px;height:50px"
                  data-ad-client="ca-pub-2711679068759978"
@@ -138,6 +176,9 @@
 
         <div id="end-game-ad-container" style="display: none; margin-top: 40px;">
              <div class="ad-placeholder ad-box-medium">
+                 <a href="https://wa.me/972533385151?text=%D7%94%D7%99%D7%99!%20%D7%A9%D7%99%D7%97%D7%A7%D7%AA%D7%99%20%D7%A2%D7%9B%D7%A9%D7%99%D7%95%20%D7%91%D7%9E%D7%A9%D7%97%D7%A7%20%D7%94%D7%A7%D7%99%D7%91%D7%95%D7%A6%D7%99%D7%9D%20%D7%95%D7%9E%D7%A2%D7%95%D7%A0%D7%99%D7%99%D7%9F%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A4%D7%A8%D7%98%D7%99%D7%9D%20%D7%A2%D7%9C%20%D7%A4%D7%A8%D7%A1%D7%95%D7%9D%20%D7%94%D7%A2%D7%A1%D7%A7%20%D7%A9%D7%9C%D7%99%20%D7%91%D7%91%D7%90%D7%A0%D7%A8" target="_blank" class="sponsor-banner">
+                     רוצים שהעסק שלכם יופיע כאן מול אלפי קיבוצניקים כל יום! לחץ לפרטים
+                 </a>
                  <ins class="adsbygoogle"
                       style="display:inline-block;width:300px;height:250px"
                       data-ad-client="ca-pub-2711679068759978"
@@ -166,9 +207,9 @@
         let specialRounds = []; let farmerRounds = []; let availableAnims = ['tractor', 'sheaf', 'vibe']; let playedAnimsCount = 0; let mapLayer, satelliteLayer;
         const sndWind = new Audio('https://www.soundjay.com/nature/sounds/wind-01.mp3'); const sndTractor = new Audio('https://actions.google.com/sounds/v1/transportation/tractor_driving_by.ogg'); const sndDining = new Audio('https://actions.google.com/sounds/v1/ambience/coffee_shop.ogg'); 
 
-        async function initMap() { mapLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', { attribution: '© OpenStreetMap' }); satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri' }); map = L.map('map', {zoomControl: false, zoomSnap: 0.1}).setView([31.5, 34.9], 7); mapLayer.addTo(map); loadHighScore(); fetchGlobalLeaderboard(); await fetchKibbutzimData(); }
+        async function initMap() { mapLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', { attribution: '© OpenStreetMap' }); satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri' }); map = L.map('map', {zoomControl: false, zoomSnap: 0.1}).setView([32.0, 34.9], 7.5); mapLayer.addTo(map); loadHighScore(); fetchGlobalLeaderboard(); await fetchKibbutzimData(); }
         async function fetchKibbutzimData() { try { const savedData = localStorage.getItem('kibbutzim_data_v2'); if (savedData) { kibbutzim = JSON.parse(savedData); showWelcomePanel(); return; } const response = await fetch('kibbutzim.kml'); if (!response.ok) throw new Error("שגיאה"); const text = await response.text(); const xmlDoc = new DOMParser().parseFromString(text, "text/xml"); const placemarks = xmlDoc.getElementsByTagName("Placemark"); kibbutzim = []; for (let p of placemarks) { const name = p.getElementsByTagName("name")[0]?.textContent; const coords = p.getElementsByTagName("coordinates")[0]?.textContent.split(','); if (name && coords) kibbutzim.push({name: name.trim(), lng: parseFloat(coords[0]), lat: parseFloat(coords[1])}); } localStorage.setItem('kibbutzim_data_v2', JSON.stringify(kibbutzim)); showWelcomePanel(); } catch (error) { document.getElementById('loading-panel').innerHTML = "<h3>שגיאה!</h3>"; } }
-        function showWelcomePanel() { document.getElementById('loading-panel').style.display = 'none'; document.getElementById('welcome-panel').style.display = 'block'; if (playerName && playerName !== "אורח") { document.getElementById('player-nickname').value = playerName; } setTimeout(() => { map.invalidateSize(); map.setView([31.5, 34.9], 7); }, 50); }
+        function showWelcomePanel() { document.getElementById('loading-panel').style.display = 'none'; document.getElementById('welcome-panel').style.display = 'block'; if (playerName && playerName !== "אורח") { document.getElementById('player-nickname').value = playerName; } setTimeout(() => { map.invalidateSize(); map.setView([32.0, 34.9], 7.5); }, 50); }
         
         function submitNickname() {
             const input = document.getElementById('player-nickname').value.trim(); if (input !== "") { playerName = input; } else if (!playerName) { playerName = "אורח"; }
@@ -177,7 +218,7 @@
             document.getElementById('start-btn').innerText = "התחל משחק"; document.getElementById('start-btn').onclick = startRound; document.getElementById('start-btn').style.display = 'block';
             document.getElementById('kibbutz-name').innerHTML = "מוכן להתחיל?"; document.getElementById('round-info').innerText = ""; document.getElementById('result-msg').innerText = "";
             document.getElementById('top-stats-bar').style.display = 'flex'; 
-            if (actualMarker) map.removeLayer(actualMarker); if (guessMarker) map.removeLayer(guessMarker); if (resultLine) map.removeLayer(resultLine); setTimeout(() => { map.invalidateSize(); map.setView([31.5, 34.9], 7); }, 50);
+            if (actualMarker) map.removeLayer(actualMarker); if (guessMarker) map.removeLayer(guessMarker); if (resultLine) map.removeLayer(resultLine); setTimeout(() => { map.invalidateSize(); map.setView([32.0, 34.9], 7.9); }, 50);
         }
         function resetToWelcome() { fetchGlobalLeaderboard(); document.getElementById('game-panel').style.display = 'none'; showWelcomePanel(); }
         async function fetchGlobalLeaderboard() { try { const snapshot = await db.collection('leaderboard').orderBy('score', 'desc').limit(5).get(); const list = document.getElementById('top5-list'); list.innerHTML = ''; if (snapshot.empty) return; snapshot.forEach(doc => { const data = doc.data(); const li = document.createElement('li'); li.innerText = `${data.name} - ${data.score} נק'`; list.appendChild(li); }); } catch (e) { document.getElementById('top5-list').innerHTML = ''; } }
@@ -223,7 +264,34 @@
         function animTractor() { const scene = document.getElementById('tractor-scene'); const dirt = document.getElementById('plowed-dirt'); const tractor = document.getElementById('the-tractor'); scene.style.display = 'block'; void scene.offsetWidth; sndTractor.play().catch(e => {}); document.body.classList.add('shake'); tractor.classList.add('tractor-shaking'); const tAnim = tractor.animate([{ right: '-100%' }, { right: '150%' }], { duration: R_TO_L_DURATION, easing: 'linear', fill: 'forwards' }); const dAnim = dirt.animate([{ width: '0%' }, { width: '100%' }], { duration: R_TO_L_DURATION, easing: 'linear', fill: 'forwards' }); setTimeout(() => { document.body.classList.remove('shake'); tractor.classList.remove('tractor-shaking'); }, R_TO_L_DURATION); setTimeout(() => { scene.style.display = 'none'; if(tAnim) tAnim.cancel(); if(dAnim) dAnim.cancel(); }, R_TO_L_DURATION + 100); }
         function animGiantSheaf() { const scene = document.getElementById('sheaf-scene'); const wheat = document.getElementById('wheat-field'); const sheaf = document.getElementById('the-sheaf'); scene.style.display = 'block'; void scene.offsetWidth; sndWind.play().catch(e => {}); const sAnim = sheaf.animate([ { left: '150%', transform: 'translate(-50%, -50%) rotate(15deg)', offset: 0 }, { left: '50%', transform: 'translate(-50%, -50%) rotate(0deg)', offset: 0.2 }, { left: '50%', transform: 'translate(-50%, -50%) rotate(5deg)', offset: 0.3 }, { left: '50%', transform: 'translate(-50%, -50%) rotate(-5deg)', offset: 0.4 }, { left: '50%', transform: 'translate(-50%, -50%) rotate(5deg)', offset: 0.5 }, { left: '50%', transform: 'translate(-50%, -50%) rotate(-5deg)', offset: 0.6 }, { left: '50%', transform: 'translate(-50%, -50%) rotate(0deg)', offset: 0.75 }, { left: '-50%', transform: 'translate(-50%, -50%) rotate(-15deg)', offset: 1 } ], { duration: R_TO_L_DURATION, easing: 'ease-in-out', fill: 'forwards' }); const wAnim = wheat.animate([{ width: '0%' }, { width: '100%' }], { duration: R_TO_L_DURATION, easing: 'linear', fill: 'forwards' }); setTimeout(() => { scene.style.display = 'none'; if(sAnim) sAnim.cancel(); if(wAnim) wAnim.cancel(); }, R_TO_L_DURATION + 100); }
         function animDiningHall() { const wall = document.getElementById('dining-hall'); const vibe = document.getElementById('the-vibe'); wall.style.display = 'block'; wall.style.opacity = 0.95; void wall.offsetWidth; sndDining.play().catch(e => {}); const vAnim = vibe.animate([ { transform: 'translateX(200%)', offset: 0 }, { transform: 'translateX(-45%)', offset: 0.20 }, { transform: 'translateX(-55%)', offset: 0.50 }, { transform: 'translateX(-45%)', offset: 0.80 }, { transform: 'translateX(-300%)', offset: 1 } ], { duration: R_TO_L_DURATION, easing: 'ease-in-out', fill: 'forwards' }); setTimeout(() => { const fadeAnim = wall.animate([{ opacity: 0.95 }, { opacity: 0 }], { duration: 400, fill: 'forwards' }); setTimeout(() => { wall.style.display = 'none'; wall.style.opacity = 0.95; if(fadeAnim) fadeAnim.cancel(); if(vAnim) vAnim.cancel(); }, 400); }, R_TO_L_DURATION - 400); setTimeout(() => { sndDining.pause(); sndDining.currentTime = 0; }, R_TO_L_DURATION + 100); }
-        document.addEventListener('click', function(event) { const hintContainer = document.getElementById('install-hint'); if (hintContainer) { if (hintContainer.contains(event.target)) { hintContainer.classList.toggle('show'); } else { hintContainer.classList.remove('show'); } } });
+        
+        // ניהול החלונות הקופצים למעלה (טרקטור ופרגון)
+        document.addEventListener('click', function(event) { 
+            // חלון הטרקטור (שמאל)
+            const hintContainer = document.getElementById('install-hint'); 
+            if (hintContainer) { 
+                if (hintContainer.contains(event.target)) { 
+                    hintContainer.classList.toggle('show'); 
+                } else { 
+                    hintContainer.classList.remove('show'); 
+                } 
+            }
+            
+            // חלון הפרגון (ימין)
+            const firgunTrigger = document.getElementById('firgun-trigger');
+            const firgunPopup = document.getElementById('firgun-popup');
+            if (firgunTrigger && firgunPopup) {
+                // לחיצה על האייקון פותחת/סוגרת
+                if (firgunTrigger.contains(event.target)) {
+                    firgunPopup.classList.toggle('show');
+                } 
+                // לחיצה מחוץ לפופאפ ולמפעיל סוגרת אותו
+                else if (!firgunPopup.contains(event.target)) {
+                    firgunPopup.classList.remove('show');
+                }
+            }
+        });
+
         window.onload = () => { initMap(); map.on('click', handleMapClick); };
     </script>
 </body>
