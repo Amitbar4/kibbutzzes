@@ -26,7 +26,7 @@
     <style>
         :root { --primary-green: #4CAF50; --dark-green: #388E3C; --earth-brown: #5D4037; --light-earth: #D7CCC8; --bg-color: #F9FBE7; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); background-image: url('bg.png'); background-size: cover; background-position: center; background-attachment: fixed; margin: 0; padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); box-sizing: border-box; display: flex; flex-direction: column; align-items: center; height: 100dvh; overflow: hidden; }
-        .panel { position: relative; background-color: rgba(255, 255, 255, 0.95); border: 5px solid var(--earth-brown); border-radius: 12px; padding: 15px; margin: 10px 0 10px 0; text-align: center; width: 95vw; max-width: 450px; box-sizing: border-box; box-shadow: 0 8px 16px rgba(0,0,0,0.3); z-index: 10; }
+        .panel { position: relative; flex-shrink: 0; background-color: rgba(255, 255, 255, 0.95); border: 5px solid var(--earth-brown); border-radius: 12px; padding: 15px; margin: 10px 0 10px 0; text-align: center; width: 95vw; max-width: 450px; box-sizing: border-box; box-shadow: 0 8px 16px rgba(0,0,0,0.3); z-index: 10; }
         
         /* אזור הפרסומות - שקוף ומוכן לגוגל */
         .ad-placeholder { margin: 10px auto; display: flex; align-items: center; justify-content: center; }
@@ -63,8 +63,8 @@
         #timer-container { width: 100%; height: 12px; background-color: #eee; border-radius: 6px; margin-bottom: 10px; overflow: hidden; display: none; border: 1px solid #ddd; }
         #timer-bar { width: 100%; height: 100%; background: linear-gradient(to left, var(--primary-green), #FFC107, #F44336); transition: width 0.1s linear; }
         
-        /* כאן בוצע השינוי: מתיחה דינמית של המפה ללא גובה מקסימלי קשיח */
-        #map-wrapper { position: relative; width: 95vw; max-width: 450px; box-sizing: border-box; flex-grow: 1; min-height: 250px; margin-bottom: 15px; border: 5px solid var(--earth-brown); border-radius: 12px; overflow: hidden; z-index: 1; background-color: #ddd; cursor: crosshair; box-shadow: 0 8px 16px rgba(0,0,0,0.3); }
+        /* עדכון משמעותי: flex: 1 מכריח את המפה לתפוס בדיוק את השטח שנותר בלי לדחוף ובלי לגרום לגלילה */
+        #map-wrapper { position: relative; width: 95vw; max-width: 450px; box-sizing: border-box; flex: 1; min-height: 120px; margin-bottom: 15px; border: 5px solid var(--earth-brown); border-radius: 12px; overflow: hidden; z-index: 1; background-color: #ddd; cursor: crosshair; box-shadow: 0 8px 16px rgba(0,0,0,0.3); }
         
         #map { width: 100%; height: 100%; border: none; border-radius: 0; margin: 0; z-index: 1; filter: brightness(1.00) contrast(1.02); }
         .scene-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 9998; pointer-events: none; display: none; }
@@ -172,9 +172,11 @@
         let specialRounds = []; let farmerRounds = []; let availableAnims = ['tractor', 'sheaf', 'vibe']; let playedAnimsCount = 0; let mapLayer, satelliteLayer;
         const sndWind = new Audio('https://www.soundjay.com/nature/sounds/wind-01.mp3'); const sndTractor = new Audio('https://actions.google.com/sounds/v1/transportation/tractor_driving_by.ogg'); const sndDining = new Audio('https://actions.google.com/sounds/v1/ambience/coffee_shop.ogg'); 
 
-        async function initMap() { mapLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', { attribution: '© OpenStreetMap' }); satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri' }); map = L.map('map', {zoomControl: false, zoomSnap: 0.1}).setView([31.5, 34.9], 7); mapLayer.addTo(map); loadHighScore(); fetchGlobalLeaderboard(); await fetchKibbutzimData(); }
+        /* עודכן מרכז הארץ ב-initMap במקום דרום הארץ */
+        async function initMap() { mapLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', { attribution: '© OpenStreetMap' }); satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri' }); map = L.map('map', {zoomControl: false, zoomSnap: 0.1}).setView([32.0, 34.9], 7.5); mapLayer.addTo(map); loadHighScore(); fetchGlobalLeaderboard(); await fetchKibbutzimData(); }
         async function fetchKibbutzimData() { try { const savedData = localStorage.getItem('kibbutzim_data_v2'); if (savedData) { kibbutzim = JSON.parse(savedData); showWelcomePanel(); return; } const response = await fetch('kibbutzim.kml'); if (!response.ok) throw new Error("שגיאה"); const text = await response.text(); const xmlDoc = new DOMParser().parseFromString(text, "text/xml"); const placemarks = xmlDoc.getElementsByTagName("Placemark"); kibbutzim = []; for (let p of placemarks) { const name = p.getElementsByTagName("name")[0]?.textContent; const coords = p.getElementsByTagName("coordinates")[0]?.textContent.split(','); if (name && coords) kibbutzim.push({name: name.trim(), lng: parseFloat(coords[0]), lat: parseFloat(coords[1])}); } localStorage.setItem('kibbutzim_data_v2', JSON.stringify(kibbutzim)); showWelcomePanel(); } catch (error) { document.getElementById('loading-panel').innerHTML = "<h3>שגיאה!</h3>"; } }
-        function showWelcomePanel() { document.getElementById('loading-panel').style.display = 'none'; document.getElementById('welcome-panel').style.display = 'block'; if (playerName && playerName !== "אורח") { document.getElementById('player-nickname').value = playerName; } setTimeout(() => { map.invalidateSize(); map.setView([31.5, 34.9], 7); }, 50); }
+        /* עודכן מרכז הארץ במסך הפתיחה */
+        function showWelcomePanel() { document.getElementById('loading-panel').style.display = 'none'; document.getElementById('welcome-panel').style.display = 'block'; if (playerName && playerName !== "אורח") { document.getElementById('player-nickname').value = playerName; } setTimeout(() => { map.invalidateSize(); map.setView([32.0, 34.9], 7.5); }, 50); }
         
         function submitNickname() {
             const input = document.getElementById('player-nickname').value.trim(); if (input !== "") { playerName = input; } else if (!playerName) { playerName = "אורח"; }
@@ -183,7 +185,7 @@
             document.getElementById('start-btn').innerText = "התחל משחק"; document.getElementById('start-btn').onclick = startRound; document.getElementById('start-btn').style.display = 'block';
             document.getElementById('kibbutz-name').innerHTML = "מוכן להתחיל?"; document.getElementById('round-info').innerText = ""; document.getElementById('result-msg').innerText = "";
             document.getElementById('top-stats-bar').style.display = 'flex'; 
-            if (actualMarker) map.removeLayer(actualMarker); if (guessMarker) map.removeLayer(guessMarker); if (resultLine) map.removeLayer(resultLine); setTimeout(() => { map.invalidateSize(); map.setView([31.5, 34.9], 7); }, 50);
+            if (actualMarker) map.removeLayer(actualMarker); if (guessMarker) map.removeLayer(guessMarker); if (resultLine) map.removeLayer(resultLine); setTimeout(() => { map.invalidateSize(); map.setView([32.0, 34.9], 7.9); }, 50);
         }
         function resetToWelcome() { fetchGlobalLeaderboard(); document.getElementById('game-panel').style.display = 'none'; showWelcomePanel(); }
         async function fetchGlobalLeaderboard() { try { const snapshot = await db.collection('leaderboard').orderBy('score', 'desc').limit(5).get(); const list = document.getElementById('top5-list'); list.innerHTML = ''; if (snapshot.empty) return; snapshot.forEach(doc => { const data = doc.data(); const li = document.createElement('li'); li.innerText = `${data.name} - ${data.score} נק'`; list.appendChild(li); }); } catch (e) { document.getElementById('top5-list').innerHTML = ''; } }
