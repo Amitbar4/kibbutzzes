@@ -6,9 +6,10 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-ZDRV4BSBT0');
     </script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2711679068759978" crossorigin="anonymous"></script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -116,7 +117,16 @@
         <input type="text" id="player-nickname" placeholder="למשל: אלוף העמק" maxlength="15" style="width: 80%; padding: 10px; font-size: 18px; border: 2px solid var(--earth-brown); border-radius: 8px; margin-bottom: 15px; text-align: center;">
         
         <button onclick="submitNickname()">למשחק!</button>
-        <div class="ad-placeholder ad-banner-small">כאן תהיה פרסומת<br>AdSense 320x50</div>
+        
+        <div class="ad-placeholder ad-banner-small">
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:320px;height:50px"
+                 data-ad-client="ca-pub-2711679068759978"
+                 data-ad-slot="YOUR_AD_SLOT_ID_HERE"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
     </div>
 
     <div id="game-panel" class="panel">
@@ -127,7 +137,15 @@
         <button id="start-btn" onclick="startRound()">התחל משחק</button>
 
         <div id="end-game-ad-container" style="display: none; margin-top: 40px;">
-             <div class="ad-placeholder ad-box-medium">כאן תהיה פרסומת גדולה<br>AdSense 300x250</div>
+             <div class="ad-placeholder ad-box-medium">
+                 <ins class="adsbygoogle"
+                      style="display:inline-block;width:300px;height:250px"
+                      data-ad-client="ca-pub-2711679068759978"
+                      data-ad-slot="YOUR_AD_SLOT_ID_HERE"></ins>
+                 <script>
+                      (adsbygoogle = window.adsbygoogle || []).push({});
+                 </script>
+             </div>
         </div>
     </div>
 
@@ -158,7 +176,7 @@
             document.getElementById('welcome-panel').style.display = 'none'; document.getElementById('game-panel').style.display = 'block'; document.getElementById('end-game-ad-container').style.display = 'none';
             document.getElementById('start-btn').innerText = "התחל משחק"; document.getElementById('start-btn').onclick = startRound; document.getElementById('start-btn').style.display = 'block';
             document.getElementById('kibbutz-name').innerHTML = "מוכן להתחיל?"; document.getElementById('round-info').innerText = ""; document.getElementById('result-msg').innerText = "";
-            document.getElementById('top-stats-bar').style.display = 'flex'; // וידוא שתפריט הסטטוס העליון מוצג בתחילת משחק
+            document.getElementById('top-stats-bar').style.display = 'flex'; 
             if (actualMarker) map.removeLayer(actualMarker); if (guessMarker) map.removeLayer(guessMarker); if (resultLine) map.removeLayer(resultLine); setTimeout(() => { map.invalidateSize(); map.setView([31.5, 34.9], 7); }, 50);
         }
         function resetToWelcome() { fetchGlobalLeaderboard(); document.getElementById('game-panel').style.display = 'none'; showWelcomePanel(); }
@@ -189,13 +207,12 @@
                 currentRound++; startBtn.innerText = "לסיבוב הבא";
             } else {
                 document.getElementById('end-game-ad-container').style.display = 'block';
-                document.getElementById('top-stats-bar').style.display = 'none'; // הסתרת השורה הריקה כדי לקרב את הכפתור לתוצאה
+                document.getElementById('top-stats-bar').style.display = 'none'; 
                 let timeTakenSeconds = Math.floor((Date.now() - gameStartTime) / 1000); let isCheater = timeTakenSeconds < MIN_GAME_TIME;
                 if (!isCheater) { updateHighScore(totalScore); }
                 startBtn.innerText = "שומר תוצאה..."; startBtn.disabled = true;
                 if (!isCheater) { await saveScoreToLeaderboard(totalScore, timeTakenSeconds); } else { await new Promise(r => setTimeout(r, 800)); }
                 startBtn.innerText = "משחק חדש"; startBtn.disabled = false; startBtn.onclick = resetToWelcome;
-                // הוסר המרווח העליון בטקסט של סוף המשחק
                 document.getElementById('kibbutz-name').innerHTML = `המשחק הסתיים!<br><span style="color:var(--dark-green);font-size:1.2em;display:block;margin-top:0px;">סך הכל ניקוד: ${totalScore}</span>`;
             }
         }
