@@ -17,21 +17,23 @@
         .ad-banner-small { width: 320px; min-height: 50px; max-width: 100%; } .ad-box-medium { width: 300px; min-height: 250px; max-width: 100%; }
         .sponsor-banner { display: flex; align-items: center; justify-content: center; width: 100%; height: 50px; box-sizing: border-box; background-color: #fdf5e6; border: 2px dashed var(--earth-brown); color: var(--earth-brown); text-align: center; padding: 5px; text-decoration: none; font-weight: bold; border-radius: 8px; font-size: 13px; transition: transform 0.2s, background-color 0.2s; direction: rtl; cursor: pointer; margin: 0; line-height: 1.1; }
         .sponsor-banner:hover { background-color: #f5deb3; transform: scale(1.02); }
-        .install-hint-container { position: absolute; top: 10px; left: 10px; cursor: pointer; z-index: 20; }
-        .install-hint-icon { width: 45px; height: 45px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); border: 2px solid var(--dark-green); background-color: white; transition: transform 0.2s; }
+        .install-hint-container { position: absolute; top: 10px; left: 10px; cursor: pointer; z-index: 20; display: flex; flex-direction: column; align-items: center; }
+        .install-hint-icon { width: 45px; height: 45px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); border: 2px solid var(--dark-green); background-color: transparent; transition: transform 0.2s; object-fit: cover; }
         .install-hint-container:active .install-hint-icon { transform: scale(0.95); }
-        .install-hint-tooltip { position: absolute; top: 58px; left: -6px; width: 79px; background: white; border: 2px solid var(--dark-green); color: var(--earth-brown); font-size: 12.5px; font-weight: bold; padding: 5px 2px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); opacity: 0; visibility: hidden; transition: all 0.3s ease; text-align: center; line-height: 1.25; pointer-events: none; }
+        .install-hint-tooltip { position: absolute; top: 65px; left: -6px; width: 79px; background: white; border: 2px solid var(--dark-green); color: var(--earth-brown); font-size: 12.5px; font-weight: bold; padding: 5px 2px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); opacity: 0; visibility: hidden; transition: all 0.3s ease; text-align: center; line-height: 1.25; pointer-events: none; }
         .install-hint-tooltip::before { content: ''; position: absolute; top: -8px; left: 22px; border-width: 0 6px 6px 6px; border-style: solid; border-color: transparent transparent var(--dark-green) transparent; }
         .install-hint-tooltip::after { content: ''; position: absolute; top: -5px; left: 22px; border-width: 0 6px 6px 6px; border-style: solid; border-color: transparent transparent white transparent; }
         .install-hint-container.show .install-hint-tooltip { opacity: 1; visibility: visible; transform: translateY(5px); }
+        
         .firgun-container { position: absolute; top: 10px; right: 10px; cursor: pointer; z-index: 20; display: flex; flex-direction: column; align-items: center; }
         #firgun-trigger { display: flex; flex-direction: column; align-items: center; }
-        .firgun-icon { width: 45px; height: 45px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); border: 2px solid #81C784; background-color: #E8F5E9; transition: transform 0.2s; object-fit: contain; padding: 2px; }
+        /* אייקון החקלאי מהודק ומתפרס על כל המסגרת */
+        .firgun-icon { width: 45px; height: 45px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); border: 2px solid #81C784; background-color: transparent; transition: transform 0.2s; object-fit: cover; padding: 0; }
         .firgun-container:active .firgun-icon { transform: scale(0.95); }
         .firgun-text { font-size: 11px; font-weight: bold; color: var(--earth-brown); margin-top: 3px; }
         
-        /* תיבת טקסט מהודקת לפרגון */
-        .firgun-popup { position: absolute; top: 65px; right: -6px; width: max-content; background: white; border: 2px solid var(--dark-green); color: var(--earth-brown); font-size: 12px; font-weight: bold; padding: 8px 12px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); opacity: 0; visibility: hidden; transition: all 0.3s ease; text-align: center; line-height: 1.4; cursor: default; z-index: 101; pointer-events: auto; }
+        /* תיבת טקסט מהודקת לפרגון עם המידות המדויקות של הטרקטור */
+        .firgun-popup { position: absolute; top: 65px; right: -6px; width: max-content; background: white; border: 2px solid var(--dark-green); color: var(--earth-brown); font-size: 12px; font-weight: bold; padding: 5px 8px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); opacity: 0; visibility: hidden; transition: all 0.3s ease; text-align: center; line-height: 1.25; cursor: default; z-index: 101; pointer-events: auto; }
         .firgun-popup::before { content: ''; position: absolute; top: -8px; right: 22px; border-width: 0 6px 6px 6px; border-style: solid; border-color: transparent transparent var(--dark-green) transparent; }
         .firgun-popup::after { content: ''; position: absolute; top: -5px; right: 22px; border-width: 0 6px 6px 6px; border-style: solid; border-color: transparent transparent white transparent; }
         .firgun-popup.show { opacity: 1; visibility: visible; transform: translateY(5px); }
@@ -77,11 +79,9 @@
         #speech-bubble { background: white; border: 4px solid var(--dark-green); border-radius: 20px; padding: 12px 18px; margin-bottom: 5px; margin-left: 80px; display: inline-block; position: relative; box-shadow: 0 6px 12px rgba(0,0,0,0.3); font-weight: bold; color: #333; transform: rotate(-10deg); font-size: clamp(22px, 6vw, 30px); max-width: 250px; }
         .shake { animation: shakeEffect 0.5s infinite; } @keyframes shakeEffect { 0% { transform: translate(1px, 1px) rotate(0deg); } 20% { transform: translate(-2px, -1px) rotate(-1deg); } 40% { transform: translate(-1px, 2px) rotate(1deg); } 60% { transform: translate(2px, 1px) rotate(0deg); } 80% { transform: translate(-1px, -2px) rotate(-1deg); } 100% { transform: translate(1px, 2px) rotate(0deg); } }
         
-        /* חלון קופץ להשארת פרטי פרסום */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 10000; direction: rtl; }
         .modal-content { position: relative; background: white; border: 4px solid var(--earth-brown); border-radius: 12px; padding: 25px 15px 15px 15px; width: 85vw; max-width: 320px; text-align: center; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
         .modal-content h3 { margin: 0; color: var(--dark-green); font-size: 18px; }
-        /* יישור שדות טקסט מימין לשמאל במסך סיום */
         .modal-content input { padding: 10px; border: 2px solid var(--primary-green); border-radius: 8px; font-size: 15px; font-family: inherit; width: 100%; box-sizing: border-box; text-align: right; direction: rtl; }
         .close-modal { position: absolute; top: 8px; left: 12px; font-size: 28px; cursor: pointer; color: #888; line-height: 1; }
         .close-modal:hover { color: #333; }
@@ -91,13 +91,23 @@
 <body>
     <div id="loading-panel" class="panel"><h3>טוען קיבוצים...</h3><p>תתחיל להתניע... 🚜</p></div>
     <div id="welcome-panel" class="panel">
-        <div class="install-hint-container" id="install-hint"><img src="icon.png" class="install-hint-icon" alt="אייקון האפליקציה"><div class="install-hint-tooltip">מומלץ להוריד<br>למסך הבית<br>לפתיחה נוחה</div></div>
+        
+        <div class="install-hint-container" id="install-hint">
+            <img src="icon.png" class="install-hint-icon" alt="אייקון האפליקציה">
+            <span class="firgun-text">אייקון המשחק</span>
+            <div class="install-hint-tooltip">מומלץ להוריד<br>למסך הבית<br>לפתיחה נוחה</div>
+        </div>
+        
         <div id="firgun-container" class="firgun-container">
-            <div id="firgun-trigger"><img src="farmericon.png" alt="פינת הפרגון" class="firgun-icon"><span class="firgun-text">פינת הפרגון❤️</span></div>
+            <div id="firgun-trigger">
+                <img src="farmericon.png" alt="פינת הפרגון" class="firgun-icon">
+                <span class="firgun-text">פינת הפרגון</span>
+            </div>
             <div id="firgun-popup" class="firgun-popup">
                 <p>המשחק חינמי לגמרי!<br>אם בא לכם לתמוך בפיתוח<br>ולפרגן על ההשקעה,<br>פייבוקס הפירגונים שלנו<br>פתוח <a href="https://links.payboxapp.com/h2vMq4S2L1b" target="_blank" class="firgun-link-btn">לפרגון 💙</a></p>
             </div>
         </div>
+        
         <div class="kibbutz-sign-container" style="margin-bottom: 25px;"><div class="sign-pole"></div><div class="sign-board sign-right">משחק</div><div class="sign-board sign-left">הקיבוצים</div></div>
         <div id="leaderboard-container"><div id="global-leaderboard"><h4>🏆 טופ 5 העולמי 🏆</h4><ol id="top5-list"></ol></div><div id="my-score-section"><div class="my-score-title">השיא שלי</div><div id="high-score-val">0</div></div></div>
         <h3 style="color:var(--dark-green); margin-top: 5px; margin-bottom: 10px;">הכנס שם: </h3><input type="text" id="player-nickname" placeholder="למשל: אלוף העמק" maxlength="15" style="width: 80%; padding: 10px; font-size: 18px; border: 2px solid var(--earth-brown); border-radius: 8px; margin-bottom: 15px; text-align: center;">
