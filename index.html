@@ -64,6 +64,23 @@
             z-index: 10;
         }
 
+        /* --- עיצוב קופסאות פרסומות לבדיקה --- */
+        .ad-placeholder {
+            background-color: #e0e0e0;
+            border: 2px dashed #9e9e9e;
+            color: #757575;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin: 10px auto;
+            border-radius: 4px;
+            text-align: center;
+            line-height: 1.2;
+        }
+        .ad-banner-small { width: 320px; height: 50px; max-width: 100%; font-size: 14px; }
+        .ad-box-medium { width: 300px; height: 250px; max-width: 100%; font-size: 18px; }
+
         /* --- תחילת עיצוב האייקון בצד שמאל למעלה --- */
         .install-hint-container {
             position: absolute;
@@ -104,39 +121,16 @@
             line-height: 1.25;
             pointer-events: none;
         }
-        /* המשולש הקטן של הבועה */
         .install-hint-tooltip::before {
-            content: '';
-            position: absolute;
-            top: -8px;
-            left: 22px; 
-            border-width: 0 6px 6px 6px;
-            border-style: solid;
-            border-color: transparent transparent var(--dark-green) transparent;
+            content: ''; position: absolute; top: -8px; left: 22px; 
+            border-width: 0 6px 6px 6px; border-style: solid; border-color: transparent transparent var(--dark-green) transparent;
         }
         .install-hint-tooltip::after {
-            content: '';
-            position: absolute;
-            top: -5px;
-            left: 22px;
-            border-width: 0 6px 6px 6px;
-            border-style: solid;
-            border-color: transparent transparent white transparent; 
+            content: ''; position: absolute; top: -5px; left: 22px;
+            border-width: 0 6px 6px 6px; border-style: solid; border-color: transparent transparent white transparent; 
         }
-        
-        .install-hint-container.show .install-hint-tooltip {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(5px);
-        }
-
-        @media (hover: hover) {
-            .install-hint-container:hover .install-hint-tooltip {
-                opacity: 1;
-                visibility: visible;
-                transform: translateY(5px);
-            }
-        }
+        .install-hint-container.show .install-hint-tooltip { opacity: 1; visibility: visible; transform: translateY(5px); }
+        @media (hover: hover) { .install-hint-container:hover .install-hint-tooltip { opacity: 1; visibility: visible; transform: translateY(5px); } }
         /* --- סוף עיצוב האייקון --- */
 
         #welcome-panel { display: none; }
@@ -157,9 +151,7 @@
             border-radius: 8px; margin-bottom: 20px; overflow: hidden;
         }
 
-        #global-leaderboard {
-            width: 65%; padding: 10px; text-align: right; font-size: 14px;
-        }
+        #global-leaderboard { width: 65%; padding: 10px; text-align: right; font-size: 14px; }
         #global-leaderboard h4 { margin: 0 0 8px 0; color: var(--dark-green); font-size: 15px; text-align: center;}
         #top5-list { margin: 0; padding-right: 20px; font-weight: bold; color: #333; }
         #top5-list li { margin-bottom: 4px; }
@@ -171,24 +163,12 @@
         .my-score-title { font-size: 14px; font-weight: bold; color: var(--dark-green); margin-bottom: 5px; }
         #high-score-val { font-size: 24px; font-weight: 900; color: var(--earth-brown); }
 
-        .kibbutz-sign-container {
-            position: relative; display: flex; flex-direction: column; align-items: center; gap: 15px;
-        }
-
-        .sign-pole {
-            position: absolute; top: 0; bottom: -30px; width: 14px; background: #4E342E; z-index: 1; border-left: 3px solid #3E2723; border-radius: 2px;
-        }
-
-        .sign-board {
-            position: relative; z-index: 2; background: #5D4037; color: white; font-weight: 900; font-size: 24px; border: 2px solid #FFF;
-            box-shadow: 2px 4px 8px rgba(0,0,0,0.5); text-shadow: 1px 1px 2px #000; width: max-content;
-        }
-
+        .kibbutz-sign-container { position: relative; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .sign-pole { position: absolute; top: 0; bottom: -30px; width: 14px; background: #4E342E; z-index: 1; border-left: 3px solid #3E2723; border-radius: 2px; }
+        .sign-board { position: relative; z-index: 2; background: #5D4037; color: white; font-weight: 900; font-size: 24px; border: 2px solid #FFF; box-shadow: 2px 4px 8px rgba(0,0,0,0.5); text-shadow: 1px 1px 2px #000; width: max-content; }
         .sign-right { transform: rotate(-3deg) translateX(10px); padding: 8px 15px 8px 25px; border-radius: 4px 0 0 4px; }
         .sign-right::after { content: ''; position: absolute; right: -20px; top: -2px; width: 0; height: 0; border-top: 23px solid transparent; border-bottom: 23px solid transparent; border-left: 20px solid #FFF; z-index: -1; }
         .sign-right::before { content: ''; position: absolute; right: -16px; top: 1px; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 17px solid #5D4037; z-index: 3; }
-
-        /* כאן בוצע התיקון: הפאדינג הימני שונה מ-25 ל-23 כדי להוריד בדיוק 2 פיקסלים מרוחב השלט */
         .sign-left { transform: rotate(2deg) translateX(-10px); padding: 8px 23px 8px 15px; border-radius: 0 4px 4px 0; }
         .sign-left::after { content: ''; position: absolute; left: -20px; top: -2px; width: 0; height: 0; border-top: 23px solid transparent; border-bottom: 23px solid transparent; border-right: 20px solid #FFF; z-index: -1; }
         .sign-left::before { content: ''; position: absolute; left: -16px; top: 1px; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-right: 17px solid #5D4037; z-index: 3; }
@@ -215,68 +195,35 @@
         #map { width: 100%; height: 100%; border: none; border-radius: 0; margin: 0; z-index: 1; filter: brightness(1.00) contrast(1.02); }
 
         .scene-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 9998; pointer-events: none; display: none; }
-
-        #plowed-dirt {
-            position: absolute; right: 0; top: 0; height: 100%; width: 0%; background-color: #4E342E;
-            background-image: linear-gradient(rgba(0,0,0,0.3) 3px, transparent 3px), radial-gradient(#3E2723 30%, transparent 40%), radial-gradient(#2E1A14 25%, transparent 35%);
-            background-size: 100% 15px, 20px 20px, 15px 15px; background-position: 0 0, 0 0, 10px 10px; opacity: 0.95; box-shadow: inset 0 0 25px rgba(0,0,0,0.8);
-        }
+        #plowed-dirt { position: absolute; right: 0; top: 0; height: 100%; width: 0%; background-color: #4E342E; background-image: linear-gradient(rgba(0,0,0,0.3) 3px, transparent 3px), radial-gradient(#3E2723 30%, transparent 40%), radial-gradient(#2E1A14 25%, transparent 35%); background-size: 100% 15px, 20px 20px, 15px 15px; background-position: 0 0, 0 0, 10px 10px; opacity: 0.95; box-shadow: inset 0 0 25px rgba(0,0,0,0.8); }
         #the-tractor { position: absolute; top: 50%; right: -100%; width: clamp(240px, 55vw, 450px); transform: translateY(-50%); }
         #the-tractor img { width: 100%; height: auto; display: block; filter: drop-shadow(8px 10px 15px rgba(0,0,0,0.6)); }
         .tractor-shaking { animation: tShake 0.2s infinite; }
         @keyframes tShake { 0% { transform: translateY(-50%) rotate(0deg); } 25% { transform: translateY(-50.5%) rotate(-0.5deg); } 50% { transform: translateY(-49.5%) rotate(0.5deg); } 75% { transform: translateY(-50.2%) rotate(-0.2deg); } 100% { transform: translateY(-50%) rotate(0deg); } }
 
-        #wheat-field {
-            position: absolute; right: 0; top: 0; height: 100%; width: 0%; background-color: #FFC107;
-            background-image: repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(212, 175, 55, 0.4) 10px, rgba(212, 175, 55, 0.4) 20px);
-            opacity: 0.9; box-shadow: inset 0 0 25px rgba(0,0,0,0.3);
-        }
+        #wheat-field { position: absolute; right: 0; top: 0; height: 100%; width: 0%; background-color: #FFC107; background-image: repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(212, 175, 55, 0.4) 10px, rgba(212, 175, 55, 0.4) 20px); opacity: 0.9; box-shadow: inset 0 0 25px rgba(0,0,0,0.3); }
         #the-sheaf { position: absolute; top: 50%; left: 150%; width: clamp(240px, 55vw, 420px); transform: translate(-50%, -50%); }
         #the-sheaf img { width: 100%; height: auto; display: block; filter: drop-shadow(8px 10px 15px rgba(0,0,0,0.6)); }
 
-        #dining-hall {
-            position: absolute; top: 0; left: 0; height: 100%; width: 100%; background-color: #F5EEDA;
-            background-image: linear-gradient(#D2B48C 15px, transparent 15px);
-            background-size: 100% 100px; background-position: 0 70%;
-            opacity: 0.95; box-shadow: inset 0 0 50px rgba(0,0,0,0.2); display: none; z-index: 9998; pointer-events: none;
-        }
+        #dining-hall { position: absolute; top: 0; left: 0; height: 100%; width: 100%; background-color: #F5EEDA; background-image: linear-gradient(#D2B48C 15px, transparent 15px); background-size: 100% 100px; background-position: 0 70%; opacity: 0.95; box-shadow: inset 0 0 50px rgba(0,0,0,0.2); display: none; z-index: 9998; pointer-events: none; }
         #the-vibe { position: absolute; bottom: 10%; left: 50%; width: clamp(280px, 60vw, 500px); transform: translateX(200%); }
         #the-vibe img { width: 100%; height: auto; display: block; filter: drop-shadow(8px 8px 12px rgba(0,0,0,0.4)); }
 
-        button {
-            background-color: var(--primary-green); color: white; border: none; padding: 12px 20px;
-            font-size: clamp(16px, 3vw, 18px); border-radius: 8px; cursor: pointer; width: 100%;
-            font-weight: bold; margin-top: 5px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); transition: transform 0.1s, background-color 0.2s;
-        }
+        button { background-color: var(--primary-green); color: white; border: none; padding: 12px 20px; font-size: clamp(16px, 3vw, 18px); border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 5px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); transition: transform 0.1s, background-color 0.2s; }
         button:active { transform: scale(0.98); }
         button:disabled { background-color: #ccc; cursor: not-allowed; }
 
-        .leaflet-tooltip.custom-tooltip {
-            background: transparent !important; border: none !important; box-shadow: none !important;
-            font-weight: 900; font-size: clamp(14px, 3vw, 18px); color: #d32f2f;
-            text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
-        }
+        .leaflet-tooltip.custom-tooltip { background: transparent !important; border: none !important; box-shadow: none !important; font-weight: 900; font-size: clamp(14px, 3vw, 18px); color: #d32f2f; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff; }
         .leaflet-tooltip.custom-tooltip::before { display: none !important; }
 
-        .score-popup {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            font-size: 60px; font-weight: bold; color: var(--dark-green); text-shadow: 2px 2px 10px rgba(255,255,255,0.8);
-            z-index: 10000; pointer-events: none; animation: scoreFloat 1.5s ease-out forwards;
-        }
+        .score-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 60px; font-weight: bold; color: var(--dark-green); text-shadow: 2px 2px 10px rgba(255,255,255,0.8); z-index: 10000; pointer-events: none; animation: scoreFloat 1.5s ease-out forwards; }
         @keyframes scoreFloat { 0% { opacity: 0; transform: translate(-50%, 0) scale(0.5); } 20% { opacity: 1; transform: translate(-50%, -50px) scale(1.2); } 100% { opacity: 0; transform: translate(-50%, -150px) scale(1); } }
 
-        #farmer-container {
-            position: fixed; bottom: -600px; left: -300px; transform: rotate(-30deg);
-            transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 9999; pointer-events: none; display: flex; flex-direction: column; align-items: flex-start;
-        }
+        #farmer-container { position: fixed; bottom: -600px; left: -300px; transform: rotate(-30deg); transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 9999; pointer-events: none; display: flex; flex-direction: column; align-items: flex-start; }
         #farmer-container.show { bottom: -40px; left: -20px; transform: rotate(10deg); }
         #farmer-character img { width: clamp(250px, 70vw, 450px); height: auto; display: block; filter: drop-shadow(5px 5px 15px rgba(0,0,0,0.5)); }
         
-        #speech-bubble {
-            background: white; border: 4px solid var(--dark-green); border-radius: 20px; padding: 12px 18px;
-            margin-bottom: 5px; margin-left: 80px; display: inline-block; position: relative; box-shadow: 0 6px 12px rgba(0,0,0,0.3); font-weight: bold; color: #333; transform: rotate(-10deg); font-size: clamp(22px, 6vw, 30px); max-width: 250px;
-        }
-
+        #speech-bubble { background: white; border: 4px solid var(--dark-green); border-radius: 20px; padding: 12px 18px; margin-bottom: 5px; margin-left: 80px; display: inline-block; position: relative; box-shadow: 0 6px 12px rgba(0,0,0,0.3); font-weight: bold; color: #333; transform: rotate(-10deg); font-size: clamp(22px, 6vw, 30px); max-width: 250px; }
         .shake { animation: shakeEffect 0.5s infinite; }
         @keyframes shakeEffect { 0% { transform: translate(1px, 1px) rotate(0deg); } 20% { transform: translate(-2px, -1px) rotate(-1deg); } 40% { transform: translate(-1px, 2px) rotate(1deg); } 60% { transform: translate(2px, 1px) rotate(0deg); } 80% { transform: translate(-1px, -2px) rotate(-1deg); } 100% { transform: translate(1px, 2px) rotate(0deg); } }
     </style>
@@ -316,7 +263,10 @@
 
         <h3 style="color:var(--dark-green); margin-top: 5px; margin-bottom: 10px;">הכנס שם: </h3>
         <input type="text" id="player-nickname" placeholder="למשל: אלוף העמק" maxlength="15" style="width: 80%; padding: 10px; font-size: 18px; border: 2px solid var(--earth-brown); border-radius: 8px; margin-bottom: 15px; text-align: center;">
+        
         <button onclick="submitNickname()">למשחק!</button>
+        
+        <div class="ad-placeholder ad-banner-small">כאן תהיה פרסומת<br>AdSense 320x50</div>
     </div>
 
     <div id="game-panel" class="panel">
@@ -326,6 +276,11 @@
             <div id="result-msg"></div>
         </div>
         <div id="timer-container"><div id="timer-bar"></div></div>
+        
+        <div id="end-game-ad-container" style="display: none;">
+             <div class="ad-placeholder ad-box-medium">כאן תהיה פרסומת גדולה<br>AdSense 300x250<br>(מופיע רק בסוף המשחק)</div>
+        </div>
+
         <button id="start-btn" onclick="startRound()">התחל משחק</button>
     </div>
 
@@ -452,11 +407,7 @@
 
         function submitNickname() {
             const input = document.getElementById('player-nickname').value.trim();
-            if (input !== "") {
-                playerName = input;
-            } else if (!playerName) {
-                playerName = "אורח";
-            }
+            if (input !== "") { playerName = input; } else if (!playerName) { playerName = "אורח"; }
             
             currentRound = 1; 
             totalScore = 0; 
@@ -469,6 +420,9 @@
 
             document.getElementById('welcome-panel').style.display = 'none';
             document.getElementById('game-panel').style.display = 'block';
+            
+            // ודא שחלונית הפרסומת הגדולה מוסתרת בתחילת המשחק
+            document.getElementById('end-game-ad-container').style.display = 'none';
             
             document.getElementById('start-btn').innerText = "התחל משחק";
             document.getElementById('start-btn').onclick = startRound;
@@ -498,88 +452,49 @@
                 const snapshot = await db.collection('leaderboard').orderBy('score', 'desc').limit(5).get();
                 const list = document.getElementById('top5-list');
                 list.innerHTML = '';
-                
                 if (snapshot.empty) return;
-
                 snapshot.forEach(doc => {
                     const data = doc.data();
                     const li = document.createElement('li');
                     li.innerText = `${data.name} - ${data.score} נק'`;
                     list.appendChild(li);
                 });
-                
-            } catch (e) {
-                console.error("שגיאה בטעינת טבלה: ", e);
-                document.getElementById('top5-list').innerHTML = '';
-            }
+            } catch (e) { console.error("שגיאה בטעינת טבלה: ", e); document.getElementById('top5-list').innerHTML = ''; }
         }
 
         async function saveScoreToLeaderboard(score, timeTaken) {
             if (score <= 0 || !playerName) return;
             try {
                 const querySnapshot = await db.collection('leaderboard').where('name', '==', playerName).get();
-                
                 if (!querySnapshot.empty) {
-                    let docId = null;
-                    let existingScore = -1;
-                    
-                    querySnapshot.forEach(doc => {
-                        const data = doc.data();
-                        if (data.score > existingScore) {
-                            existingScore = data.score;
-                            docId = doc.id;
-                        }
-                    });
-
+                    let docId = null; let existingScore = -1;
+                    querySnapshot.forEach(doc => { const data = doc.data(); if (data.score > existingScore) { existingScore = data.score; docId = doc.id; } });
                     if (score > existingScore) {
-                        await db.collection('leaderboard').doc(docId).update({
-                            score: score,
-                            timePlayed: timeTaken,
-                            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                        });
+                        await db.collection('leaderboard').doc(docId).update({ score: score, timePlayed: timeTaken, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
                     }
                 } else {
-                    await db.collection('leaderboard').add({
-                        name: playerName,
-                        score: score,
-                        timePlayed: timeTaken,
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                    });
+                    await db.collection('leaderboard').add({ name: playerName, score: score, timePlayed: timeTaken, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
                 }
-            } catch (e) {
-                console.error("שגיאה בשמירת התוצאה: ", e);
-            }
+            } catch (e) { console.error("שגיאה בשמירת התוצאה: ", e); }
         }
 
         function loadHighScore() {
             const saved = localStorage.getItem('kibbutz_high_score_v3');
-            if (saved) {
-                highScore = parseInt(saved);
-                document.getElementById('high-score-val').innerText = highScore;
-            }
+            if (saved) { highScore = parseInt(saved); document.getElementById('high-score-val').innerText = highScore; }
         }
 
         function updateHighScore(newScore) {
-            if (newScore > highScore) {
-                highScore = newScore;
-                localStorage.setItem('kibbutz_high_score_v3', highScore);
-                document.getElementById('high-score-val').innerText = highScore;
-            }
+            if (newScore > highScore) { highScore = newScore; localStorage.setItem('kibbutz_high_score_v3', highScore); document.getElementById('high-score-val').innerText = highScore; }
         }
 
         function pickSpecialRounds() {
-            let rounds = [];
-            while(rounds.length < 1) { let r = Math.floor(Math.random() * 10) + 1; if(!rounds.includes(r)) rounds.push(r); }
-            return rounds;
+            let rounds = []; while(rounds.length < 1) { let r = Math.floor(Math.random() * 10) + 1; if(!rounds.includes(r)) rounds.push(r); } return rounds;
         }
 
-        function pickFarmerRounds() {
-            return [ Math.floor(Math.random() * 3) + 1, Math.floor(Math.random() * 3) + 4, Math.floor(Math.random() * 3) + 7 ];
-        }
+        function pickFarmerRounds() { return [ Math.floor(Math.random() * 3) + 1, Math.floor(Math.random() * 3) + 4, Math.floor(Math.random() * 3) + 7 ]; }
 
         function startRound() {
             document.getElementById('farmer-container').classList.remove('show');
-            
             document.getElementById('result-msg').innerText = "";
             document.getElementById('start-btn').style.display = 'none';
             document.getElementById('timer-container').style.display = 'block';
@@ -644,13 +559,8 @@
             let hasAnim = false;
             let hasFarmerOnly = false;
             
-            if (dist <= 3) {
-                hasAnim = true;
-                triggerFarmerAndAnimLogic(dist, timeUsed);
-            } else if (farmerRounds.includes(currentRound)) {
-                hasFarmerOnly = true;
-                triggerFarmerAndAnimLogic(dist, timeUsed);
-            }
+            if (dist <= 3) { hasAnim = true; triggerFarmerAndAnimLogic(dist, timeUsed); } 
+            else if (farmerRounds.includes(currentRound)) { hasFarmerOnly = true; triggerFarmerAndAnimLogic(dist, timeUsed); }
 
             if (isSpecial) {
                 await new Promise(r => setTimeout(r, 1200));
@@ -666,11 +576,8 @@
                 
                 satelliteLayer.remove(); mapLayer.addTo(map); 
                 map.setView([32.0, 34.9], 7.9);
-            } else if (hasAnim) {
-                await new Promise(r => setTimeout(r, R_TO_L_DURATION)); 
-            } else if (hasFarmerOnly) {
-                await new Promise(r => setTimeout(r, 500));
-            }
+            } else if (hasAnim) { await new Promise(r => setTimeout(r, R_TO_L_DURATION)); } 
+            else if (hasFarmerOnly) { await new Promise(r => setTimeout(r, 500)); }
 
             const startBtn = document.getElementById('start-btn');
             startBtn.style.display = 'block';
@@ -679,22 +586,19 @@
                 currentRound++; 
                 startBtn.innerText = "לסיבוב הבא";
             } else {
+                // הצגת המודעה הגדולה של סוף המשחק
+                document.getElementById('end-game-ad-container').style.display = 'block';
+
                 let timeTakenSeconds = Math.floor((Date.now() - gameStartTime) / 1000);
                 let isCheater = timeTakenSeconds < MIN_GAME_TIME;
 
-                if (!isCheater) {
-                    updateHighScore(totalScore);
-                }
+                if (!isCheater) { updateHighScore(totalScore); }
                 
                 startBtn.innerText = "שומר תוצאה...";
                 startBtn.disabled = true;
                 
-                if (!isCheater) {
-                    await saveScoreToLeaderboard(totalScore, timeTakenSeconds);
-                } else {
-                    console.log("זוהתה פעילות חשודה, התוצאה לא נשמרה.");
-                    await new Promise(r => setTimeout(r, 800)); 
-                }
+                if (!isCheater) { await saveScoreToLeaderboard(totalScore, timeTakenSeconds); } 
+                else { console.log("זוהתה פעילות חשודה, התוצאה לא נשמרה."); await new Promise(r => setTimeout(r, 800)); }
                 
                 startBtn.innerText = "משחק חדש";
                 startBtn.disabled = false;
@@ -726,18 +630,9 @@
                 }
                 playedAnimsCount++;
 
-                if (chosenAnim === 'tractor') { 
-                    msg = "טרקטור אמיתי- חרשת כבר את המשחק"; 
-                    animTractor(); 
-                } 
-                else if (chosenAnim === 'sheaf') { 
-                    msg = "מגיע לך זר על זה!"; 
-                    animGiantSheaf(); 
-                } 
-                else { 
-                    msg = "צלף! כולם בחדר אוכל מדברים עליך"; 
-                    animDiningHall(); 
-                }
+                if (chosenAnim === 'tractor') { msg = "טרקטור אמיתי- חרשת כבר את המשחק"; animTractor(); } 
+                else if (chosenAnim === 'sheaf') { msg = "מגיע לך זר על זה!"; animGiantSheaf(); } 
+                else { msg = "צלף! כולם בחדר אוכל מדברים עליך"; animDiningHall(); }
             } 
             else if (dist <= 20) {
                 const msgs = ["זבםםם!! פגעת בול", "וואו, מגיעה לך דירה בשיוך...", "מדויק! צלם מסך ושלח בקהילנט", "קרוב בצורה מפתיעה..."]; 
@@ -770,102 +665,40 @@
 
         function animTractor() {
             const scene = document.getElementById('tractor-scene'); const dirt = document.getElementById('plowed-dirt'); const tractor = document.getElementById('the-tractor');
-            scene.style.display = 'block'; 
-            void scene.offsetWidth; 
-            
+            scene.style.display = 'block'; void scene.offsetWidth; 
             sndTractor.play().catch(e => {}); document.body.classList.add('shake'); tractor.classList.add('tractor-shaking');
-            
             const tAnim = tractor.animate([{ right: '-100%' }, { right: '150%' }], { duration: R_TO_L_DURATION, easing: 'linear', fill: 'forwards' });
             const dAnim = dirt.animate([{ width: '0%' }, { width: '100%' }], { duration: R_TO_L_DURATION, easing: 'linear', fill: 'forwards' });
-            
             setTimeout(() => { document.body.classList.remove('shake'); tractor.classList.remove('tractor-shaking'); }, R_TO_L_DURATION);
-            
-            setTimeout(() => { 
-                scene.style.display = 'none'; 
-                if(tAnim) tAnim.cancel();
-                if(dAnim) dAnim.cancel();
-            }, R_TO_L_DURATION + 100);
+            setTimeout(() => { scene.style.display = 'none'; if(tAnim) tAnim.cancel(); if(dAnim) dAnim.cancel(); }, R_TO_L_DURATION + 100);
         }
 
         function animGiantSheaf() {
             const scene = document.getElementById('sheaf-scene'); const wheat = document.getElementById('wheat-field'); const sheaf = document.getElementById('the-sheaf');
-            scene.style.display = 'block'; 
-            void scene.offsetWidth; 
-            
+            scene.style.display = 'block'; void scene.offsetWidth; 
             sndWind.play().catch(e => {}); 
-            
             const sAnim = sheaf.animate([
-                { left: '150%', transform: 'translate(-50%, -50%) rotate(15deg)', offset: 0 },
-                { left: '50%', transform: 'translate(-50%, -50%) rotate(0deg)', offset: 0.2 },
-                { left: '50%', transform: 'translate(-50%, -50%) rotate(5deg)', offset: 0.3 },
-                { left: '50%', transform: 'translate(-50%, -50%) rotate(-5deg)', offset: 0.4 },
-                { left: '50%', transform: 'translate(-50%, -50%) rotate(5deg)', offset: 0.5 },
-                { left: '50%', transform: 'translate(-50%, -50%) rotate(-5deg)', offset: 0.6 },
-                { left: '50%', transform: 'translate(-50%, -50%) rotate(0deg)', offset: 0.75 },
-                { left: '-50%', transform: 'translate(-50%, -50%) rotate(-15deg)', offset: 1 }
+                { left: '150%', transform: 'translate(-50%, -50%) rotate(15deg)', offset: 0 }, { left: '50%', transform: 'translate(-50%, -50%) rotate(0deg)', offset: 0.2 }, { left: '50%', transform: 'translate(-50%, -50%) rotate(5deg)', offset: 0.3 }, { left: '50%', transform: 'translate(-50%, -50%) rotate(-5deg)', offset: 0.4 }, { left: '50%', transform: 'translate(-50%, -50%) rotate(5deg)', offset: 0.5 }, { left: '50%', transform: 'translate(-50%, -50%) rotate(-5deg)', offset: 0.6 }, { left: '50%', transform: 'translate(-50%, -50%) rotate(0deg)', offset: 0.75 }, { left: '-50%', transform: 'translate(-50%, -50%) rotate(-15deg)', offset: 1 }
             ], { duration: R_TO_L_DURATION, easing: 'ease-in-out', fill: 'forwards' });
-            
             const wAnim = wheat.animate([{ width: '0%' }, { width: '100%' }], { duration: R_TO_L_DURATION, easing: 'linear', fill: 'forwards' });
-            
-            setTimeout(() => { 
-                scene.style.display = 'none'; 
-                if(sAnim) sAnim.cancel();
-                if(wAnim) wAnim.cancel();
-            }, R_TO_L_DURATION + 100);
+            setTimeout(() => { scene.style.display = 'none'; if(sAnim) sAnim.cancel(); if(wAnim) wAnim.cancel(); }, R_TO_L_DURATION + 100);
         }
 
         function animDiningHall() {
-            const wall = document.getElementById('dining-hall');
-            const vibe = document.getElementById('the-vibe');
-            
-            wall.style.display = 'block';
-            wall.style.opacity = 0.95;
-            void wall.offsetWidth; 
-
+            const wall = document.getElementById('dining-hall'); const vibe = document.getElementById('the-vibe');
+            wall.style.display = 'block'; wall.style.opacity = 0.95; void wall.offsetWidth; 
             sndDining.play().catch(e => {});
-            
-            const vAnim = vibe.animate([
-                { transform: 'translateX(200%)', offset: 0 },         
-                { transform: 'translateX(-45%)', offset: 0.20 },      
-                { transform: 'translateX(-55%)', offset: 0.50 },      
-                { transform: 'translateX(-45%)', offset: 0.80 },      
-                { transform: 'translateX(-300%)', offset: 1 }         
-            ], { 
-                duration: R_TO_L_DURATION, 
-                easing: 'ease-in-out', 
-                fill: 'forwards' 
-            });
-            
+            const vAnim = vibe.animate([ { transform: 'translateX(200%)', offset: 0 }, { transform: 'translateX(-45%)', offset: 0.20 }, { transform: 'translateX(-55%)', offset: 0.50 }, { transform: 'translateX(-45%)', offset: 0.80 }, { transform: 'translateX(-300%)', offset: 1 } ], { duration: R_TO_L_DURATION, easing: 'ease-in-out', fill: 'forwards' });
             setTimeout(() => {
                 const fadeAnim = wall.animate([{ opacity: 0.95 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
-                
-                setTimeout(() => {
-                    wall.style.display = 'none';
-                    wall.style.opacity = 0.95; 
-                    if(fadeAnim) fadeAnim.cancel(); 
-                    if(vAnim) vAnim.cancel();
-                }, 400);
-
+                setTimeout(() => { wall.style.display = 'none'; wall.style.opacity = 0.95; if(fadeAnim) fadeAnim.cancel(); if(vAnim) vAnim.cancel(); }, 400);
             }, R_TO_L_DURATION - 400);
-
-            setTimeout(() => {
-                sndDining.pause();
-                sndDining.currentTime = 0;
-            }, R_TO_L_DURATION + 100);
+            setTimeout(() => { sndDining.pause(); sndDining.currentTime = 0; }, R_TO_L_DURATION + 100);
         }
 
-        // מנגנון שמטפל נכון בלחיצות על מסך מגע וסגירת הבועה
         document.addEventListener('click', function(event) {
             const hintContainer = document.getElementById('install-hint');
-            if (hintContainer) {
-                // אם הלחיצה היא בדיוק על האייקון או בתוך הקונטיינר שלו
-                if (hintContainer.contains(event.target)) {
-                    hintContainer.classList.toggle('show');
-                } else {
-                    // אם הלחיצה היא בכל מקום אחר במסך
-                    hintContainer.classList.remove('show');
-                }
-            }
+            if (hintContainer) { if (hintContainer.contains(event.target)) { hintContainer.classList.toggle('show'); } else { hintContainer.classList.remove('show'); } }
         });
 
         window.onload = () => { initMap(); map.on('click', handleMapClick); };
