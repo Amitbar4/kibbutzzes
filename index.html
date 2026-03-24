@@ -26,14 +26,14 @@
         .install-hint-container.show .install-hint-tooltip { opacity: 1; visibility: visible; transform: translateY(5px); }
         .firgun-container { position: absolute; top: 10px; right: 10px; cursor: pointer; z-index: 20; display: flex; flex-direction: column; align-items: center; }
         #firgun-trigger { display: flex; flex-direction: column; align-items: center; }
-        .firgun-icon { width: 45px; height: 45px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); border: 2px solid var(--primary-green); background-color: transparent; transition: transform 0.2s; object-fit: contain; }
+        .firgun-icon { width: 45px; height: 45px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); border: 2px solid #81C784; background-color: #E8F5E9; transition: transform 0.2s; object-fit: contain; padding: 2px; }
         .firgun-container:active .firgun-icon { transform: scale(0.95); }
         .firgun-text { font-size: 11px; font-weight: bold; color: var(--earth-brown); margin-top: 3px; }
-        .firgun-popup { position: absolute; top: 68px; right: -6px; width: 190px; background: white; border: 2px solid var(--earth-brown); color: #333; font-size: 12px; font-weight: bold; padding: 10px; border-radius: 10px; box-shadow: 0 6px 12px rgba(0,0,0,0.3); opacity: 0; visibility: hidden; transition: all 0.3s ease; text-align: center; line-height: 1.25; cursor: default; z-index: 101; pointer-events: auto; }
-        .firgun-popup::before { content: ''; position: absolute; top: -11px; right: 22px; border-width: 0 8px 10px 8px; border-style: solid; border-color: transparent transparent var(--earth-brown) transparent; }
-        .firgun-popup::after { content: ''; position: absolute; top: -7px; right: 22px; border-width: 0 8px 10px 8px; border-style: solid; border-color: transparent transparent white transparent; }
+        .firgun-popup { position: absolute; top: 65px; right: -6px; width: 175px; background: white; border: 2px solid var(--dark-green); color: var(--earth-brown); font-size: 12px; font-weight: bold; padding: 6px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); opacity: 0; visibility: hidden; transition: all 0.3s ease; text-align: center; line-height: 1.25; cursor: default; z-index: 101; pointer-events: auto; }
+        .firgun-popup::before { content: ''; position: absolute; top: -8px; right: 22px; border-width: 0 6px 6px 6px; border-style: solid; border-color: transparent transparent var(--dark-green) transparent; }
+        .firgun-popup::after { content: ''; position: absolute; top: -5px; right: 22px; border-width: 0 6px 6px 6px; border-style: solid; border-color: transparent transparent white transparent; }
         .firgun-popup.show { opacity: 1; visibility: visible; transform: translateY(5px); }
-        .firgun-popup p { margin: 0 0 8px 0; }
+        .firgun-popup p { margin: 0 0 6px 0; }
         .firgun-link-btn { display: inline-block; background-color: var(--earth-brown); color: white; text-decoration: none; padding: 5px 10px; border-radius: 6px; font-weight: bold; transition: background-color 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.2); font-size: 11px; }
         .firgun-link-btn:hover { background-color: #3e2b22; }
         #welcome-panel { display: none; } #game-panel { display: none; } #loading-panel { display: block; }
@@ -73,6 +73,14 @@
         #farmer-character img { width: clamp(250px, 70vw, 450px); height: auto; display: block; filter: drop-shadow(5px 5px 15px rgba(0,0,0,0.5)); }
         #speech-bubble { background: white; border: 4px solid var(--dark-green); border-radius: 20px; padding: 12px 18px; margin-bottom: 5px; margin-left: 80px; display: inline-block; position: relative; box-shadow: 0 6px 12px rgba(0,0,0,0.3); font-weight: bold; color: #333; transform: rotate(-10deg); font-size: clamp(22px, 6vw, 30px); max-width: 250px; }
         .shake { animation: shakeEffect 0.5s infinite; } @keyframes shakeEffect { 0% { transform: translate(1px, 1px) rotate(0deg); } 20% { transform: translate(-2px, -1px) rotate(-1deg); } 40% { transform: translate(-1px, 2px) rotate(1deg); } 60% { transform: translate(2px, 1px) rotate(0deg); } 80% { transform: translate(-1px, -2px) rotate(-1deg); } 100% { transform: translate(1px, 2px) rotate(0deg); } }
+        
+        /* חלון קופץ להשארת פרטי פרסום */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 10000; direction: rtl; }
+        .modal-content { position: relative; background: white; border: 4px solid var(--earth-brown); border-radius: 12px; padding: 25px 15px 15px 15px; width: 85vw; max-width: 320px; text-align: center; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .modal-content h3 { margin: 0; color: var(--dark-green); font-size: 18px; }
+        .modal-content input { padding: 10px; border: 2px solid var(--primary-green); border-radius: 8px; font-size: 15px; font-family: inherit; width: 100%; box-sizing: border-box; }
+        .close-modal { position: absolute; top: 8px; left: 12px; font-size: 28px; cursor: pointer; color: #888; line-height: 1; }
+        .close-modal:hover { color: #333; }
     </style>
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script> <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
 </head>
@@ -83,7 +91,7 @@
         <div id="firgun-container" class="firgun-container">
             <div id="firgun-trigger"><img src="aluma.png" alt="פינת הפרגון" class="firgun-icon"><span class="firgun-text">פינת הפרגון❤️</span></div>
             <div id="firgun-popup" class="firgun-popup">
-                <p>המשחק חינמי לגמרי! אם בא לכם לתמוך בפיתוח ולפרגן על ההשקעה עם איזו בירה 🍻, פייבוקס הפירגונים שלנו פתוח</p>
+                <p>המשחק חינמי לגמרי! אם בא לכם לתמוך בפיתוח ולפרגן על ההשקעה, פייבוקס הפירגונים שלנו פתוח</p>
                 <a href="https://links.payboxapp.com/h2vMq4S2L1b" target="_blank" class="firgun-link-btn">לפרגון בפייבוקס 💙</a>
             </div>
         </div>
@@ -92,7 +100,6 @@
         <h3 style="color:var(--dark-green); margin-top: 5px; margin-bottom: 10px;">הכנס שם: </h3><input type="text" id="player-nickname" placeholder="למשל: אלוף העמק" maxlength="15" style="width: 80%; padding: 10px; font-size: 18px; border: 2px solid var(--earth-brown); border-radius: 8px; margin-bottom: 15px; text-align: center;">
         <button onclick="submitNickname()">למשחק!</button>
         <div class="ad-placeholder ad-banner-small">
-            <a href="mailto:amitbar204@gmail.com?subject=%D7%A4%D7%A8%D7%A1%D7%95%D7%9D%20%D7%91%D7%9E%D7%A9%D7%97%D7%A7%20%D7%94%D7%A7%D7%99%D7%91%D7%95%D7%A6%D7%99%D7%9D&body=%D7%94%D7%99%D7%99!%20%D7%A9%D7%99%D7%97%D7%A7%D7%AA%D7%99%20%D7%A2%D7%9B%D7%A9%D7%99%D7%95%20%D7%91%D7%9E%D7%A9%D7%97%D7%A7%20%D7%94%D7%A7%D7%99%D7%91%D7%95%D7%A6%D7%99%D7%9D%20%D7%95%D7%9E%D7%A2%D7%95%D7%A0%D7%99%D7%99%D7%9F%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A4%D7%A8%D7%98%D7%99%D7%9D%20%D7%A2%D7%9C%20%D7%A4%D7%A8%D7%A1%D7%95%D7%9D%20%D7%94%D7%A2%D7%A1%D7%A7%20%D7%A9%D7%9C%D7%99%20%D7%91%D7%91%D7%90%D7%A0%D7%A8" class="sponsor-banner">רוצים שהעסק שלכם יופיע כאן מול אלפי קיבוצניקים כל יום! לחץ לפרטים</a>
             <ins class="adsbygoogle" style="display:inline-block;width:320px;height:50px" data-ad-client="ca-pub-2711679068759978" data-ad-slot="YOUR_AD_SLOT_ID_HERE"></ins>
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
@@ -102,7 +109,7 @@
         <button id="start-btn" onclick="startRound()">התחל משחק</button>
         <div id="end-game-ad-container" style="display: none; margin-top: 40px;">
             <div class="ad-placeholder ad-box-medium">
-                <a href="mailto:amitbar204@gmail.com?subject=%D7%A4%D7%A8%D7%A1%D7%95%D7%9D%20%D7%91%D7%9E%D7%A9%D7%97%D7%A7%20%D7%94%D7%A7%D7%99%D7%91%D7%95%D7%A6%D7%99%D7%9D&body=%D7%94%D7%99%D7%99!%20%D7%A9%D7%99%D7%97%D7%A7%D7%AA%D7%99%20%D7%A2%D7%9B%D7%A9%D7%99%D7%95%20%D7%91%D7%9E%D7%A9%D7%97%D7%A7%20%D7%94%D7%A7%D7%99%D7%91%D7%95%D7%A6%D7%99%D7%9D%20%D7%95%D7%9E%D7%A2%D7%95%D7%A0%D7%99%D7%99%D7%9F%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A4%D7%A8%D7%98%D7%99%D7%9D%20%D7%A2%D7%9C%20%D7%A4%D7%A8%D7%A1%D7%95%D7%9D%20%D7%94%D7%A2%D7%A1%D7%A7%20%D7%A9%D7%9C%D7%99%20%D7%91%D7%91%D7%90%D7%A0%D7%A8" class="sponsor-banner">רוצים שהעסק שלכם יופיע כאן מול אלפי קיבוצניקים כל יום! לחץ לפרטים</a>
+                <div class="sponsor-banner" onclick="openSponsorModal()">רוצים שהעסק שלכם יופיע כאן מול אלפי קיבוצניקים כל יום! לחץ לפרטים</div>
                 <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-2711679068759978" data-ad-slot="YOUR_AD_SLOT_ID_HERE"></ins>
                 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
             </div>
@@ -110,6 +117,18 @@
     </div>
     <div id="map-wrapper"><div id="map"></div><div id="tractor-scene" class="scene-layer"><div id="plowed-dirt"></div><div id="the-tractor"><img src="tractor.png" alt="טרקטור פרגוסון"></div></div><div id="sheaf-scene" class="scene-layer"><div id="wheat-field"></div><div id="the-sheaf"><img src="aluma.png" alt="אלומה"></div></div><div id="dining-hall"><div id="the-vibe"><img src="kibbutz_vibe.png" alt="הפרלמנט"></div></div></div>
     <div id="farmer-container"><div id="speech-bubble"></div><div id="farmer-character"><img src="farmer.png" alt="חקלאי"></div></div>
+    
+    <div id="sponsor-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeSponsorModal()">&times;</span>
+            <h3>פרטים לפרסום במשחק</h3>
+            <input type="text" id="sponsor-name" placeholder="שם מלא" required>
+            <input type="tel" id="sponsor-phone" placeholder="מס' טלפון" required>
+            <input type="text" id="sponsor-kibbutz" placeholder="קיבוץ (לא חובה)">
+            <button onclick="submitSponsorForm()">שלח פרטים</button>
+        </div>
+    </div>
+
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         const firebaseConfig = { apiKey: "AIzaSyAVXoCgOCgB9m1GOa1bbFen1rEzXCjEhvQ", authDomain: "kibbutzes.firebaseapp.com", projectId: "kibbutzes", storageBucket: "kibbutzes.firebasestorage.app", messagingSenderId: "433815834468", appId: "1:433815834468:web:a30ab44821a3652e35f471" };
@@ -138,7 +157,34 @@
         function animTractor() { const scene = document.getElementById('tractor-scene'); const dirt = document.getElementById('plowed-dirt'); const tractor = document.getElementById('the-tractor'); scene.style.display = 'block'; void scene.offsetWidth; sndTractor.play().catch(e => {}); document.body.classList.add('shake'); tractor.classList.add('tractor-shaking'); const tAnim = tractor.animate([{ right: '-100%' }, { right: '150%' }], { duration: R_TO_L_DURATION, easing: 'linear', fill: 'forwards' }); const dAnim = dirt.animate([{ width: '0%' }, { width: '100%' }], { duration: R_TO_L_DURATION, easing: 'linear', fill: 'forwards' }); setTimeout(() => { document.body.classList.remove('shake'); tractor.classList.remove('tractor-shaking'); }, R_TO_L_DURATION); setTimeout(() => { scene.style.display = 'none'; if(tAnim) tAnim.cancel(); if(dAnim) dAnim.cancel(); }, R_TO_L_DURATION + 100); }
         function animGiantSheaf() { const scene = document.getElementById('sheaf-scene'); const wheat = document.getElementById('wheat-field'); const sheaf = document.getElementById('the-sheaf'); scene.style.display = 'block'; void scene.offsetWidth; sndWind.play().catch(e => {}); const sAnim = sheaf.animate([ { left: '150%', transform: 'translate(-50%, -50%) rotate(15deg)', offset: 0 }, { left: '50%', transform: 'translate(-50%, -50%) rotate(0deg)', offset: 0.2 }, { left: '50%', transform: 'translate(-50%, -50%) rotate(5deg)', offset: 0.3 }, { left: '50%', transform: 'translate(-50%, -50%) rotate(-5deg)', offset: 0.4 }, { left: '50%', transform: 'translate(-50%, -50%) rotate(5deg)', offset: 0.5 }, { left: '50%', transform: 'translate(-50%, -50%) rotate(-5deg)', offset: 0.6 }, { left: '50%', transform: 'translate(-50%, -50%) rotate(0deg)', offset: 0.75 }, { left: '-50%', transform: 'translate(-50%, -50%) rotate(-15deg)', offset: 1 } ], { duration: R_TO_L_DURATION, easing: 'ease-in-out', fill: 'forwards' }); const wAnim = wheat.animate([{ width: '0%' }, { width: '100%' }], { duration: R_TO_L_DURATION, easing: 'linear', fill: 'forwards' }); setTimeout(() => { scene.style.display = 'none'; if(sAnim) sAnim.cancel(); if(wAnim) wAnim.cancel(); }, R_TO_L_DURATION + 100); }
         function animDiningHall() { const wall = document.getElementById('dining-hall'); const vibe = document.getElementById('the-vibe'); wall.style.display = 'block'; wall.style.opacity = 0.95; void wall.offsetWidth; sndDining.play().catch(e => {}); const vAnim = vibe.animate([ { transform: 'translateX(200%)', offset: 0 }, { transform: 'translateX(-45%)', offset: 0.20 }, { transform: 'translateX(-55%)', offset: 0.50 }, { transform: 'translateX(-45%)', offset: 0.80 }, { transform: 'translateX(-300%)', offset: 1 } ], { duration: R_TO_L_DURATION, easing: 'ease-in-out', fill: 'forwards' }); setTimeout(() => { const fadeAnim = wall.animate([{ opacity: 0.95 }, { opacity: 0 }], { duration: 400, fill: 'forwards' }); setTimeout(() => { wall.style.display = 'none'; wall.style.opacity = 0.95; if(fadeAnim) fadeAnim.cancel(); if(vAnim) vAnim.cancel(); }, 400); }, R_TO_L_DURATION - 400); setTimeout(() => { sndDining.pause(); sndDining.currentTime = 0; }, R_TO_L_DURATION + 100); }
-        document.addEventListener('click', function(event) { const hintContainer = document.getElementById('install-hint'); if (hintContainer) { if (hintContainer.contains(event.target)) { hintContainer.classList.toggle('show'); } else { hintContainer.classList.remove('show'); } } const firgunTrigger = document.getElementById('firgun-trigger'); const firgunPopup = document.getElementById('firgun-popup'); if (firgunTrigger && firgunPopup) { if (firgunTrigger.contains(event.target)) { firgunPopup.classList.toggle('show'); } else if (!firgunPopup.contains(event.target)) { firgunPopup.classList.remove('show'); } } });
+        
+        // פונקציות חלון השארת פרטים
+        function openSponsorModal() { document.getElementById('sponsor-modal').style.display = 'flex'; }
+        function closeSponsorModal() { document.getElementById('sponsor-modal').style.display = 'none'; }
+        function submitSponsorForm() {
+            const name = document.getElementById('sponsor-name').value.trim();
+            const phone = document.getElementById('sponsor-phone').value.trim();
+            const kibbutz = document.getElementById('sponsor-kibbutz').value.trim();
+            if (!name || !phone) { alert('נא למלא לפחות שם וטלפון כדי שנוכל לחזור אליך.'); return; }
+            db.collection('sponsors').add({ name: name, phone: phone, kibbutz: kibbutz, timestamp: firebase.firestore.FieldValue.serverTimestamp() })
+            .then(() => {
+                alert('הפרטים נשלחו בהצלחה! ניצור קשר בהקדם.');
+                closeSponsorModal();
+                document.getElementById('sponsor-name').value = ''; document.getElementById('sponsor-phone').value = ''; document.getElementById('sponsor-kibbutz').value = '';
+            }).catch(e => { alert('שגיאה בשליחה. אנא נסה שוב.'); });
+        }
+        
+        document.addEventListener('click', function(event) { 
+            const hintContainer = document.getElementById('install-hint'); 
+            if (hintContainer) { if (hintContainer.contains(event.target)) { hintContainer.classList.toggle('show'); } else { hintContainer.classList.remove('show'); } } 
+            const firgunTrigger = document.getElementById('firgun-trigger'); const firgunPopup = document.getElementById('firgun-popup'); 
+            if (firgunTrigger && firgunPopup) { if (firgunTrigger.contains(event.target)) { firgunPopup.classList.toggle('show'); } else if (!firgunPopup.contains(event.target)) { firgunPopup.classList.remove('show'); } } 
+            
+            // סגירת חלון הטופס אם לוחצים על הרקע הכהה
+            const modalOverlay = document.getElementById('sponsor-modal');
+            if (event.target === modalOverlay) { closeSponsorModal(); }
+        });
+        
         window.onload = () => { initMap(); map.on('click', handleMapClick); };
     </script>
 </body>
