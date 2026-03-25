@@ -58,7 +58,6 @@
         .btn-google { background-color: white; color: #333; border: 2px solid #ddd; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 16px; width: 85%; }
         .btn-google img { width: 20px; height: 20px; }
         .btn-guest { background-color: transparent; color: var(--earth-brown); border: 2px solid var(--earth-brown); font-size: 14px; width: 85%; padding: 8px; box-shadow: none; }
-        .user-info { font-weight: bold; color: var(--dark-green); margin-bottom: 5px; font-size: 15px; }
         
         .kibbutz-sign-container { position: relative; display: flex; flex-direction: column; align-items: center; gap: 15px; }
         .sign-pole { position: absolute; top: 0; bottom: -30px; width: 14px; background: #4E342E; z-index: 1; border-left: 3px solid #3E2723; border-radius: 2px; }
@@ -146,10 +145,12 @@
         </div>
 
         <div id="user-info-section" style="display:none; flex-direction: column; align-items: center;">
-            <div id="welcome-user-text" class="user-info"></div>
-            <input type="text" id="player-nickname" placeholder="כינוי בטבלה..." maxlength="15" style="padding: 8px; border: 2px solid var(--primary-green); border-radius: 8px; font-size: 16px; width: 85%; box-sizing: border-box; text-align: center; font-family: inherit; margin-bottom: 12px; font-weight: bold; color: var(--earth-brown);">
+            <div style="display: flex; align-items: center; width: 85%; margin-bottom: 10px; border: 2px solid var(--primary-green); border-radius: 8px; background: #fff; padding: 0 8px; box-sizing: border-box;">
+                <input type="text" id="player-nickname" maxlength="15" placeholder="כינוי..." style="flex: 1; border: none; outline: none; font-size: 16px; font-weight: bold; color: var(--earth-brown); padding: 8px 0; background: transparent; font-family: inherit;">
+                <span id="player-location-suffix" style="font-size: 14px; color: #888; white-space: nowrap; margin-right: 5px; user-select: none;"></span>
+            </div>
             <button onclick="startGameLogic()" style="width: 85%;">התחל משחק</button>
-            <button onclick="logout()" style="background-color: transparent; color: #d32f2f; border: 2px solid #d32f2f; padding: 6px 15px; font-size: 14px; font-weight: bold; margin-top: 10px; width: auto; box-shadow: none;">התנתק מהחשבון</button>
+            <button onclick="logout()" style="background-color: #d32f2f; color: white; border: none; padding: 6px 15px; font-size: 13px; font-weight: bold; margin-top: 5px; width: auto; box-shadow: 0 2px 4px rgba(0,0,0,0.2); border-radius: 6px;">התנתק</button>
         </div>
 
         <div class="ad-placeholder ad-banner-small" style="margin-top: 15px;">
@@ -211,13 +212,11 @@
         let specialRounds = []; let farmerRounds = []; let availableAnims = ['tractor', 'sheaf', 'vibe']; let playedAnimsCount = 0; let mapLayer, satelliteLayer;
         const sndWind = new Audio('https://www.soundjay.com/nature/sounds/wind-01.mp3'); const sndTractor = new Audio('https://actions.google.com/sounds/v1/transportation/tractor_driving_by.ogg'); const sndDining = new Audio('https://actions.google.com/sounds/v1/ambience/coffee_shop.ogg'); 
         
-        let currentUserData = null; // {uid, docId, name, location, isGuest}
-        
-        // הגדרות זיכרון מטמון למניעת קריאות מיותרות
+        let currentUserData = null; 
         let globalThreshold = 0; let localThreshold = 0; 
         let lastGlobalFetch = 0; let lastLocalFetch = 0; 
         let globalLeaderboardCache = ''; let localLeaderboardCache = '';
-        const CACHE_TIME = 60000; // 60 seconds
+        const CACHE_TIME = 60000; 
 
         async function initMap() { mapLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', { attribution: '© OpenStreetMap' }); satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri' }); map = L.map('map', {zoomControl: false, zoomSnap: 0.1}).setView([32.0, 34.9], 7.5); mapLayer.addTo(map); await fetchKibbutzimData(); setupAuthListener(); }
         
@@ -288,7 +287,7 @@
                 const snapshot = await db.collection('leaderboard').where('uid', '==', currentUserData.uid).limit(1).get();
                 if (!snapshot.empty) {
                     highScore = snapshot.docs[0].data().score;
-                    currentUserData.docId = snapshot.docs[0].id; // נשמור את מזהה הרשומה כדי לעדכן אותה בהמשך ולא ליצור חדשה
+                    currentUserData.docId = snapshot.docs[0].id; 
                 } else {
                     highScore = 0;
                 }
@@ -302,8 +301,17 @@
             document.getElementById('auth-section').style.display = 'none';
             document.getElementById('user-info-section').style.display = 'flex';
             
-            document.getElementById('welcome-user-text').innerText = `מחובר מקיבוץ: ${currentUserData.location}`;
-            document.getElementById('player-nickname').value = currentUserData.name.split(' ')[0]; // שם ברירת מחדל מהגוגל
+            // הכנת התווית השיוכית
+            let locText = "";
+            if (currentUserData.location === "מושבניק" || currentUserData.location === "🚜 מושבניק") {
+                locText = "(מושבניק)";
+            } else if (currentUserData.location.includes("עירוני")) {
+                locText = "(עירוני/כללי)";
+            } else {
+                locText = `(מקיבוץ ${currentUserData.location})`;
+            }
+            document.getElementById('player-location-suffix').innerText = locText;
+            document.getElementById('player-nickname').value = currentUserData.name.split(' ')[0]; 
             
             gtag('config', 'G-ZDRV4BSBT0', { 'user_id': currentUserData.uid });
             gtag('set', 'user_properties', { 'kibbutz': currentUserData.location });
@@ -312,8 +320,8 @@
             let shortLoc = currentUserData.location.length > 10 ? currentUserData.location.substring(0,10)+'...' : currentUserData.location;
             document.getElementById('tab-local').innerText = `טופ 5 - ${shortLoc} 🏅`;
             
-            fetchUserHighScore(); // שליפת השיא מהענן!
-            switchTab('local'); // נעביר כברירת מחדל לטבלה של הקיבוץ שלו
+            fetchUserHighScore(); 
+            switchTab('local'); 
             setTimeout(() => { map.invalidateSize(); map.setView([32.0, 34.9], 7.5); }, 50);
         }
 
@@ -336,7 +344,7 @@
         async function fetchGlobalLeaderboard(force = false) { 
             const list = document.getElementById('list-global');
             if (!force && Date.now() - lastGlobalFetch < CACHE_TIME && globalLeaderboardCache) {
-                list.innerHTML = globalLeaderboardCache; return; // נשלוף מזיכרון
+                list.innerHTML = globalLeaderboardCache; return; 
             }
             try { 
                 const snapshot = await db.collection('leaderboard').orderBy('score', 'desc').limit(5).get(); 
@@ -358,7 +366,7 @@
             if(!currentUserData || currentUserData.isGuest) return;
             const list = document.getElementById('list-local');
             if (!force && Date.now() - lastLocalFetch < CACHE_TIME && localLeaderboardCache) {
-                list.innerHTML = localLeaderboardCache; return; // נשלוף מזיכרון
+                list.innerHTML = localLeaderboardCache; return; 
             }
             try { 
                 const snapshot = await db.collection('leaderboard').where('location', '==', currentUserData.location).orderBy('score', 'desc').limit(5).get(); 
@@ -379,11 +387,11 @@
         async function saveScoreToLeaderboard(score, timeTaken) { 
             if (score <= 0 || !currentUserData || currentUserData.isGuest) return; 
             
+            // המידע שנשמר הוא אך ורק הכינוי שמוקלד, בלי התווית המסופחת שרואים בעין
             let finalName = document.getElementById('player-nickname').value.trim();
             if (!finalName) finalName = currentUserData.name; 
             finalName = finalName.substring(0, 15); 
 
-            // עדכון שרת מתבצע רק אם השחקן שבר את השיא האישי שלו
             if (score > highScore) {
                 highScore = score;
                 document.getElementById('high-score-val').innerText = highScore;
@@ -396,7 +404,6 @@
                         currentUserData.docId = newDoc.id;
                     } 
                     
-                    // בדיקה האם השיא שנשבר צריך לרענן את אחת מהטבלאות בזיכרון המקומי
                     let forceGlobal = (score > globalThreshold || globalThreshold === 0);
                     let forceLocal = (score > localThreshold || localThreshold === 0);
                     
