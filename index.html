@@ -31,7 +31,7 @@
         .firgun-icon { width: 53px; height: 53px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); border: 2px solid #81C784; background-color: transparent; transition: transform 0.2s; object-fit: cover; padding: 0; }
         .firgun-container:active .firgun-icon { transform: scale(0.95); }
         .firgun-text { font-size: 12.5px; font-weight: bold; color: var(--earth-brown); margin-top: 3px; }
-        .firgun-popup { position: absolute; top: 74px; right: -6px; width: max-content; background: white; border: 2px solid var(--dark-green); color: var(--earth-brown); font-size: 12.5px; font-weight: bold; padding: 4px 3px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); opacity: 0; visibility: hidden; transition: all 0.3s ease; text-align: center; line-height: 1.25; cursor: default; z-index: 101; pointer-events: auto; }
+        .firgun-popup { position: absolute; top: 74px; right: -6px; width: max-content; background: white; border: 2px solid var(--dark-green); color: var(--earth-brown); font-size: 12.5px; font-weight: bold; padding: 3px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); opacity: 0; visibility: hidden; transition: all 0.3s ease; text-align: center; line-height: 1.25; cursor: default; z-index: 101; pointer-events: auto; }
         .firgun-popup::before { content: ''; position: absolute; top: -8px; right: 22px; border-width: 0 6px 6px 6px; border-style: solid; border-color: transparent transparent var(--dark-green) transparent; }
         .firgun-popup::after { content: ''; position: absolute; top: -5px; right: 22px; border-width: 0 6px 6px 6px; border-style: solid; border-color: transparent transparent white transparent; }
         .firgun-popup.show { opacity: 1; visibility: visible; transform: translateY(5px); }
@@ -45,7 +45,7 @@
         
         /* Leaderboard Tabs */
         .tabs-header { display: flex; justify-content: center; gap: 10px; margin-bottom: 5px; }
-        .tab-btn { background: #ccc; color: #555; border: 2px solid #aaa; padding: 4px 12px; border-radius: 15px; font-size: 13px; font-weight: bold; cursor: pointer; transition: all 0.2s; width: auto; margin: 0; box-shadow: none; }
+        .tab-btn { background: #ccc; color: #555; border: 2px solid #aaa; padding: 4px 12px; border-radius: 15px; font-size: 13px; font-weight: bold; cursor: pointer; transition: all 0.2s; width: auto; margin: 0; box-shadow: none; white-space: normal; line-height: 1.2; word-break: break-word; }
         .tab-btn.active { background: var(--primary-green); color: white; border-color: var(--dark-green); }
         #leaderboard-container { display: flex; justify-content: space-between; align-items: stretch; background: #e8f5e9; border: 2px solid var(--primary-green); border-radius: 8px; margin-bottom: 20px; overflow: hidden; }
         #board-area { width: 65%; padding: 10px; text-align: right; font-size: 14px; position: relative; }
@@ -139,9 +139,9 @@
         <div id="auth-section" class="auth-buttons">
             <button class="btn-google" onclick="loginWithGoogle()">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google">
-                לשחק מול הקיבוץ- התחברות עם גוגל 🚀
+                התחברות עם גוגל 🚀
             </button>
-            <button class="btn-guest" onclick="startAsGuest()">שחק כאורח (ללא שמירת שיאים)</button>
+            <button class="btn-guest" onclick="startAsGuest()">שחק כאורח (ללא שיאים)</button>
         </div>
 
         <div id="user-info-section" style="display:none; flex-direction: column; align-items: center;">
@@ -199,7 +199,7 @@
             <p style="font-size: 14px; margin: 0 0 10px 0; color: #555;">כדי שתוכל להתחרות מול החבר'ה מהבית, ספר לנו מאיפה אתה:</p>
             <input type="text" id="onboarding-location" list="kibbutz-list" placeholder="חפש קיבוץ, מושב או עיר...">
             <datalist id="kibbutz-list"></datalist>
-            <p style="font-size: 11px; margin: -5px 0 10px 0; color: #777;">לא קיבוצניק? פשוט הקלד 'מושבניק' או 'עירוני'.</p>
+            <p style="font-size: 11px; margin: -5px 0 10px 0; color: #777;">לא קיבוצניק? בחר 'מושבניק' או 'כללי'</p>
             <button onclick="saveOnboarding()">שמור וסע</button>
         </div>
     </div>
@@ -227,7 +227,7 @@
         
         function populateKibbutzDatalist() {
             const datalist = document.getElementById('kibbutz-list');
-            datalist.innerHTML = '<option value="🚜 מושבניק"></option><option value="🏢 עירוני / אחר"></option>';
+            datalist.innerHTML = '<option value="מושבניק"></option><option value="כללי"></option>';
             const sorted = [...kibbutzim].sort((a,b) => a.name.localeCompare(b.name, 'he'));
             sorted.forEach(k => {
                 let opt = document.createElement('option');
@@ -307,10 +307,10 @@
             document.getElementById('logout-section').style.display = 'block';
             
             let locText = "";
-            if (currentUserData.location === "מושבניק" || currentUserData.location === "🚜 מושבניק") {
+            if (currentUserData.location === "מושבניק") {
                 locText = "(מושבניק)";
-            } else if (currentUserData.location.includes("עירוני")) {
-                locText = "(עירוני/כללי)";
+            } else if (currentUserData.location === "כללי") {
+                locText = "(כללי)";
             } else {
                 locText = `(מקיבוץ ${currentUserData.location})`;
             }
@@ -321,8 +321,7 @@
             gtag('set', 'user_properties', { 'kibbutz': currentUserData.location });
 
             document.getElementById('tab-local').style.display = 'inline-block';
-            let shortLoc = currentUserData.location.length > 10 ? currentUserData.location.substring(0,10)+'...' : currentUserData.location;
-            document.getElementById('tab-local').innerText = `טופ 5 - ${shortLoc} 🏅`;
+            document.getElementById('tab-local').innerText = `טופ 5 - ${currentUserData.location} 🏅`;
             
             fetchUserHighScore(); 
             switchTab('local'); 
