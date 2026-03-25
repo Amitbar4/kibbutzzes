@@ -17,36 +17,41 @@
         .ad-banner-small { width: 320px; min-height: 50px; max-width: 100%; } .ad-box-medium { width: 300px; min-height: 250px; max-width: 100%; }
         .sponsor-banner { display: flex; align-items: center; justify-content: center; width: 100%; height: 50px; box-sizing: border-box; background-color: #fdf5e6; border: 2px dashed var(--earth-brown); color: var(--earth-brown); text-align: center; padding: 5px; text-decoration: none; font-weight: bold; border-radius: 8px; font-size: 13px; transition: transform 0.2s, background-color 0.2s; direction: rtl; cursor: pointer; margin: 0; line-height: 1.1; }
         .sponsor-banner:hover { background-color: #f5deb3; transform: scale(1.02); }
-        .install-hint-container { position: absolute; top: 10px; left: 10px; cursor: pointer; z-index: 20; display: flex; flex-direction: column; align-items: center; }
-        .install-hint-icon { width: 50px; height: 50px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); border: 2px solid var(--dark-green); background-color: transparent; transition: transform 0.2s; object-fit: cover; }
-        .install-hint-container:active .install-hint-icon { transform: scale(0.95); }
-        .install-hint-tooltip { position: absolute; top: 70px; left: -6px; width: 79px; background: white; border: 2px solid var(--dark-green); color: var(--earth-brown); font-size: 12.5px; font-weight: bold; padding: 5px 2px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); opacity: 0; visibility: hidden; transition: all 0.3s ease; text-align: center; line-height: 1.25; pointer-events: none; }
-        .install-hint-tooltip::before { content: ''; position: absolute; top: -8px; left: 22px; border-width: 0 6px 6px 6px; border-style: solid; border-color: transparent transparent var(--dark-green) transparent; }
-        .install-hint-tooltip::after { content: ''; position: absolute; top: -5px; left: 22px; border-width: 0 6px 6px 6px; border-style: solid; border-color: transparent transparent white transparent; }
-        .install-hint-container.show .install-hint-tooltip { opacity: 1; visibility: visible; transform: translateY(5px); }
-        
-        .firgun-container { position: absolute; top: 10px; right: 10px; cursor: pointer; z-index: 20; display: flex; flex-direction: column; align-items: center; }
-        #firgun-trigger { display: flex; flex-direction: column; align-items: center; }
-        .firgun-icon { width: 50px; height: 50px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); border: 2px solid #81C784; background-color: transparent; transition: transform 0.2s; object-fit: cover; padding: 0; }
-        .firgun-container:active .firgun-icon { transform: scale(0.95); }
-        .firgun-text { font-size: 11px; font-weight: bold; color: var(--earth-brown); margin-top: 3px; }
-        
-        .firgun-popup { position: absolute; top: 70px; right: -6px; width: max-content; background: white; border: 2px solid var(--dark-green); color: var(--earth-brown); font-size: 12.5px; font-weight: bold; padding: 4px 3.5px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); opacity: 0; visibility: hidden; transition: all 0.3s ease; text-align: center; line-height: 1.25; cursor: default; z-index: 101; pointer-events: auto; }
-        .firgun-popup::before { content: ''; position: absolute; top: -8px; right: 22px; border-width: 0 6px 6px 6px; border-style: solid; border-color: transparent transparent var(--dark-green) transparent; }
-        .firgun-popup::after { content: ''; position: absolute; top: -5px; right: 22px; border-width: 0 6px 6px 6px; border-style: solid; border-color: transparent transparent white transparent; }
-        .firgun-popup.show { opacity: 1; visibility: visible; transform: translateY(5px); }
-        .firgun-popup p { margin: 0; display: block; }
-        .firgun-link-btn { display: inline-block; background-color: var(--earth-brown); color: white; text-decoration: none; padding: 2px 8px; border-radius: 5px; font-weight: bold; transition: background-color 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.2); font-size: 11px; margin-right: 2px; vertical-align: baseline; }
-        .firgun-link-btn:hover { background-color: #3e2b22; }
+        .install-hint-container, .firgun-container { position: absolute; top: 10px; cursor: pointer; z-index: 20; display: flex; flex-direction: column; align-items: center; }
+        .install-hint-container { left: 10px; } .firgun-container { right: 10px; }
+        .install-hint-icon, .firgun-icon { width: 53px; height: 53px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); border: 2px solid var(--dark-green); background-color: transparent; transition: transform 0.2s; object-fit: cover; }
+        .firgun-icon { border-color: #81C784; padding: 0; }
+        .install-hint-container:active .install-hint-icon, .firgun-container:active .firgun-icon { transform: scale(0.95); }
+        .firgun-text { font-size: 12.5px; font-weight: bold; color: var(--earth-brown); margin-top: 3px; }
+        .install-hint-tooltip, .firgun-popup { position: absolute; top: 74px; width: max-content; background: white; border: 2px solid var(--dark-green); color: var(--earth-brown); font-size: 12.5px; font-weight: bold; padding: 5px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); opacity: 0; visibility: hidden; transition: all 0.3s ease; text-align: center; line-height: 1.25; }
+        .install-hint-tooltip { left: -6px; width: 79px; pointer-events: none; } .firgun-popup { right: -6px; z-index: 101; pointer-events: auto; }
+        .install-hint-tooltip::before, .firgun-popup::before { content: ''; position: absolute; top: -8px; border-width: 0 6px 6px 6px; border-style: solid; border-color: transparent transparent var(--dark-green) transparent; }
+        .install-hint-tooltip::after, .firgun-popup::after { content: ''; position: absolute; top: -5px; border-width: 0 6px 6px 6px; border-style: solid; border-color: transparent transparent white transparent; }
+        .install-hint-tooltip::before, .install-hint-tooltip::after { left: 22px; } .firgun-popup::before, .firgun-popup::after { right: 22px; }
+        .install-hint-container.show .install-hint-tooltip, .firgun-popup.show { opacity: 1; visibility: visible; transform: translateY(5px); }
+        .firgun-popup p { margin: 0; display: block; } .firgun-link-btn { display: inline-block; background-color: var(--earth-brown); color: white; text-decoration: none; padding: 2px 8px; border-radius: 5px; font-weight: bold; transition: background-color 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.2); font-size: 11px; margin-right: 2px; vertical-align: baseline; } .firgun-link-btn:hover { background-color: #3e2b22; }
         
         #welcome-panel { display: none; } #game-panel { display: none; } #loading-panel { display: block; }
         #top-stats-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; min-height: 24px; font-size: 18px; font-weight: bold; }
         #round-info { color: var(--dark-green); } #result-msg { color: var(--earth-brown); }
+        
+        /* Leaderboard Tabs */
+        .tabs-header { display: flex; justify-content: center; gap: 10px; margin-bottom: 5px; }
+        .tab-btn { background: #ccc; color: #555; border: 2px solid #aaa; padding: 4px 12px; border-radius: 15px; font-size: 13px; font-weight: bold; cursor: pointer; transition: all 0.2s; width: auto; margin: 0; box-shadow: none; }
+        .tab-btn.active { background: var(--primary-green); color: white; border-color: var(--dark-green); }
         #leaderboard-container { display: flex; justify-content: space-between; align-items: stretch; background: #e8f5e9; border: 2px solid var(--primary-green); border-radius: 8px; margin-bottom: 20px; overflow: hidden; }
-        #global-leaderboard { width: 65%; padding: 10px; text-align: right; font-size: 14px; } #global-leaderboard h4 { margin: 0 0 8px 0; color: var(--dark-green); font-size: 15px; text-align: center;}
-        #top5-list { margin: 0; padding-right: 20px; font-weight: bold; color: #333; } #top5-list li { margin-bottom: 4px; }
+        #board-area { width: 65%; padding: 10px; text-align: right; font-size: 14px; position: relative; }
+        .board-list { margin: 0; padding-right: 20px; font-weight: bold; color: #333; min-height: 110px; } .board-list li { margin-bottom: 4px; }
         #my-score-section { width: 35%; background: rgba(76, 175, 80, 0.1); border-right: 2px solid var(--primary-green); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 10px; }
         .my-score-title { font-size: 14px; font-weight: bold; color: var(--dark-green); margin-bottom: 5px; } #high-score-val { font-size: 24px; font-weight: 900; color: var(--earth-brown); }
+        
+        /* Auth Buttons */
+        .auth-buttons { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; align-items: center; }
+        .btn-google { background-color: white; color: #333; border: 2px solid #ddd; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 16px; width: 85%; }
+        .btn-google img { width: 20px; height: 20px; }
+        .btn-guest { background-color: transparent; color: var(--earth-brown); border: 2px solid var(--earth-brown); font-size: 14px; width: 85%; padding: 8px; box-shadow: none; }
+        .user-info { font-weight: bold; color: var(--dark-green); margin-bottom: 10px; font-size: 15px; }
+        
         .kibbutz-sign-container { position: relative; display: flex; flex-direction: column; align-items: center; gap: 15px; }
         .sign-pole { position: absolute; top: 0; bottom: -30px; width: 14px; background: #4E342E; z-index: 1; border-left: 3px solid #3E2723; border-radius: 2px; }
         .sign-board { position: relative; z-index: 2; background: #5D4037; color: white; font-weight: 900; font-size: 24px; border: 2px solid #FFF; box-shadow: 2px 4px 8px rgba(0,0,0,0.5); text-shadow: 1px 1px 2px #000; width: max-content; }
@@ -80,41 +85,56 @@
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 10000; direction: rtl; }
         .modal-content { position: relative; background: white; border: 4px solid var(--earth-brown); border-radius: 12px; padding: 25px 15px 15px 15px; width: 85vw; max-width: 320px; text-align: center; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
         .modal-content h3 { margin: 0; color: var(--dark-green); font-size: 18px; }
-        .modal-content input { padding: 10px; border: 2px solid var(--primary-green); border-radius: 8px; font-size: 15px; font-family: inherit; width: 100%; box-sizing: border-box; text-align: right; direction: rtl; }
+        .modal-content input, .modal-content select { padding: 10px; border: 2px solid var(--primary-green); border-radius: 8px; font-size: 15px; font-family: inherit; width: 100%; box-sizing: border-box; text-align: right; direction: rtl; }
         .close-modal { position: absolute; top: 8px; left: 12px; font-size: 28px; cursor: pointer; color: #888; line-height: 1; }
         .close-modal:hover { color: #333; }
+        .map-copyright { position: absolute; bottom: 0; left: 0; z-index: 9999; background: rgba(255, 255, 255, 0.7); padding: 2px 6px; font-size: 10px; color: #333; font-family: sans-serif; border-top-right-radius: 4px; pointer-events: none; direction: ltr; }
     </style>
-    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script> <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script> 
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth-compat.js"></script>
 </head>
 <body>
-    <div id="loading-panel" class="panel"><h3>טוען קיבוצים...</h3><p>תתחיל להתניע... 🚜</p></div>
+    <div id="loading-panel" class="panel"><h3>טוען...</h3><p>תתחיל להתניע... 🚜</p></div>
+    
     <div id="welcome-panel" class="panel">
-        
-        <div class="install-hint-container" id="install-hint">
-            <img src="icon.png" class="install-hint-icon" alt="אייקון האפליקציה">
-            <span class="firgun-text">אייקון המשחק</span>
-            <div class="install-hint-tooltip">מומלץ להוריד<br>למסך הבית<br>לפתיחה נוחה</div>
-        </div>
-        
-        <div id="firgun-container" class="firgun-container">
-            <div id="firgun-trigger">
-                <img src="farmericon.png" alt="פינת הפרגון" class="firgun-icon">
-                <span class="firgun-text">פינת הפרגון</span>
-            </div>
-            <div id="firgun-popup" class="firgun-popup">
-                <p>המשחק חינמי לגמרי!<br>אם בא לכם לתמוך בפיתוח<br>ולפרגן על ההשקעה,<br>פייבוקס הפירגונים שלנו<br>פתוח <a href="https://links.payboxapp.com/h2vMq4S2L1b" target="_blank" class="firgun-link-btn">לפרגון 💙</a></p>
-            </div>
-        </div>
+        <div class="install-hint-container" id="install-hint"><img src="icon.png" class="install-hint-icon" alt="אייקון האפליקציה"><span class="firgun-text">אייקון המשחק</span><div class="install-hint-tooltip">מומלץ להוריד<br>למסך הבית<br>לפתיחה נוחה</div></div>
+        <div id="firgun-container" class="firgun-container"><div id="firgun-trigger"><img src="farmericon.png" alt="פינת הפרגון" class="firgun-icon"><span class="firgun-text">פינת הפרגון</span></div><div id="firgun-popup" class="firgun-popup"><p>המשחק חינמי לגמרי אבל<br>אם בא לכם לתמוך בפיתוח<br>ולפרגן על ההשקעה,<br>אשמח מאוד <a href="https://links.payboxapp.com/h2vMq4S2L1b" target="_blank" class="firgun-link-btn">לפרגון 💙</a></p></div></div>
         
         <div class="kibbutz-sign-container" style="margin-bottom: 25px;"><div class="sign-pole"></div><div class="sign-board sign-right">משחק</div><div class="sign-board sign-left">הקיבוצים</div></div>
-        <div id="leaderboard-container"><div id="global-leaderboard"><h4>🏆 טופ 5 העולמי 🏆</h4><ol id="top5-list"></ol></div><div id="my-score-section"><div class="my-score-title">השיא שלי</div><div id="high-score-val">0</div></div></div>
-        <h3 style="color:var(--dark-green); margin-top: 5px; margin-bottom: 10px;">הכנס שם: </h3><input type="text" id="player-nickname" placeholder="למשל: אלוף העמק" maxlength="15" style="width: 80%; padding: 10px; font-size: 18px; border: 2px solid var(--earth-brown); border-radius: 8px; margin-bottom: 15px; text-align: center;">
-        <button onclick="submitNickname()">למשחק!</button>
-        <div class="ad-placeholder ad-banner-small">
+        
+        <div id="leaderboard-container">
+            <div id="board-area">
+                <div class="tabs-header">
+                    <button class="tab-btn active" id="tab-global" onclick="switchTab('global')">עולמי</button>
+                    <button class="tab-btn" id="tab-local" onclick="switchTab('local')" style="display:none;">הקיבוץ שלי</button>
+                </div>
+                <ol id="list-global" class="board-list"></ol>
+                <ol id="list-local" class="board-list" style="display:none;"></ol>
+            </div>
+            <div id="my-score-section"><div class="my-score-title">השיא שלי</div><div id="high-score-val">0</div></div>
+        </div>
+
+        <div id="auth-section" class="auth-buttons">
+            <button class="btn-google" onclick="loginWithGoogle()">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google">
+                התחבר עם Google 🚀
+            </button>
+            <button class="btn-guest" onclick="startAsGuest()">שחק כאורח (ללא שמירת שיאים)</button>
+        </div>
+
+        <div id="user-info-section" style="display:none;">
+            <div id="welcome-user-text" class="user-info"></div>
+            <button onclick="startGameLogic()">התחל משחק</button>
+            <button onclick="logout()" style="background-color: transparent; color: #888; border: 1px solid #ddd; padding: 6px; font-size: 13px; margin-top: 10px; width: auto; box-shadow: none;">התנתק</button>
+        </div>
+
+        <div class="ad-placeholder ad-banner-small" style="margin-top: 15px;">
             <ins class="adsbygoogle" style="display:inline-block;width:320px;height:50px" data-ad-client="ca-pub-2711679068759978" data-ad-slot="YOUR_AD_SLOT_ID_HERE"></ins>
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
     </div>
+
     <div id="game-panel" class="panel">
         <div id="kibbutz-name"></div><div id="top-stats-bar"><div id="round-info"></div><div id="result-msg"></div></div><div id="timer-container"><div id="timer-bar"></div></div>
         <button id="start-btn" onclick="startRound()">התחל משחק</button>
@@ -126,7 +146,13 @@
             </div>
         </div>
     </div>
-    <div id="map-wrapper"><div id="map"></div><div id="tractor-scene" class="scene-layer"><div id="plowed-dirt"></div><div id="the-tractor"><img src="tractor.png" alt="טרקטור פרגוסון"></div></div><div id="sheaf-scene" class="scene-layer"><div id="wheat-field"></div><div id="the-sheaf"><img src="aluma.png" alt="אלומה"></div></div><div id="dining-hall"><div id="the-vibe"><img src="kibbutz_vibe.png" alt="הפרלמנט"></div></div></div>
+    
+    <div id="map-wrapper">
+        <div id="map"></div>
+        <div class="map-copyright">© 2026 Kibbutzzes | Amit Bar</div>
+        <div id="tractor-scene" class="scene-layer"><div id="plowed-dirt"></div><div id="the-tractor"><img src="tractor.png" alt="טרקטור פרגוסון"></div></div><div id="sheaf-scene" class="scene-layer"><div id="wheat-field"></div><div id="the-sheaf"><img src="aluma.png" alt="אלומה"></div></div><div id="dining-hall"><div id="the-vibe"><img src="kibbutz_vibe.png" alt="הפרלמנט"></div></div>
+    </div>
+    
     <div id="farmer-container"><div id="speech-bubble"></div><div id="farmer-character"><img src="farmer.png" alt="חקלאי"></div></div>
     
     <div id="sponsor-modal" class="modal-overlay">
@@ -140,20 +166,181 @@
         </div>
     </div>
 
+    <div id="onboarding-modal" class="modal-overlay">
+        <div class="modal-content" style="padding-top: 20px;">
+            <h3 id="onboarding-title">ברוך הבא!</h3>
+            <p style="font-size: 14px; margin: 0 0 10px 0; color: #555;">כדי שתוכל להתחרות מול החבר'ה מהבית, ספר לנו מאיפה אתה:</p>
+            <select id="onboarding-location">
+                </select>
+            <button onclick="saveOnboarding()">שמור וסע</button>
+        </div>
+    </div>
+
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         const firebaseConfig = { apiKey: "AIzaSyAVXoCgOCgB9m1GOa1bbFen1rEzXCjEhvQ", authDomain: "kibbutzes.firebaseapp.com", projectId: "kibbutzes", storageBucket: "kibbutzes.firebasestorage.app", messagingSenderId: "433815834468", appId: "1:433815834468:web:a30ab44821a3652e35f471" };
-        firebase.initializeApp(firebaseConfig); const db = firebase.firestore();
-        let kibbutzim = []; let currentKibbutz = null; let timerInterval; let timeLeft = 15; let map, actualMarker, guessMarker, resultLine; let isRoundActive = false; let currentRound = 1; const MAX_ROUNDS = 10; let totalScore = 0; let highScore = 0; let playerName = ""; let gameStartTime = 0; const MIN_GAME_TIME = 85; 
+        firebase.initializeApp(firebaseConfig); 
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+
+        let kibbutzim = []; let currentKibbutz = null; let timerInterval; let timeLeft = 15; let map, actualMarker, guessMarker, resultLine; let isRoundActive = false; let currentRound = 1; const MAX_ROUNDS = 10; let totalScore = 0; let highScore = 0; let gameStartTime = 0; const MIN_GAME_TIME = 85; 
         let specialRounds = []; let farmerRounds = []; let availableAnims = ['tractor', 'sheaf', 'vibe']; let playedAnimsCount = 0; let mapLayer, satelliteLayer;
         const sndWind = new Audio('https://www.soundjay.com/nature/sounds/wind-01.mp3'); const sndTractor = new Audio('https://actions.google.com/sounds/v1/transportation/tractor_driving_by.ogg'); const sndDining = new Audio('https://actions.google.com/sounds/v1/ambience/coffee_shop.ogg'); 
-        async function initMap() { mapLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', { attribution: '© OpenStreetMap' }); satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri' }); map = L.map('map', {zoomControl: false, zoomSnap: 0.1}).setView([32.0, 34.9], 7.5); mapLayer.addTo(map); loadHighScore(); fetchGlobalLeaderboard(); await fetchKibbutzimData(); }
-        async function fetchKibbutzimData() { try { const savedData = localStorage.getItem('kibbutzim_data_v2'); if (savedData) { kibbutzim = JSON.parse(savedData); showWelcomePanel(); return; } const response = await fetch('kibbutzim.kml'); if (!response.ok) throw new Error("שגיאה"); const text = await response.text(); const xmlDoc = new DOMParser().parseFromString(text, "text/xml"); const placemarks = xmlDoc.getElementsByTagName("Placemark"); kibbutzim = []; for (let p of placemarks) { const name = p.getElementsByTagName("name")[0]?.textContent; const coords = p.getElementsByTagName("coordinates")[0]?.textContent.split(','); if (name && coords) kibbutzim.push({name: name.trim(), lng: parseFloat(coords[0]), lat: parseFloat(coords[1])}); } localStorage.setItem('kibbutzim_data_v2', JSON.stringify(kibbutzim)); showWelcomePanel(); } catch (error) { document.getElementById('loading-panel').innerHTML = "<h3>שגיאה!</h3>"; } }
-        function showWelcomePanel() { document.getElementById('loading-panel').style.display = 'none'; document.getElementById('welcome-panel').style.display = 'block'; if (playerName && playerName !== "אורח") { document.getElementById('player-nickname').value = playerName; } setTimeout(() => { map.invalidateSize(); map.setView([32.0, 34.9], 7.5); }, 50); }
-        function submitNickname() { const input = document.getElementById('player-nickname').value.trim(); if (input !== "") { playerName = input; } else if (!playerName) { playerName = "אורח"; } currentRound = 1; totalScore = 0; gameStartTime = Date.now(); specialRounds = pickSpecialRounds(); farmerRounds = pickFarmerRounds(); availableAnims = ['tractor', 'sheaf', 'vibe']; playedAnimsCount = 0; document.getElementById('welcome-panel').style.display = 'none'; document.getElementById('game-panel').style.display = 'block'; document.getElementById('end-game-ad-container').style.display = 'none'; document.getElementById('start-btn').innerText = "התחל משחק"; document.getElementById('start-btn').onclick = startRound; document.getElementById('start-btn').style.display = 'block'; document.getElementById('kibbutz-name').innerHTML = "מוכן להתחיל?"; document.getElementById('round-info').innerText = ""; document.getElementById('result-msg').innerText = ""; document.getElementById('top-stats-bar').style.display = 'flex'; if (actualMarker) map.removeLayer(actualMarker); if (guessMarker) map.removeLayer(guessMarker); if (resultLine) map.removeLayer(resultLine); setTimeout(() => { map.invalidateSize(); map.setView([32.0, 34.9], 7.9); }, 50); }
-        function resetToWelcome() { fetchGlobalLeaderboard(); document.getElementById('game-panel').style.display = 'none'; showWelcomePanel(); }
-        async function fetchGlobalLeaderboard() { try { const snapshot = await db.collection('leaderboard').orderBy('score', 'desc').limit(5).get(); const list = document.getElementById('top5-list'); list.innerHTML = ''; if (snapshot.empty) return; snapshot.forEach(doc => { const data = doc.data(); const li = document.createElement('li'); li.innerText = `${data.name} - ${data.score} נק'`; list.appendChild(li); }); } catch (e) { document.getElementById('top5-list').innerHTML = ''; } }
-        async function saveScoreToLeaderboard(score, timeTaken) { if (score <= 0 || !playerName) return; try { const querySnapshot = await db.collection('leaderboard').where('name', '==', playerName).get(); if (!querySnapshot.empty) { let docId = null; let existingScore = -1; querySnapshot.forEach(doc => { const data = doc.data(); if (data.score > existingScore) { existingScore = data.score; docId = doc.id; } }); if (score > existingScore) { await db.collection('leaderboard').doc(docId).update({ score: score, timePlayed: timeTaken, timestamp: firebase.firestore.FieldValue.serverTimestamp() }); } } else { await db.collection('leaderboard').add({ name: playerName, score: score, timePlayed: timeTaken, timestamp: firebase.firestore.FieldValue.serverTimestamp() }); } } catch (e) {} }
+        
+        let currentUserData = null; // {uid, name, location, isGuest}
+
+        async function initMap() { mapLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', { attribution: '© OpenStreetMap' }); satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri' }); map = L.map('map', {zoomControl: false, zoomSnap: 0.1}).setView([32.0, 34.9], 7.5); mapLayer.addTo(map); loadHighScore(); fetchGlobalLeaderboard(); await fetchKibbutzimData(); setupAuthListener(); }
+        
+        async function fetchKibbutzimData() { try { const savedData = localStorage.getItem('kibbutzim_data_v2'); if (savedData) { kibbutzim = JSON.parse(savedData); populateKibbutzSelect(); return; } const response = await fetch('kibbutzim.kml'); if (!response.ok) throw new Error("שגיאה"); const text = await response.text(); const xmlDoc = new DOMParser().parseFromString(text, "text/xml"); const placemarks = xmlDoc.getElementsByTagName("Placemark"); kibbutzim = []; for (let p of placemarks) { const name = p.getElementsByTagName("name")[0]?.textContent; const coords = p.getElementsByTagName("coordinates")[0]?.textContent.split(','); if (name && coords) kibbutzim.push({name: name.trim(), lng: parseFloat(coords[0]), lat: parseFloat(coords[1])}); } localStorage.setItem('kibbutzim_data_v2', JSON.stringify(kibbutzim)); populateKibbutzSelect(); } catch (error) { document.getElementById('loading-panel').innerHTML = "<h3>שגיאה בטעינת המפה</h3>"; } }
+        
+        function populateKibbutzSelect() {
+            const select = document.getElementById('onboarding-location');
+            select.innerHTML = '<option value="" disabled selected>בחר/י מהרשימה...</option><option value="מושבניק">🚜 מושבניק</option><option value="עירוני / אחר">🏢 עירוני / אחר</option>';
+            // מיון לפי א"ב
+            const sorted = [...kibbutzim].sort((a,b) => a.name.localeCompare(b.name, 'he'));
+            sorted.forEach(k => {
+                let opt = document.createElement('option');
+                opt.value = k.name; opt.innerText = k.name;
+                select.appendChild(opt);
+            });
+        }
+
+        /* --- Auth Logic --- */
+        function setupAuthListener() {
+            auth.onAuthStateChanged(async (user) => {
+                if (user) {
+                    const doc = await db.collection('users').doc(user.uid).get();
+                    if (doc.exists) {
+                        const data = doc.data();
+                        currentUserData = { uid: user.uid, name: data.name, location: data.location, isGuest: false };
+                        setupLoggedInUser();
+                    } else {
+                        // משתמש חדש! פותח מודל לבחירת קיבוץ
+                        document.getElementById('loading-panel').style.display = 'none';
+                        document.getElementById('onboarding-title').innerText = `אהלן ${user.displayName.split(' ')[0]}!`;
+                        document.getElementById('onboarding-modal').style.display = 'flex';
+                    }
+                } else {
+                    currentUserData = null;
+                    document.getElementById('loading-panel').style.display = 'none';
+                    document.getElementById('welcome-panel').style.display = 'block';
+                    document.getElementById('auth-section').style.display = 'flex';
+                    document.getElementById('user-info-section').style.display = 'none';
+                    document.getElementById('tab-local').style.display = 'none';
+                    switchTab('global');
+                    setTimeout(() => { map.invalidateSize(); map.setView([32.0, 34.9], 7.5); }, 50);
+                }
+            });
+        }
+
+        function loginWithGoogle() { const provider = new firebase.auth.GoogleAuthProvider(); auth.signInWithPopup(provider); }
+        function logout() { auth.signOut(); }
+        function startAsGuest() {
+            currentUserData = { uid: null, name: "אורח", location: "אורח", isGuest: true };
+            startGameLogic();
+        }
+
+        async function saveOnboarding() {
+            const loc = document.getElementById('onboarding-location').value;
+            if(!loc) return alert('חובה לבחור יישוב כדי להמשיך!');
+            const user = auth.currentUser;
+            await db.collection('users').doc(user.uid).set({
+                name: user.displayName, email: user.email, location: loc, createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            document.getElementById('onboarding-modal').style.display = 'none';
+            currentUserData = { uid: user.uid, name: user.displayName, location: loc, isGuest: false };
+            setupLoggedInUser();
+        }
+
+        function setupLoggedInUser() {
+            document.getElementById('loading-panel').style.display = 'none';
+            document.getElementById('welcome-panel').style.display = 'block';
+            document.getElementById('auth-section').style.display = 'none';
+            document.getElementById('user-info-section').style.display = 'block';
+            document.getElementById('welcome-user-text').innerText = `מחובר כ: ${currentUserData.name.split(' ')[0]} (${currentUserData.location})`;
+            
+            // Analytics Update
+            gtag('config', 'G-ZDRV4BSBT0', { 'user_id': currentUserData.uid });
+            gtag('set', 'user_properties', { 'kibbutz': currentUserData.location });
+
+            // Leaderboard Tabs setup
+            document.getElementById('tab-local').style.display = 'inline-block';
+            document.getElementById('tab-local').innerText = `טופ 5 - ${currentUserData.location.length > 10 ? currentUserData.location.substring(0,10)+'...' : currentUserData.location}`;
+            fetchLocalLeaderboard();
+            setTimeout(() => { map.invalidateSize(); map.setView([32.0, 34.9], 7.5); }, 50);
+        }
+
+        /* --- Leaderboard Logic --- */
+        function switchTab(tab) {
+            document.getElementById('tab-global').classList.remove('active');
+            document.getElementById('tab-local').classList.remove('active');
+            if(tab === 'global') {
+                document.getElementById('tab-global').classList.add('active');
+                document.getElementById('list-global').style.display = 'block';
+                document.getElementById('list-local').style.display = 'none';
+            } else {
+                document.getElementById('tab-local').classList.add('active');
+                document.getElementById('list-global').style.display = 'none';
+                document.getElementById('list-local').style.display = 'block';
+            }
+        }
+
+        async function fetchGlobalLeaderboard() { 
+            const list = document.getElementById('list-global');
+            try { 
+                const snapshot = await db.collection('leaderboard').orderBy('score', 'desc').limit(5).get(); 
+                list.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const li = document.createElement('li'); li.innerText = `${doc.data().name.split(' ')[0]} - ${doc.data().score} נק'`; list.appendChild(li);
+                });
+            } catch (e) { console.error(e); } 
+        }
+
+        async function fetchLocalLeaderboard() {
+            if(!currentUserData || currentUserData.isGuest) return;
+            const list = document.getElementById('list-local');
+            try { 
+                // הערה: פיירבייס ידרוש יצירת אינדקס פה. אם חסר אינדקס, תופיע שגיאה בקונסול עם לינק ליצירתו.
+                const snapshot = await db.collection('leaderboard').where('location', '==', currentUserData.location).orderBy('score', 'desc').limit(5).get(); 
+                list.innerHTML = '';
+                if(snapshot.empty) { list.innerHTML = '<li style="list-style:none; font-size:12px;">אין עדיין שיאים פה! הייה הראשון!</li>'; return; }
+                snapshot.forEach(doc => {
+                    const li = document.createElement('li'); li.innerText = `${doc.data().name.split(' ')[0]} - ${doc.data().score} נק'`; list.appendChild(li);
+                });
+            } catch (e) { 
+                console.error("שגיאה בטעינת טבלה מקומית (כנראה חסר אינדקס):", e); 
+                list.innerHTML = '<li style="list-style:none; font-size:12px; color:red;">טוען נתונים... (דרוש Index)</li>';
+            }
+        }
+
+        async function saveScoreToLeaderboard(score, timeTaken) { 
+            if (score <= 0 || !currentUserData || currentUserData.isGuest) return; 
+            try { 
+                const querySnapshot = await db.collection('leaderboard').where('uid', '==', currentUserData.uid).get(); 
+                if (!querySnapshot.empty) { 
+                    let docId = null; let existingScore = -1; 
+                    querySnapshot.forEach(doc => { const data = doc.data(); if (data.score > existingScore) { existingScore = data.score; docId = doc.id; } }); 
+                    if (score > existingScore) { 
+                        await db.collection('leaderboard').doc(docId).update({ score: score, timePlayed: timeTaken, location: currentUserData.location, timestamp: firebase.firestore.FieldValue.serverTimestamp() }); 
+                    } 
+                } else { 
+                    await db.collection('leaderboard').add({ uid: currentUserData.uid, name: currentUserData.name, location: currentUserData.location, score: score, timePlayed: timeTaken, timestamp: firebase.firestore.FieldValue.serverTimestamp() }); 
+                } 
+                fetchGlobalLeaderboard(); fetchLocalLeaderboard();
+            } catch (e) { console.error(e); } 
+        }
+
+        /* --- Game Flow --- */
+        function startGameLogic() { 
+            currentRound = 1; totalScore = 0; gameStartTime = Date.now(); specialRounds = pickSpecialRounds(); farmerRounds = pickFarmerRounds(); availableAnims = ['tractor', 'sheaf', 'vibe']; playedAnimsCount = 0; 
+            document.getElementById('welcome-panel').style.display = 'none'; document.getElementById('game-panel').style.display = 'block'; document.getElementById('end-game-ad-container').style.display = 'none'; 
+            document.getElementById('start-btn').innerText = "התחל משחק"; document.getElementById('start-btn').onclick = startRound; document.getElementById('start-btn').style.display = 'block'; 
+            document.getElementById('kibbutz-name').innerHTML = "מוכן להתחיל?"; document.getElementById('round-info').innerText = ""; document.getElementById('result-msg').innerText = ""; document.getElementById('top-stats-bar').style.display = 'flex'; 
+            if (actualMarker) map.removeLayer(actualMarker); if (guessMarker) map.removeLayer(guessMarker); if (resultLine) map.removeLayer(resultLine); 
+            setTimeout(() => { map.invalidateSize(); map.setView([32.0, 34.9], 7.9); }, 50); 
+        }
+        function resetToWelcome() { document.getElementById('game-panel').style.display = 'none'; document.getElementById('welcome-panel').style.display = 'block'; setTimeout(() => { map.invalidateSize(); map.setView([32.0, 34.9], 7.5); }, 50); }
+        
         function loadHighScore() { const saved = localStorage.getItem('kibbutz_high_score_v3'); if (saved) { highScore = parseInt(saved); document.getElementById('high-score-val').innerText = highScore; } }
         function updateHighScore(newScore) { if (newScore > highScore) { highScore = newScore; localStorage.setItem('kibbutz_high_score_v3', highScore); document.getElementById('high-score-val').innerText = highScore; } }
         function pickSpecialRounds() { let rounds = []; while(rounds.length < 1) { let r = Math.floor(Math.random() * 10) + 1; if(!rounds.includes(r)) rounds.push(r); } return rounds; }
@@ -172,29 +359,17 @@
         function openSponsorModal() { document.getElementById('sponsor-modal').style.display = 'flex'; }
         function closeSponsorModal() { document.getElementById('sponsor-modal').style.display = 'none'; }
         function submitSponsorForm() {
-            const name = document.getElementById('sponsor-name').value.trim();
-            const phone = document.getElementById('sponsor-phone').value.trim();
-            const kibbutz = document.getElementById('sponsor-kibbutz').value.trim();
+            const name = document.getElementById('sponsor-name').value.trim(); const phone = document.getElementById('sponsor-phone').value.trim(); const kibbutz = document.getElementById('sponsor-kibbutz').value.trim();
             if (!name || !phone) { alert('נא למלא לפחות שם וטלפון כדי שנוכל לחזור אליך.'); return; }
             db.collection('sponsors').add({ name: name, phone: phone, kibbutz: kibbutz, timestamp: firebase.firestore.FieldValue.serverTimestamp() })
-            .then(() => {
-                alert('הפרטים נשלחו בהצלחה! ניצור קשר בהקדם.');
-                closeSponsorModal();
-                document.getElementById('sponsor-name').value = ''; document.getElementById('sponsor-phone').value = ''; document.getElementById('sponsor-kibbutz').value = '';
-            }).catch(e => {
-                console.error(e);
-                alert('שגיאה בשליחה! כנראה שצריך לפתוח הרשאות ב-Firebase (ראה הסבר שקיבלת).');
-            });
+            .then(() => { alert('הפרטים נשלחו בהצלחה! ניצור קשר בהקדם.'); closeSponsorModal(); document.getElementById('sponsor-name').value = ''; document.getElementById('sponsor-phone').value = ''; document.getElementById('sponsor-kibbutz').value = ''; })
+            .catch(e => { console.error(e); alert('שגיאה בשליחה!'); });
         }
         
         document.addEventListener('click', function(event) { 
-            const hintContainer = document.getElementById('install-hint'); 
-            if (hintContainer) { if (hintContainer.contains(event.target)) { hintContainer.classList.toggle('show'); } else { hintContainer.classList.remove('show'); } } 
-            const firgunTrigger = document.getElementById('firgun-trigger'); const firgunPopup = document.getElementById('firgun-popup'); 
-            if (firgunTrigger && firgunPopup) { if (firgunTrigger.contains(event.target)) { firgunPopup.classList.toggle('show'); } else if (!firgunPopup.contains(event.target)) { firgunPopup.classList.remove('show'); } } 
-            
-            const modalOverlay = document.getElementById('sponsor-modal');
-            if (event.target === modalOverlay) { closeSponsorModal(); }
+            const hintContainer = document.getElementById('install-hint'); if (hintContainer) { if (hintContainer.contains(event.target)) { hintContainer.classList.toggle('show'); } else { hintContainer.classList.remove('show'); } } 
+            const firgunTrigger = document.getElementById('firgun-trigger'); const firgunPopup = document.getElementById('firgun-popup'); if (firgunTrigger && firgunPopup) { if (firgunTrigger.contains(event.target)) { firgunPopup.classList.toggle('show'); } else if (!firgunPopup.contains(event.target)) { firgunPopup.classList.remove('show'); } } 
+            const modalOverlaySponsor = document.getElementById('sponsor-modal'); if (event.target === modalOverlaySponsor) { closeSponsorModal(); }
         });
         
         window.onload = () => { initMap(); map.on('click', handleMapClick); };
