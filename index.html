@@ -118,7 +118,7 @@
                 <span class="firgun-text">פינת הפרגון</span>
             </div>
             <div id="firgun-popup" class="firgun-popup">
-                <p>המשחק חינמי לגמרי אבל<br>אם בא לכם לתמוך בפיתוח<br>ולפרגן על ההשקעה,<br>אשמח מאוד <a href="https://links.payboxapp.com/h2vMq4S2L1b" target="_blank" class="firgun-link-btn">לפרגון 💙</a></p>
+                <p>אם אהבתם את<br>העדכון, תהיו אחים<br>אשמח <a href="https://links.payboxapp.com/h2vMq4S2L1b" target="_blank" class="firgun-link-btn">לפרגון 💙</a></p>
             </div>
         </div>
         
@@ -149,13 +149,16 @@
                 <input type="text" id="player-nickname" maxlength="15" placeholder="כינוי..." style="flex: 1; border: none; outline: none; font-size: 16px; font-weight: bold; color: var(--earth-brown); padding: 8px 0; background: transparent; font-family: inherit;">
                 <span id="player-location-suffix" style="font-size: 14px; color: #888; white-space: nowrap; margin-right: 5px; user-select: none;"></span>
             </div>
-            <button onclick="startGameLogic()" style="width: 85%;">התחל משחק</button>
-            <button onclick="logout()" style="background-color: #d32f2f; color: white; border: none; padding: 6px 15px; font-size: 13px; font-weight: bold; margin-top: 5px; width: auto; box-shadow: 0 2px 4px rgba(0,0,0,0.2); border-radius: 6px;">התנתק</button>
+            <button onclick="startGameLogic()" style="width: 85%;">התחל משחק!</button>
         </div>
 
         <div class="ad-placeholder ad-banner-small" style="margin-top: 15px;">
             <ins class="adsbygoogle" style="display:inline-block;width:320px;height:50px" data-ad-client="ca-pub-2711679068759978" data-ad-slot="YOUR_AD_SLOT_ID_HERE"></ins>
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+
+        <div id="logout-section" style="display:none; margin-top: 10px;">
+            <button onclick="logout()" style="background-color: #d32f2f; color: white; border: none; padding: 6px 15px; font-size: 13px; font-weight: bold; width: auto; box-shadow: 0 2px 4px rgba(0,0,0,0.2); border-radius: 6px;">התנתק</button>
         </div>
     </div>
 
@@ -252,6 +255,7 @@
                     document.getElementById('welcome-panel').style.display = 'block';
                     document.getElementById('auth-section').style.display = 'flex';
                     document.getElementById('user-info-section').style.display = 'none';
+                    document.getElementById('logout-section').style.display = 'none';
                     document.getElementById('tab-local').style.display = 'none';
                     
                     const savedScore = localStorage.getItem('kibbutz_high_score_v3');
@@ -300,8 +304,8 @@
             document.getElementById('welcome-panel').style.display = 'block';
             document.getElementById('auth-section').style.display = 'none';
             document.getElementById('user-info-section').style.display = 'flex';
+            document.getElementById('logout-section').style.display = 'block';
             
-            // הכנת התווית השיוכית
             let locText = "";
             if (currentUserData.location === "מושבניק" || currentUserData.location === "🚜 מושבניק") {
                 locText = "(מושבניק)";
@@ -387,7 +391,6 @@
         async function saveScoreToLeaderboard(score, timeTaken) { 
             if (score <= 0 || !currentUserData || currentUserData.isGuest) return; 
             
-            // המידע שנשמר הוא אך ורק הכינוי שמוקלד, בלי התווית המסופחת שרואים בעין
             let finalName = document.getElementById('player-nickname').value.trim();
             if (!finalName) finalName = currentUserData.name; 
             finalName = finalName.substring(0, 15); 
