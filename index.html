@@ -17,19 +17,29 @@
         .ad-banner-small { width: 320px; min-height: 50px; max-width: 100%; } .ad-box-medium { width: 300px; min-height: 250px; max-width: 100%; }
         .sponsor-banner { display: flex; align-items: center; justify-content: center; width: 100%; height: 50px; box-sizing: border-box; background-color: #fdf5e6; border: 2px dashed var(--earth-brown); color: var(--earth-brown); text-align: center; padding: 5px; text-decoration: none; font-weight: bold; border-radius: 8px; font-size: 13px; transition: transform 0.2s, background-color 0.2s; direction: rtl; cursor: pointer; margin: 0; line-height: 1.1; }
         .sponsor-banner:hover { background-color: #f5deb3; transform: scale(1.02); }
-        .install-hint-container, .firgun-container { position: absolute; top: 10px; cursor: pointer; z-index: 20; display: flex; flex-direction: column; align-items: center; }
-        .install-hint-container { left: 10px; } .firgun-container { right: 10px; }
-        .install-hint-icon, .firgun-icon { width: 53px; height: 53px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); border: 2px solid var(--dark-green); background-color: transparent; transition: transform 0.2s; object-fit: cover; }
-        .firgun-icon { border-color: #81C784; padding: 0; }
-        .install-hint-container:active .install-hint-icon, .firgun-container:active .firgun-icon { transform: scale(0.95); }
+        
+        /* עיצוב אייקון הורדה */
+        .install-hint-container { position: absolute; top: 10px; left: 10px; cursor: pointer; z-index: 20; display: flex; flex-direction: column; align-items: center; }
+        .install-hint-icon { width: 53px; height: 53px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); border: 2px solid var(--dark-green); background-color: transparent; transition: transform 0.2s; object-fit: cover; }
+        .install-hint-container:active .install-hint-icon { transform: scale(0.95); }
+        .install-hint-tooltip { position: absolute; top: 74px; left: -6px; width: 79px; background: white; border: 2px solid var(--dark-green); color: var(--earth-brown); font-size: 12.5px; font-weight: bold; padding: 5px 2px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); opacity: 0; visibility: hidden; transition: all 0.3s ease; text-align: center; line-height: 1.25; pointer-events: none; }
+        .install-hint-tooltip::before { content: ''; position: absolute; top: -8px; left: 22px; border-width: 0 6px 6px 6px; border-style: solid; border-color: transparent transparent var(--dark-green) transparent; }
+        .install-hint-tooltip::after { content: ''; position: absolute; top: -5px; left: 22px; border-width: 0 6px 6px 6px; border-style: solid; border-color: transparent transparent white transparent; }
+        .install-hint-container.show .install-hint-tooltip { opacity: 1; visibility: visible; transform: translateY(5px); }
+        
+        /* עיצוב פינת הפרגון - הוחזר לעיצוב המקורי */
+        .firgun-container { position: absolute; top: 10px; right: 10px; cursor: pointer; z-index: 20; display: flex; flex-direction: column; align-items: center; }
+        #firgun-trigger { display: flex; flex-direction: column; align-items: center; }
+        .firgun-icon { width: 53px; height: 53px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); border: 2px solid #81C784; background-color: transparent; transition: transform 0.2s; object-fit: cover; padding: 0; }
+        .firgun-container:active .firgun-icon { transform: scale(0.95); }
         .firgun-text { font-size: 12.5px; font-weight: bold; color: var(--earth-brown); margin-top: 3px; }
-        .install-hint-tooltip, .firgun-popup { position: absolute; top: 74px; width: max-content; background: white; border: 2px solid var(--dark-green); color: var(--earth-brown); font-size: 12.5px; font-weight: bold; padding: 5px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); opacity: 0; visibility: hidden; transition: all 0.3s ease; text-align: center; line-height: 1.25; }
-        .install-hint-tooltip { left: -6px; width: 79px; pointer-events: none; } .firgun-popup { right: -6px; z-index: 101; pointer-events: auto; }
-        .install-hint-tooltip::before, .firgun-popup::before { content: ''; position: absolute; top: -8px; border-width: 0 6px 6px 6px; border-style: solid; border-color: transparent transparent var(--dark-green) transparent; }
-        .install-hint-tooltip::after, .firgun-popup::after { content: ''; position: absolute; top: -5px; border-width: 0 6px 6px 6px; border-style: solid; border-color: transparent transparent white transparent; }
-        .install-hint-tooltip::before, .install-hint-tooltip::after { left: 22px; } .firgun-popup::before, .firgun-popup::after { right: 22px; }
-        .install-hint-container.show .install-hint-tooltip, .firgun-popup.show { opacity: 1; visibility: visible; transform: translateY(5px); }
-        .firgun-popup p { margin: 0; display: block; } .firgun-link-btn { display: inline-block; background-color: var(--earth-brown); color: white; text-decoration: none; padding: 2px 8px; border-radius: 5px; font-weight: bold; transition: background-color 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.2); font-size: 11px; margin-right: 2px; vertical-align: baseline; } .firgun-link-btn:hover { background-color: #3e2b22; }
+        .firgun-popup { position: absolute; top: 74px; right: -6px; width: max-content; background: white; border: 2px solid var(--dark-green); color: var(--earth-brown); font-size: 12.5px; font-weight: bold; padding: 4px 3.5px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); opacity: 0; visibility: hidden; transition: all 0.3s ease; text-align: center; line-height: 1.25; cursor: default; z-index: 101; pointer-events: auto; }
+        .firgun-popup::before { content: ''; position: absolute; top: -8px; right: 22px; border-width: 0 6px 6px 6px; border-style: solid; border-color: transparent transparent var(--dark-green) transparent; }
+        .firgun-popup::after { content: ''; position: absolute; top: -5px; right: 22px; border-width: 0 6px 6px 6px; border-style: solid; border-color: transparent transparent white transparent; }
+        .firgun-popup.show { opacity: 1; visibility: visible; transform: translateY(5px); }
+        .firgun-popup p { margin: 0; display: block; }
+        .firgun-link-btn { display: inline-block; background-color: var(--earth-brown); color: white; text-decoration: none; padding: 2px 8px; border-radius: 5px; font-weight: bold; transition: background-color 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.2); font-size: 11px; margin-right: 2px; vertical-align: baseline; }
+        .firgun-link-btn:hover { background-color: #3e2b22; }
         
         #welcome-panel { display: none; } #game-panel { display: none; } #loading-panel { display: block; }
         #top-stats-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; min-height: 24px; font-size: 18px; font-weight: bold; }
@@ -98,8 +108,22 @@
     <div id="loading-panel" class="panel"><h3>טוען...</h3><p>תתחיל להתניע... 🚜</p></div>
     
     <div id="welcome-panel" class="panel">
-        <div class="install-hint-container" id="install-hint"><img src="icon.png" class="install-hint-icon" alt="אייקון האפליקציה"><span class="firgun-text">אייקון המשחק</span><div class="install-hint-tooltip">מומלץ להוריד<br>למסך הבית<br>לפתיחה נוחה</div></div>
-        <div id="firgun-container" class="firgun-container"><div id="firgun-trigger"><img src="farmericon.png" alt="פינת הפרגון" class="firgun-icon"><span class="firgun-text">פינת הפרגון</span></div><div id="firgun-popup" class="firgun-popup"><p>המשחק חינמי לגמרי אבל<br>אם בא לכם לתמוך בפיתוח<br>ולפרגן על ההשקעה,<br>אשמח מאוד <a href="https://links.payboxapp.com/h2vMq4S2L1b" target="_blank" class="firgun-link-btn">לפרגון 💙</a></p></div></div>
+        
+        <div class="install-hint-container" id="install-hint">
+            <img src="icon.png" class="install-hint-icon" alt="אייקון האפליקציה">
+            <span class="firgun-text">אייקון המשחק</span>
+            <div class="install-hint-tooltip">מומלץ להוריד<br>למסך הבית<br>לפתיחה נוחה</div>
+        </div>
+        
+        <div id="firgun-container" class="firgun-container">
+            <div id="firgun-trigger">
+                <img src="farmericon.png" alt="פינת הפרגון" class="firgun-icon">
+                <span class="firgun-text">פינת הפרגון</span>
+            </div>
+            <div id="firgun-popup" class="firgun-popup">
+                <p>המשחק חינמי לגמרי אבל<br>אם בא לכם לתמוך בפיתוח<br>ולפרגן על ההשקעה,<br>אשמח מאוד <a href="https://links.payboxapp.com/h2vMq4S2L1b" target="_blank" class="firgun-link-btn">לפרגון 💙</a></p>
+            </div>
+        </div>
         
         <div class="kibbutz-sign-container" style="margin-bottom: 25px;"><div class="sign-pole"></div><div class="sign-board sign-right">משחק</div><div class="sign-board sign-left">הקיבוצים</div></div>
         
@@ -291,7 +315,10 @@
                 const snapshot = await db.collection('leaderboard').orderBy('score', 'desc').limit(5).get(); 
                 list.innerHTML = '';
                 snapshot.forEach(doc => {
-                    const li = document.createElement('li'); li.innerText = `${doc.data().name.split(' ')[0]} - ${doc.data().score} נק'`; list.appendChild(li);
+                    const li = document.createElement('li'); 
+                    // התיקון בוצע כאן: החזרתי את השם המלא
+                    li.innerText = `${doc.data().name} - ${doc.data().score} נק'`; 
+                    list.appendChild(li);
                 });
             } catch (e) { console.error(e); } 
         }
@@ -300,12 +327,15 @@
             if(!currentUserData || currentUserData.isGuest) return;
             const list = document.getElementById('list-local');
             try { 
-                // הערה: פיירבייס ידרוש יצירת אינדקס פה. אם חסר אינדקס, תופיע שגיאה בקונסול עם לינק ליצירתו.
+                // הערה: פיירבייס ידרוש יצירת אינדקס פה.
                 const snapshot = await db.collection('leaderboard').where('location', '==', currentUserData.location).orderBy('score', 'desc').limit(5).get(); 
                 list.innerHTML = '';
                 if(snapshot.empty) { list.innerHTML = '<li style="list-style:none; font-size:12px;">אין עדיין שיאים פה! הייה הראשון!</li>'; return; }
                 snapshot.forEach(doc => {
-                    const li = document.createElement('li'); li.innerText = `${doc.data().name.split(' ')[0]} - ${doc.data().score} נק'`; list.appendChild(li);
+                    const li = document.createElement('li'); 
+                    // התיקון בוצע גם כאן (שם מלא בטבלה המקומית)
+                    li.innerText = `${doc.data().name} - ${doc.data().score} נק'`; 
+                    list.appendChild(li);
                 });
             } catch (e) { 
                 console.error("שגיאה בטעינת טבלה מקומית (כנראה חסר אינדקס):", e); 
