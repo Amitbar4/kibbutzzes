@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         :root { --primary-green: #4CAF50; --dark-green: #388E3C; --earth-brown: #5D4037; --bg-color: #F9FBE7; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); background-image: url('bg.png'); background-size: cover; background-position: center; background-attachment: fixed; margin: 0; padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); box-sizing: border-box; display: flex; flex-direction: column; align-items: center; height: 100dvh; overflow: hidden; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); background-image: url('bg.webp'); background-size: cover; background-position: center; background-attachment: fixed; margin: 0; padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); box-sizing: border-box; display: flex; flex-direction: column; align-items: center; height: 100dvh; overflow: hidden; }
         .panel { position: relative; flex-shrink: 0; background-color: rgba(255, 255, 255, 0.95); border: 5px solid var(--earth-brown); border-radius: 12px; padding: 15px; margin: 10px 0 10px 0; text-align: center; width: 95vw; max-width: 450px; box-sizing: border-box; box-shadow: 0 8px 16px rgba(0,0,0,0.3); z-index: 10; }
         .ad-placeholder { margin: 5px auto; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; }
         .ad-banner-small { width: 320px; min-height: 50px; max-width: 100%; } .ad-box-medium { width: 300px; min-height: 250px; max-width: 100%; }
@@ -153,7 +153,7 @@
         </div>
 
         <div class="ad-placeholder ad-banner-small" style="margin-top: 15px;">
-            <div class="sponsor-banner" onclick="openSponsorModal()">רוצים להגיע לאלפי קיבוצניקים ביום? לחצו כאן לפרסום במשחק! 🌾</div>
+            <div class="sponsor-banner" onclick="openSponsorModal()">רוצים שהעסק שלכם יופיע כאן מול אלפי קיבוצניקים כל יום? לחצו לפרטים</div>
         </div>
 
         <div id="logout-section" style="display:none; margin-top: 10px;">
@@ -166,7 +166,7 @@
         <button id="start-btn" onclick="startRound()">התחל משחק</button>
         <div id="end-game-ad-container" style="display: none; margin-top: 40px;">
             <div class="ad-placeholder ad-box-medium">
-                <div class="sponsor-banner" onclick="openSponsorModal()">רוצים שהעסק שלכם יופיע כאן מול אלפי קיבוצניקים כל יום! לחץ לפרטים</div>
+                <div class="sponsor-banner" onclick="openSponsorModal()">רוצים שהעסק שלכם יופיע כאן מול אלפי קיבוצניקים כל יום? לחצו לפרטים</div>
                 <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-2711679068759978" data-ad-slot="YOUR_AD_SLOT_ID_HERE"></ins>
                 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
             </div>
@@ -176,10 +176,10 @@
     <div id="map-wrapper">
         <div id="map"></div>
         <div class="map-copyright">© 2026 Kibbutzzes | Amit Bar</div>
-        <div id="tractor-scene" class="scene-layer"><div id="plowed-dirt"></div><div id="the-tractor"><img src="tractor.png" alt="טרקטור פרגוסון"></div></div><div id="sheaf-scene" class="scene-layer"><div id="wheat-field"></div><div id="the-sheaf"><img src="aluma.png" alt="אלומה"></div></div><div id="dining-hall"><div id="the-vibe"><img src="kibbutz_vibe.png" alt="הפרלמנט"></div></div>
+        <div id="tractor-scene" class="scene-layer"><div id="plowed-dirt"></div><div id="the-tractor"><img src="tractor.webp" alt="טרקטור פרגוסון"></div></div><div id="sheaf-scene" class="scene-layer"><div id="wheat-field"></div><div id="the-sheaf"><img src="aluma.webp" alt="אלומה"></div></div><div id="dining-hall"><div id="the-vibe"><img src="kibbutz_vibe.webp" alt="הפרלמנט"></div></div>
     </div>
     
-    <div id="farmer-container"><div id="speech-bubble"></div><div id="farmer-character"><img src="farmer.png" alt="חקלאי"></div></div>
+    <div id="farmer-container"><div id="speech-bubble"></div><div id="farmer-character"><img src="farmer.webp" alt="חקלאי"></div></div>
     
     <div id="sponsor-modal" class="modal-overlay">
         <div class="modal-content">
