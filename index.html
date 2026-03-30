@@ -280,6 +280,16 @@
         async function saveOnboarding() {
             const loc = document.getElementById('onboarding-location').value.trim();
             if(!loc) return alert('חובה להקליד ולבחור יישוב כדי להמשיך!');
+            
+            // --- התיקון שהוספנו: בדיקת תקינות הערך מול הרשימה ---
+            const allowedLocations = kibbutzim.map(k => k.name);
+            allowedLocations.push("מושבניק", "כללי");
+
+            if (!allowedLocations.includes(loc)) {
+                return alert('נא לבחור יישוב אך ורק מתוך הרשימה (או "מושבניק" / "כללי"). שימו לב לאיות מדוייק.');
+            }
+            // ----------------------------------------------------
+
             const user = auth.currentUser;
             await db.collection('users').doc(user.uid).set({
                 name: user.displayName, email: user.email, location: loc, createdAt: firebase.firestore.FieldValue.serverTimestamp()
