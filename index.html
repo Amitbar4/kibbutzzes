@@ -222,7 +222,7 @@
 
         async function initMap() { mapLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', { attribution: '© OpenStreetMap' }); satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri' }); map = L.map('map', {zoomControl: false, zoomSnap: 0.1}).setView([32.0, 34.9], 7.5); mapLayer.addTo(map); await fetchKibbutzimData(); setupAuthListener(); }
         
-        async function fetchKibbutzimData() { try { const savedData = localStorage.getItem('kibbutzim_data_v2'); if (savedData) { kibbutzim = JSON.parse(savedData); populateKibbutzDatalist(); return; } const response = await fetch('kibbutzim.kml'); if (!response.ok) throw new Error("שגיאה"); const text = await response.text(); const xmlDoc = new DOMParser().parseFromString(text, "text/xml"); const placemarks = xmlDoc.getElementsByTagName("Placemark"); kibbutzim = []; for (let p of placemarks) { const name = p.getElementsByTagName("name")[0]?.textContent; const coords = p.getElementsByTagName("coordinates")[0]?.textContent.split(','); if (name && coords) kibbutzim.push({name: name.trim(), lng: parseFloat(coords[0]), lat: parseFloat(coords[1])}); } localStorage.setItem('kibbutzim_data_v2', JSON.stringify(kibbutzim)); populateKibbutzDatalist(); } catch (error) { document.getElementById('loading-panel').innerHTML = "<h3>שגיאה בטעינת המפה</h3>"; } }
+        async function fetchKibbutzimData() { try { const savedData = localStorage.getItem('kibbutzim_data_v3'); if (savedData) { kibbutzim = JSON.parse(savedData); populateKibbutzDatalist(); return; } const response = await fetch('kibbutzim.kml'); if (!response.ok) throw new Error("שגיאה"); const text = await response.text(); const xmlDoc = new DOMParser().parseFromString(text, "text/xml"); const placemarks = xmlDoc.getElementsByTagName("Placemark"); kibbutzim = []; for (let p of placemarks) { const name = p.getElementsByTagName("name")[0]?.textContent; const coords = p.getElementsByTagName("coordinates")[0]?.textContent.split(','); if (name && coords) kibbutzim.push({name: name.trim(), lng: parseFloat(coords[0]), lat: parseFloat(coords[1])}); } localStorage.setItem('kibbutzim_data_v3', JSON.stringify(kibbutzim)); populateKibbutzDatalist(); } catch (error) { document.getElementById('loading-panel').innerHTML = "<h3>שגיאה בטעינת המפה</h3>"; } }
         
         function populateKibbutzDatalist() {
             const datalist = document.getElementById('kibbutz-list');
@@ -367,8 +367,8 @@
             } else if (currentUserData.location === "כללי") {
                 locText = "(כללי)";
             } else {
-                // הצגה של היישוב בלי המילה קיבוץ, לדוגמה: (מ-יזרעאל)
-                locText = `(מ-${currentUserData.location})`;
+                // הצגה של היישוב בלי המילה קיבוץ ובלי מקף, לדוגמה: (מיזרעאל)
+                locText = `(מ${currentUserData.location})`;
             }
             document.getElementById('player-location-suffix').innerText = locText;
             document.getElementById('player-nickname').value = currentUserData.name.split(' ')[0]; 
