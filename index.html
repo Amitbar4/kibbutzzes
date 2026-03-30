@@ -218,6 +218,7 @@
         let lastGlobalFetch = 0; let lastLocalFetch = 0; 
         let globalLeaderboardCache = ''; let localLeaderboardCache = '';
         const CACHE_TIME = 60000; 
+        let justLoggedIn = false; // דגל לבדיקת התחברות יזומה
 
         async function initMap() { mapLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', { attribution: '© OpenStreetMap' }); satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri' }); map = L.map('map', {zoomControl: false, zoomSnap: 0.1}).setView([32.0, 34.9], 7.5); mapLayer.addTo(map); await fetchKibbutzimData(); setupAuthListener(); }
         
@@ -238,13 +239,21 @@
             auth.onAuthStateChanged(async (user) => {
                 if (user) {
                     const doc = await db.collection('users').doc(user.uid).get();
-                    if (doc.exists) {
+                    if (doc.exists && !justLoggedIn) {
+                        // אם זה רענון עמוד רגיל ולא התחברות יזומה עכשיו
                         const data = doc.data();
                         currentUserData = { uid: user.uid, name: data.name, location: data.location, isGuest: false };
                         setupLoggedInUser();
                     } else {
+                        // אם זה משתמש חדש או מישהו שלחץ עכשיו על התחברות יזומה
                         document.getElementById('loading-panel').style.display = 'none';
                         document.getElementById('onboarding-title').innerText = `אהלן ${user.displayName.split(' ')[0]}!`;
+                        if (doc.exists) {
+                            // אם הוא כבר מוגדר, מציגים את היישוב הקיים כדי שיוכל לערוך
+                            document.getElementById('onboarding-location').value = doc.data().location;
+                        } else {
+                            document.getElementById('onboarding-location').value = "";
+                        }
                         document.getElementById('onboarding-modal').style.display = 'flex';
                     }
                 } else {
@@ -266,12 +275,17 @@
         }
 
         function loginWithGoogle() { 
+            justLoggedIn = true; // סימון שהתבצעה לחיצה יזומה עכשיו
             const provider = new firebase.auth.GoogleAuthProvider(); 
             provider.setCustomParameters({ prompt: 'select_account' });
             auth.signInWithPopup(provider); 
         }
 
-        function logout() { auth.signOut(); }
+        function logout() { 
+            auth.signOut(); 
+            justLoggedIn = false;
+        }
+        
         function startAsGuest() {
             currentUserData = { uid: null, name: "אורח", location: "אורח", isGuest: true };
             startGameLogic();
@@ -281,7 +295,7 @@
             const loc = document.getElementById('onboarding-location').value.trim();
             if(!loc) return alert('חובה להקליד ולבחור יישוב כדי להמשיך!');
             
-            // --- התיקון שהוספנו: בדיקת תקינות הערך מול הרשימה ---
+            // --- בדיקת תקינות הערך מול הרשימה ---
             const allowedLocations = kibbutzim.map(k => k.name);
             allowedLocations.push("מושבניק", "כללי");
 
@@ -291,11 +305,38 @@
             // ----------------------------------------------------
 
             const user = auth.currentUser;
-            await db.collection('users').doc(user.uid).set({
-                name: user.displayName, email: user.email, location: loc, createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
+            const userDocRef = db.collection('users').doc(user.uid);
+            const userDoc = await userDocRef.get();
+            
+            // שמירת המיקום ביוזר עצמו
+            if (!userDoc.exists) {
+                await userDocRef.set({
+                    name: user.displayName, email: user.email, location: loc, createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            } else {
+                await userDocRef.set({
+                    name: user.displayName, email: user.email, location: loc, updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
+            }
+
+            // עדכון מחיקת התוצאה אם המשתמש בחר מיקום חדש כדי שלא יגנוב את השיא
+            try { 
+                const snapshot = await db.collection('leaderboard').where('uid', '==', user.uid).limit(1).get();
+                if (!snapshot.empty) {
+                    const docId = snapshot.docs[0].id;
+                    const oldLoc = snapshot.docs[0].data().location;
+                    if (oldLoc !== loc) {
+                        // היישוב שונה - מוחקים את השיא הישן כדי שיתחיל מאפס ביישוב החדש
+                        await db.collection('leaderboard').doc(docId).delete();
+                        localLeaderboardCache = ''; 
+                        globalLeaderboardCache = '';
+                    }
+                }
+            } catch (e) { console.error("שגיאה בבדיקת מיקום בטבלת שיאים:", e); }
+
             document.getElementById('onboarding-modal').style.display = 'none';
             currentUserData = { uid: user.uid, name: user.displayName, location: loc, isGuest: false };
+            justLoggedIn = false; // איפוס הדגל אחרי שהגדרנו הכל
             setupLoggedInUser();
         }
 
@@ -307,6 +348,7 @@
                     currentUserData.docId = snapshot.docs[0].id; 
                 } else {
                     highScore = 0;
+                    currentUserData.docId = null; // מאפס את ה-ID כדי שנייצר רשומה חדשה כשישחק
                 }
                 document.getElementById('high-score-val').innerText = highScore;
             } catch (e) { console.error(e); }
