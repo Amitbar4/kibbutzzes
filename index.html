@@ -196,7 +196,7 @@
         <div class="modal-content" style="padding-top: 20px;">
             <h3 id="onboarding-title">ברוך הבא!</h3>
             <p style="font-size: 14px; margin: 0 0 10px 0; color: #555;">כדי שתוכל להתחרות מול החבר'ה מהבית, סמן מאיפה אתה:</p>
-            <input type="text" id="onboarding-location" list="kibbutz-list" placeholder="חפש קיבוץ, מושב או עיר...">
+            <input type="text" id="onboarding-location" list="kibbutz-list" placeholder="הזן שם קיבוץ או מושבניק / כללי...">
             <datalist id="kibbutz-list"></datalist>
             <p style="font-size: 11px; margin: -5px 0 10px 0; color: #777;">לא קיבוצניק? בחר 'מושבניק' או 'כללי'</p>
             <button onclick="saveOnboarding()">שמור וסע</button>
@@ -300,7 +300,7 @@
             allowedLocations.push("מושבניק", "כללי");
 
             if (!allowedLocations.includes(loc)) {
-                return alert('נא לבחור יישוב אך ורק מתוך הרשימה (או "מושבניק" / "כללי"). שימו לב לאיות מדוייק.');
+                return alert('נא לבחור אך ורק מתוך רשימת הקיבוצים (או "מושבניק" / "כללי"). שימו לב לאיות מדויק.');
             }
             // ----------------------------------------------------
 
